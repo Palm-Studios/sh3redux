@@ -1,0 +1,1211 @@
+# depslib dependency file v1.0
+1385316878 source:e:\users\jesse\documents\palm studios\silent hill redux\silent hill 3 redux\main.cpp
+	<iostream>
+
+1480320371 source:e:\users\jesse\documents\palm studios\silent hill redux\resource.rc
+
+1480494876 source:e:\users\jesse\documents\palm studios\silent hill redux\source\sh3.cpp
+	<iostream>
+	<system/CGameInstance.hpp>
+
+1480320371 source:e:\users\jesse\documents\palm studios\silent hill redux\resource64.rc
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\begin_code.h
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\close_code.h
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"SDL_endian.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480503448 source:e:\users\jesse\documents\palm studios\silent hill redux\source\system\cgameinstance.cpp
+	<system/CGameInstance.hpp>
+	<system/CConfiguration.hpp>
+	<SDL2/SDL.h>
+	<debug.hpp>
+	<system/CScene.hpp>
+	<scenes/CTestScene.hpp>
+
+1480503210 e:\users\jesse\documents\palm studios\silent hill redux\include\system\cgameinstance.hpp
+	<system/CWindow.hpp>
+	<stdtype.hpp>
+
+1480320371 source:e:\users\jesse\documents\palm studios\silent hill redux\resource32.rc
+
+1480407153 e:\users\jesse\documents\palm studios\silent hill redux\include\stdtype.hpp
+
+1480407158 e:\users\jesse\documents\palm studios\silent hill redux\include\debug.hpp
+
+1480491112 source:e:\users\jesse\documents\palm studios\silent hill redux\source\system\cconfiguration.cpp
+	<system/CConfiguration.hpp>
+	<debug.hpp>
+	<string>
+	<algorithm>
+
+1480428709 e:\users\jesse\documents\palm studios\silent hill redux\include\system\cconfiguration.hpp
+	<iostream>
+	<fstream>
+	<map>
+
+1480683412 source:e:\users\jesse\documents\palm studios\silent hill redux\source\system\cwindow.cpp
+	<system/CWindow.hpp>
+	<GL/glew.h>
+	<debug.hpp>
+	<SDL2/SDL_ttf.h>
+
+1480681553 e:\users\jesse\documents\palm studios\silent hill redux\include\system\cwindow.hpp
+	<SDL2/SDL.h>
+	<string>
+
+1480493522 e:\users\jesse\documents\palm studios\silent hill redux\include\system\ceventdispatcher.hpp
+	<SDL2/SDL.h>
+	<map>
+
+1480494172 source:e:\users\jesse\documents\palm studios\silent hill redux\source\system\ceventdispatcher.cpp
+	<system/CEventDispatcher.hpp>
+
+1480512688 source:e:\users\jesse\documents\palm studios\silent hill redux\source\scenes\ctestscene.cpp
+	<scenes/CTestScene.hpp>
+	<SDL2/SDL.h>
+	<GL/GL.h>
+	<debug.hpp>
+
+1480498653 e:\users\jesse\documents\palm studios\silent hill redux\include\scenes\ctestscene.hpp
+	<system/CScene.hpp>
+	<system/CGameInstance.hpp>
+
+1480496984 e:\users\jesse\documents\palm studios\silent hill redux\include\system\cscene.hpp
+
+1469321978 e:\users\jesse\documents\palm studios\silent hill redux\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1454362934 e:\users\jesse\documents\palm studios\silent hill redux\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480320371 source:e:\users\jesse\documents\palm studios\sh3redux\resource32.rc
+
+1481024202 source:e:\users\jesse\documents\palm studios\sh3redux\source\scenes\ctestscene.cpp
+	<scenes/CTestScene.hpp>
+	<system/CShader.hpp>
+	<SDL2/SDL.h>
+	<GL/glew.h>
+	<GL/GL.h>
+	<debug.hpp>
+
+1481024201 e:\users\jesse\documents\palm studios\sh3redux\include\scenes\ctestscene.hpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<system/CScene.hpp>
+	<system/CGameInstance.hpp>
+
+1480496986 e:\users\jesse\documents\palm studios\sh3redux\include\system\cscene.hpp
+
+1480503212 e:\users\jesse\documents\palm studios\sh3redux\include\system\cgameinstance.hpp
+	<system/CWindow.hpp>
+	<stdtype.hpp>
+
+1480843896 e:\users\jesse\documents\palm studios\sh3redux\include\system\cwindow.hpp
+	<SDL2/SDL.h>
+	<string>
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\begin_code.h
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\close_code.h
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"SDL_endian.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1476935894 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480407154 e:\users\jesse\documents\palm studios\sh3redux\include\stdtype.hpp
+
+1480407160 e:\users\jesse\documents\palm studios\sh3redux\include\debug.hpp
+
+1480494876 source:e:\users\jesse\documents\palm studios\sh3redux\source\sh3.cpp
+	<iostream>
+	<system/CGameInstance.hpp>
+
+1480491112 source:e:\users\jesse\documents\palm studios\sh3redux\source\system\cconfiguration.cpp
+	<system/CConfiguration.hpp>
+	<debug.hpp>
+	<string>
+	<algorithm>
+
+1480428710 e:\users\jesse\documents\palm studios\sh3redux\include\system\cconfiguration.hpp
+	<iostream>
+	<fstream>
+	<map>
+
+1481024202 source:e:\users\jesse\documents\palm studios\sh3redux\source\system\cgameinstance.cpp
+	<system/CGameInstance.hpp>
+	<system/CConfiguration.hpp>
+	<SDL2/SDL.h>
+	<debug.hpp>
+	<system/CScene.hpp>
+	<scenes/CTestScene.hpp>
+
+1481024202 source:e:\users\jesse\documents\palm studios\sh3redux\source\system\cwindow.cpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<system/CWindow.hpp>
+	<debug.hpp>
+	<SDL2/SDL_ttf.h>
+
+1469321978 e:\users\jesse\documents\palm studios\sh3redux\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1454362934 e:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1481024202 source:e:\users\jesse\documents\palm studios\sh3redux\source\system\cshader.cpp
+	<system/CShader.hpp>
+	<iostream>
+	<fstream>
+	<debug.hpp>
+
+1481024201 e:\users\jesse\documents\palm studios\sh3redux\include\system\cshader.hpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<string>
+
+1480996836 source:c:\users\jesse\documents\palm studios\sh3redux\resource32.rc
+
+1481023373 source:c:\users\jesse\documents\palm studios\sh3redux\source\scenes\ctestscene.cpp
+	<scenes/CTestScene.hpp>
+	<system/CShader.hpp>
+	<SDL2/SDL.h>
+	<GL/glew.h>
+	<GL/GL.h>
+	<debug.hpp>
+
+1481022346 c:\users\jesse\documents\palm studios\sh3redux\include\scenes\ctestscene.hpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<system/CScene.hpp>
+	<system/CGameInstance.hpp>
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\system\cscene.hpp
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\system\cgameinstance.hpp
+	<system/CWindow.hpp>
+	<stdtype.hpp>
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\system\cwindow.hpp
+	<SDL2/SDL.h>
+	<string>
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<sal.h>
+	"begin_code.h"
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\begin_code.h
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\close_code.h
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<mmintrin.h>
+	<mm3dnow.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"SDL_endian.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\stdtype.hpp
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\debug.hpp
+
+1480996836 source:c:\users\jesse\documents\palm studios\sh3redux\source\sh3.cpp
+	<iostream>
+	<system/CGameInstance.hpp>
+
+1480996836 source:c:\users\jesse\documents\palm studios\sh3redux\source\system\cconfiguration.cpp
+	<system/CConfiguration.hpp>
+	<debug.hpp>
+	<string>
+	<algorithm>
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\system\cconfiguration.hpp
+	<iostream>
+	<fstream>
+	<map>
+
+1481022564 source:c:\users\jesse\documents\palm studios\sh3redux\source\system\cgameinstance.cpp
+	<system/CGameInstance.hpp>
+	<system/CConfiguration.hpp>
+	<SDL2/SDL.h>
+	<debug.hpp>
+	<system/CScene.hpp>
+	<scenes/CTestScene.hpp>
+
+1481023588 source:c:\users\jesse\documents\palm studios\sh3redux\source\system\cshader.cpp
+	<system/CShader.hpp>
+	<iostream>
+	<fstream>
+	<debug.hpp>
+
+1481023683 c:\users\jesse\documents\palm studios\sh3redux\include\system\cshader.hpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<string>
+
+1481022385 source:c:\users\jesse\documents\palm studios\sh3redux\source\system\cwindow.cpp
+	<GL/glew.h>
+	<GL/gl.h>
+	<system/CWindow.hpp>
+	<debug.hpp>
+	<SDL2/SDL_ttf.h>
+
+1480996834 c:\users\jesse\documents\palm studios\sh3redux\include\gl\glew.h
+	<stddef.h>
+	<inttypes.h>
+	<stdint.h>
+	<inttypes.h>
+	<Availability.h>
+	<OpenGL/glu.h>
+	<GL/glu.h>
+
+1480996835 c:\users\jesse\documents\palm studios\sh3redux\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
