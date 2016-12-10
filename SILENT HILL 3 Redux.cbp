@@ -84,15 +84,6 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="include/debug.hpp" />
-		<Unit filename="include/scenes/CTestScene.hpp" />
-		<Unit filename="include/stdtype.hpp" />
-		<Unit filename="include/system/CCamera.hpp" />
-		<Unit filename="include/system/CConfiguration.hpp" />
-		<Unit filename="include/system/CGameInstance.hpp" />
-		<Unit filename="include/system/CScene.hpp" />
-		<Unit filename="include/system/CShader.hpp" />
-		<Unit filename="include/system/CWindow.hpp" />
 		<Unit filename="resource32.rc">
 			<Option compilerVar="WINDRES" />
 			<Option compiler="gcc" use="1" buildCommand="$rescomp -F pe-i386 $res_includes -J rc -O coff -i $file -o $resource_output" />
@@ -105,12 +96,6 @@
 			<Option target="Debug x86_64" />
 			<Option target="Release x86_64" />
 		</Unit>
-		<Unit filename="source/scenes/CTestScene.cpp" />
-		<Unit filename="source/sh3.cpp" />
-		<Unit filename="source/system/CConfiguration.cpp" />
-		<Unit filename="source/system/CGameInstance.cpp" />
-		<Unit filename="source/system/CShader.cpp" />
-		<Unit filename="source/system/CWindow.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
