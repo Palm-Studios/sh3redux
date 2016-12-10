@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SILENT HILL 3 Redux" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug i686">
+				<Option output="bin/Debug/i686/sh3rd" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/i686" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=i686" />
+					<Add option="-Wswitch-enum" />
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="-m32" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32 -lmingw32  -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew32" />
+					<Add directory="lib/i686/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release i686">
+				<Option output="bin/Release/i686/sh3rd" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/i686" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-march=i686" />
+					<Add option="-O2" />
+					<Add option="-Wswitch-enum" />
+					<Add option="-std=c++11" />
+					<Add option="-m32" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m32 -lmingw32 -lfreetype -lftgl -lSDL2main-lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add directory="lib/i686/lib" />
+				</Linker>
+			</Target>
+			<Target title="Debug x86_64">
+				<Option output="bin/Debug/x86_64/sh3rd" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/x86_64" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-Wswitch-default" />
+					<Add option="-std=c++11" />
+					<Add option="-g" />
+					<Add option="-m64" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-m64 -lmingw32 -lfreetype -lftgl -lSDL2main -lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add directory="lib/x86_64/lib" />
+				</Linker>
+			</Target>
+			<Target title="Release x86_64">
+				<Option output="bin/Release/x86_64/sh3rd" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/x86_64" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-Wswitch-default" />
+					<Add option="-std=c++11" />
+					<Add option="-m64" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-m64 -lmingw32 -lfreetype -lftgl -lSDL2main -lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add directory="lib/x86_64/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="include/debug.hpp" />
+		<Unit filename="include/scenes/CTestScene.hpp" />
+		<Unit filename="include/stdtype.hpp" />
+		<Unit filename="include/system/CCamera.hpp" />
+		<Unit filename="include/system/CConfiguration.hpp" />
+		<Unit filename="include/system/CGameInstance.hpp" />
+		<Unit filename="include/system/CScene.hpp" />
+		<Unit filename="include/system/CShader.hpp" />
+		<Unit filename="include/system/CWindow.hpp" />
+		<Unit filename="resource32.rc">
+			<Option compilerVar="WINDRES" />
+			<Option compiler="gcc" use="1" buildCommand="$rescomp -F pe-i386 $res_includes -J rc -O coff -i $file -o $resource_output" />
+			<Option target="Debug i686" />
+			<Option target="Release i686" />
+		</Unit>
+		<Unit filename="resource64.rc">
+			<Option compilerVar="WINDRES" />
+			<Option compiler="gcc" use="1" buildCommand="$rescomp -F pe-x86-64 $res_includes -J rc -O coff -i $file -o $resource_output" />
+			<Option target="Debug x86_64" />
+			<Option target="Release x86_64" />
+		</Unit>
+		<Unit filename="source/scenes/CTestScene.cpp" />
+		<Unit filename="source/sh3.cpp" />
+		<Unit filename="source/system/CConfiguration.cpp" />
+		<Unit filename="source/system/CGameInstance.cpp" />
+		<Unit filename="source/system/CShader.cpp" />
+		<Unit filename="source/system/CWindow.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
