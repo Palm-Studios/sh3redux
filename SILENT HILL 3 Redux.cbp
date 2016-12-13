@@ -84,6 +84,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/SH3/stdtype.hpp" />
 		<Unit filename="resource32.rc">
 			<Option compilerVar="WINDRES" />
 			<Option compiler="gcc" use="1" buildCommand="$rescomp -F pe-i386 $res_includes -J rc -O coff -i $file -o $resource_output" />
@@ -96,6 +97,7 @@
 			<Option target="Debug x86_64" />
 			<Option target="Release x86_64" />
 		</Unit>
+		<Unit filename="source/sh3main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
