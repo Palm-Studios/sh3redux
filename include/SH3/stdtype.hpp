@@ -17,6 +17,7 @@ Notes:
 
 Revision History:
         13-12-2016: Initial Revision [Quaker762]
+        14-12-2016: Added messagebox( ) function [Quaker762]
 
 --*/
 #ifndef STDTYPE_HPP_INCLUDED
@@ -25,6 +26,15 @@ Revision History:
 #include <cstdio>
 #include <cstring>
 #include <cstdarg>
+
+    // Cross platform ;)
+#ifdef _WIN32
+    #include <windows.h>
+#elif __APPLE__
+
+#elif __linux__
+
+#endif
 
 /************************************************************/
 /*                  STATIC FUNCTIONS                        */
@@ -99,6 +109,26 @@ static inline void Log(int logType, char* str, ...)
     }
 
     fclose(logfile);
+}
+
+static inline void messagebox(const char* title, const char* str, ...)
+{
+    char        buff[4096];
+    va_list     args;
+
+    // Get our variable args, like %x, %s etcetc
+    va_start(args, str);
+    vsprintf(buff, str, args);
+    va_end(args);
+
+    // Cross platform ;)
+    #ifdef _WIN32
+        MessageBox(NULL, buff, title, MB_OK);
+    #elif __APPLE__ // No idea for this, Apple probably have it behine 602348483468034684056 layers of fucking bullshit, the arseholes.
+
+    #elif __linux__ // This no way in hell this will be standard, we should probably just have the console open!
+
+    #endif
 }
 
 

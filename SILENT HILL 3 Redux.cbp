@@ -85,6 +85,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/SH3/stdtype.hpp" />
+		<Unit filename="include/SH3/types/vertex.hpp" />
 		<Unit filename="resource32.rc">
 			<Option compilerVar="WINDRES" />
 			<Option compiler="gcc" use="1" buildCommand="$rescomp -F pe-i386 $res_includes -J rc -O coff -i $file -o $resource_output" />
