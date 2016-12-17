@@ -13,14 +13,14 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-march=i686" />
-					<Add option="-Wswitch-enum" />
 					<Add option="-std=c++11" />
-					<Add option="-g" />
 					<Add option="-m32" />
+					<Add option="-g" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add option="-m32 -lmingw32  -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew32" />
+					<Add option="-m32" />
+					<Add option="-m32 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew32" />
 					<Add directory="lib/i686/lib" />
 				</Linker>
 			</Target>
@@ -32,14 +32,14 @@
 				<Compiler>
 					<Add option="-march=i686" />
 					<Add option="-O2" />
-					<Add option="-Wswitch-enum" />
 					<Add option="-std=c++11" />
 					<Add option="-m32" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-m32 -lmingw32 -lfreetype -lftgl -lSDL2main-lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add option="-m32" />
+					<Add option="-m32 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
 					<Add directory="lib/i686/lib" />
 				</Linker>
 			</Target>
@@ -49,14 +49,14 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-Wswitch-default" />
 					<Add option="-std=c++11" />
-					<Add option="-g" />
 					<Add option="-m64" />
+					<Add option="-g" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
-					<Add option="-m64 -lmingw32 -lfreetype -lftgl -lSDL2main -lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add option="-m64" />
+					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
 					<Add directory="lib/x86_64/lib" />
 				</Linker>
 			</Target>
@@ -68,22 +68,30 @@
 				<Option use_console_runner="0" />
 				<Compiler>
 					<Add option="-O2" />
-					<Add option="-Wswitch-default" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-m64 -lmingw32 -lfreetype -lftgl -lSDL2main -lSDL2_ttf -lSDL2 -lopengl32 -glew32" />
+					<Add option="-m64" />
+					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
 					<Add directory="lib/x86_64/lib" />
 				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wundef" />
+			<Add option="-Wunreachable-code" />
+			<Add option="-Wswitch-default" />
+			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/SH3/arc/sh3_arc_types.hpp" />
+		<Unit filename="include/SH3/sh3_arc_section.hpp" />
+		<Unit filename="include/SH3/sh3arch.hpp" />
+		<Unit filename="include/SH3/sh3math.hpp" />
 		<Unit filename="include/SH3/stdtype.hpp" />
 		<Unit filename="include/SH3/types/vertex.hpp" />
 		<Unit filename="resource32.rc">
@@ -98,6 +106,8 @@
 			<Option target="Debug x86_64" />
 			<Option target="Release x86_64" />
 		</Unit>
+		<Unit filename="source/arc/sh3_arc.cpp" />
+		<Unit filename="source/arc/sh3_arc_section.cpp" />
 		<Unit filename="source/sh3main.cpp" />
 		<Extensions>
 			<code_completion />

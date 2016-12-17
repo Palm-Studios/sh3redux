@@ -21,6 +21,7 @@ Revision History:
 --*/
 
 #include <SH3/stdtype.hpp>
+#include <SH3/sh3math.hpp>
 #include <iostream>
 
 /*++
