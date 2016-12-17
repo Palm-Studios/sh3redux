@@ -1209,3 +1209,26 @@
 	"begin_code.h"
 	"close_code.h"
 
+1481962245 source:e:\users\jesse\documents\palm studios\sh3redux\source\arc\sh3_arc_section.cpp
+	<SH3/arc/sh3_arc_types.hpp>
+
+1481964271 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\arc\sh3_arc_types.hpp
+	<SH3/stdtype.hpp>
+	<cstdint>
+	<map>
+	<string>
+	<zlib.h>
+
+1481963618 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\stdtype.hpp
+	<cstdio>
+	<cstring>
+	<cstdarg>
+	<windows.h>
+
+1481953166 source:e:\users\jesse\documents\palm studios\sh3redux\source\sh3main.cpp
+	<SH3/stdtype.hpp>
+	<SH3/sh3math.hpp>
+	<iostream>
+
+1481953160 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\sh3math.hpp
+

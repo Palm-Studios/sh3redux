@@ -8,6 +8,8 @@ Module Name:
 Abstract:
         Defines some common types, static functions and macros commonly used.
 
+        All other headers should include this header!
+
 Author:
         Quaker762
 
@@ -18,6 +20,7 @@ Notes:
 Revision History:
         13-12-2016: Initial Revision [Quaker762]
         14-12-2016: Added messagebox( ) function [Quaker762]
+        17-12-2016: Added safedel( ) template function [Quaker762]
 
 --*/
 #ifndef STDTYPE_HPP_INCLUDED
@@ -48,7 +51,7 @@ Revision History:
 #define LOG_ERROR   2
 #define LOG_FATAL   3
 
-static inline void Log(int logType, char* str, ...)
+static inline void Log(int logType, const char* str, ...)
 {
     static int  firstOpen = 1;
 
@@ -158,6 +161,42 @@ static inline void messagebox(const char* title, const char* str, ...)
 
 typedef int SHSTATUS;
 
+
+
+
+
+
+
+
+
+
+
+
+/************************************************************/
+/*                  TEMPLATE FUNCTIONS                      */
+/*                                                          */
+/************************************************************/
+
+// Template to make sure if we delete, we aren't deleting
+// a nullptr (because segfaults are baddddd)
+template <class T> void safedelete(T* p)
+{
+    if(p != nullptr)
+    {
+        delete p;
+        p = nullptr;
+    }
+}
+
+// Same as above, but for arrays!
+template <class T> void safedelete_arr(T* p)
+{
+    if(p != nullptr)
+    {
+        delete[] p;
+        p = nullptr;
+    }
+}
 
 
 
