@@ -99,15 +99,16 @@ typedef struct
 class sh3_arc_section
 {
 public:
-    sh3_arc_section_header_t header;
+    sh3_arc_section_header_t    header;
+    sh3_arc_file_header_t**     fileEntries;
 
-    sh3_arc_section();
-    ~sh3_arc_section();
+    sh3_arc_section(){};
+    ~sh3_arc_section(){safedelete_arr(fileEntries);};
 
-    std::string m_name; // Name of this section
+    char* sectionName; // Name of this section
 
     // FUNCTION DECLARATIONS
-    void Load(gzFile fHandle);
+    int Load(gzFile fHandle);
 
 private:
     std::map<char*, uint32_t> fileList; // Maps a file (and its associated path) to it's section index
@@ -118,7 +119,7 @@ class sh3_arc
 public:
     sh3_arc_mft_header_t    s_fileHeader;   // First 16 bytes of the file. Contains the file signature
     sh3_arc_data_header_t   s_infoHeader;   // Information about the MFT
-    sh3_arc_section*        c_pSections;    // List of all the sections in arc.arc
+    sh3_arc_section*        c_pSections;  // List of all the sections in arc.arc
 
     sh3_arc(){};
     ~sh3_arc(){safedelete_arr(c_pSections);};

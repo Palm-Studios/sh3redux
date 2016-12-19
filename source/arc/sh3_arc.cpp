@@ -83,8 +83,10 @@ int sh3_arc::Load()
 
     c_pSections = new sh3_arc_section[s_infoHeader.sectionCount];
 
-    for(int i = 0; i < s_infoHeader.sectionCount; i++)
+    for(unsigned int i = 0; i < s_infoHeader.sectionCount; i++)
+    {
         c_pSections[i].Load(aHandle);
+    }
 
     gzclose(aHandle);
     return res;
