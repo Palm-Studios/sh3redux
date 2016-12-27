@@ -22,6 +22,9 @@ Revision History:
 
 #include <SH3/stdtype.hpp>
 #include <SH3/sh3math.hpp>
+#include <SH3/arc/sh3_arc_types.hpp>
+#include <SH3/system/sh3_window.hpp>
+#include <SH3/system/sh3_config.hpp>
 #include <iostream>
 
 /*++
@@ -40,7 +43,14 @@ Return Type:
 --*/
 SHSTATUS main(int argc, char** argv)
 {
-    std::cout << "Hello World!";
+    sh3_config config;
+
+    Log(LOG_INFO, "===SILENT HILL 3 REDUX===");
+    Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
+
+    config.Load();
+
+    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
     return SHTRUE;
 }
