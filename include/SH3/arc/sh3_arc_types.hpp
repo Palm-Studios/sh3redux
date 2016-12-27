@@ -42,8 +42,9 @@ Environment:
 Notes:
 
 Revision History:
-        14-12-2016: File Created [Quaker762]
-        17-12-2016: Finished adding base types [Quaker762]
+        14-12-2016: File Created                                        [Quaker762]
+        17-12-2016: Finished adding base types                          [Quaker762]
+        22-12-2016: Added sh3_arc::LoadFile() prototype                 [Quaker762]
 
 --*/
 #ifndef SH3_ARC_TYPES_HPP_INCLUDED
@@ -87,12 +88,17 @@ typedef struct
 typedef struct
 {
     uint16_t type;          // This is 3 (for a file entry)
-    uint16_t fileSize;      // Size of this file (in bytes)
+    uint16_t fileSize;      // Size of this file entry(in bytes)
     uint16_t arcIndex;      // Index of this file (in the .arc it is located in)
     uint16_t sectionIndex;  // Index of the current section we are in.
 } sh3_arc_file_header_t;
 
-
+// Actual file entry
+typedef struct
+{
+    sh3_arc_file_header_t   header;     // File info header
+    char*                   fname;      // File path and name (plus ext and NULL terminator)
+} sh3_arc_file_entry_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,18 +106,19 @@ class sh3_arc_section
 {
 public:
     sh3_arc_section_header_t    header;
-    sh3_arc_file_header_t**     fileEntries;
+    sh3_arc_file_entry_t**      fileEntries;
 
     sh3_arc_section(){};
     ~sh3_arc_section(){safedelete_arr(fileEntries);};
 
     char* sectionName; // Name of this section
 
+    // Should this be private?!?!
+    std::map<char*, uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
+
     // FUNCTION DECLARATIONS
     int Load(gzFile fHandle);
 
-private:
-    std::map<char*, uint32_t> fileList; // Maps a file (and its associated path) to it's section index
 };
 
 class sh3_arc
@@ -119,17 +126,14 @@ class sh3_arc
 public:
     sh3_arc_mft_header_t    s_fileHeader;   // First 16 bytes of the file. Contains the file signature
     sh3_arc_data_header_t   s_infoHeader;   // Information about the MFT
-    sh3_arc_section*        c_pSections;  // List of all the sections in arc.arc
+    sh3_arc_section*        c_pSections;    // List of all the sections in arc.arc
 
     sh3_arc(){};
     ~sh3_arc(){safedelete_arr(c_pSections);};
 
-    std::string relPath; // Path relative to the executable
-
     // FUNCTION DECLARATIONS
     int Load();
-
-private:
+    int LoadFile(char* filename, uint8_t* buffer);
 
 };
 

@@ -32,6 +32,7 @@ Revision History:
 
     // Cross platform ;)
 #ifdef _WIN32
+    #define WIN32_LEAN_AND_MEAN
     #include <windows.h>
 #elif __APPLE__
 
@@ -50,69 +51,14 @@ Revision History:
 #define LOG_WARN    1
 #define LOG_ERROR   2
 #define LOG_FATAL   3
+#define LOG_NONE    4
 
-static inline void Log(int logType, const char* str, ...)
-{
-    static int  firstOpen = 1;
-
-    const char* filename = "log.txt";
-    char        buff[4096];
-    FILE*       logfile = NULL;
-    va_list     args;
-    unsigned int         res;
-
-    if(firstOpen)
-    {
-        if((logfile = fopen(filename, "w+")) == NULL)
-        {
-            fprintf(stderr, "Unable to open a handle to %s", filename);
-            return;
-        }
-
-        firstOpen = 0;
-    }
-
-    switch(logType)
-    {
-    case LOG_INFO:
-        strcpy(buff, "[info]");
-        break;
-
-    case LOG_WARN:
-        strcpy(buff, "[warning]");
-        break;
-
-    case LOG_ERROR:
-        strcpy(buff, "[error]");
-        break;
-
-    case LOG_FATAL:
-        strcpy(buff, "[fatal]");
-        break;
-
-    default:
-        break;
-    }
-
-    if((logfile = fopen(filename, "a+")) == NULL) // Open the file to append, so we don't wipe the entire contents!
-    {
-        fprintf(stderr, "Unable to open a handle to %s", filename);
-        return;
-    }
-
-    // Get our variable args, like %x, %s etcetc
-    va_start(args, str);
-    vsprintf(buff, str, args);
-    va_end(args);
-
-    if((res = fwrite(buff, 1, strlen(buff), logfile)) != strlen(buff))
-    {
-        fprintf(stderr, "Unable to write to flush info log!");
-        return;
-    }
-
-    fclose(logfile);
-}
+/*
+    We need this here to avoid the stupid overwriting bug we get (well, not really
+    a bug because each file gets its own copy of the static function) so we stick an
+    external defintion here and implement in another file!! :^]
+*/
+extern void Log(int logType, const char* str, ...);
 
 static inline void messagebox(const char* title, const char* str, ...)
 {
@@ -154,7 +100,7 @@ static inline void messagebox(const char* title, const char* str, ...)
 --**/
 
 #ifdef _WIN32
-    #define BADALLOC (void*)0xBAADF00D; // This is the null
+    #define BADALLOC (void*)0xBAADF00D; // This is the nullptr on Windows Systems (I think...)
 #elif
     #define BADALLOC (void*)0; // Not sure what Linux/OSX define this as...
 #endif

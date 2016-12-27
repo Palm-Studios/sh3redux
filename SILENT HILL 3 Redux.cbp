@@ -56,7 +56,7 @@
 				</Compiler>
 				<Linker>
 					<Add option="-m64" />
-					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
+					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew64" />
 					<Add directory="lib/x86_64/lib" />
 				</Linker>
 			</Target>
@@ -75,7 +75,7 @@
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m64" />
-					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
+					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew64" />
 					<Add directory="lib/x86_64/lib" />
 				</Linker>
 			</Target>
@@ -88,11 +88,16 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="include/SH3/arc/sh3_arc_section.hpp" />
 		<Unit filename="include/SH3/arc/sh3_arc_types.hpp" />
-		<Unit filename="include/SH3/sh3_arc_section.hpp" />
+		<Unit filename="include/SH3/graphics/sh3_model.hpp" />
 		<Unit filename="include/SH3/sh3arch.hpp" />
 		<Unit filename="include/SH3/sh3math.hpp" />
+		<Unit filename="include/SH3/sh3util.hpp" />
 		<Unit filename="include/SH3/stdtype.hpp" />
+		<Unit filename="include/SH3/system/sh3_config.hpp" />
+		<Unit filename="include/SH3/system/sh3_glcontext.hpp" />
+		<Unit filename="include/SH3/system/sh3_window.hpp" />
 		<Unit filename="include/SH3/types/vertex.hpp" />
 		<Unit filename="resource32.rc">
 			<Option compilerVar="WINDRES" />
@@ -109,6 +114,10 @@
 		<Unit filename="source/arc/sh3_arc.cpp" />
 		<Unit filename="source/arc/sh3_arc_section.cpp" />
 		<Unit filename="source/sh3main.cpp" />
+		<Unit filename="source/system/sh3_config.cpp" />
+		<Unit filename="source/system/sh3_glcontext.cpp" />
+		<Unit filename="source/system/sh3_log.cpp" />
+		<Unit filename="source/system/sh3_window.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
