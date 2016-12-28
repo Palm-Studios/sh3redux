@@ -33,10 +33,10 @@ public:
     ~sh3_config(){};
 
     int Load();
-    int GetOptionValue(const char* option);
+    int GetOptionValue(std::string option);
 
 private:
-    std::map<const char*, int> values;
+    std::map<std::string, int> values;
 };
 
 

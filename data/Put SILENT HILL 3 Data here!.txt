@@ -1,1 +1,1 @@
-All .ard files need to go IN THIS DIRECTORY!
+All .arc files need to go IN THIS DIRECTORY!

@@ -20,6 +20,10 @@ Revision History:
         17-12-2016: Started an implementation of Load( )                        [Quaker762]
         22-12-2016: Finished Implementation of Load( )                          [Quaker762]
                     Started an implementation of LoadFile( )
+        27-12-2016: Reworked LoadFile( )                                        [Quaker762]
+                    Fixed an issue where program would segfault due to not finishing the
+                    for loop and then trying to read from the handle
+                    Added a few constants (no magic numbers in THIS Dojo!)
 
 --*/
 #include <SH3/arc/sh3_arc_types.hpp>
@@ -126,15 +130,18 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
             index = c_pSections[i].fileList[filename];
             if((sectionHandle = fopen(c_pSections[i].sectionName, "rb")) == NULL)
             {
-                Log(LOG_FATAL, "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section %s!", c_pSections[i].sectionName);
-                messagebox("Fatal Error", "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section %s!", c_pSections[i].sectionName);
-                return 0;
+                Log(LOG_FATAL, "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName);
+                messagebox("Fatal Error", "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName);
+                exit(-1);
             }
 
             break;
         }
+    }
 
-        return -1;
+    if(i >= s_infoHeader.sectionCount - 1) // Check for the end of the
+    {
+        return ARC_FILE_NOT_FOUND;
     }
 
     /*
@@ -147,7 +154,12 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
 
     if(header.magic != ARCSECTION_MAGIC) // Validate the magic number to make sure we're really reading a .arc file!
     {
-        Log(LOG_ERROR, "sh3_arc::LoadFile( ): Sub arc magic incorrect!!!");
+        if(header.magic != ARCSECTION_MAGIC)
+        {
+            Log(LOG_FATAL, "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName);
+            messagebox("Fatal Error", "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName);
+            exit(-1);
+        }
     }
 
     fseek(sectionHandle, index * sizeof(sh3_subarc_file_t), SEEK_CUR); // Seek to the file entry
