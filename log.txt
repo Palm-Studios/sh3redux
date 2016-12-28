@@ -1,4 +1,3 @@
 ===SILENT HILL 3 REDUX===
 Copyright 2016-2017 Palm Studios
 
-E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, tex!
