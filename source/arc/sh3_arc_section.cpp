@@ -65,11 +65,11 @@ int sh3_arc_section::Load(gzFile fHandle)
 
         file->fname = new char[file->header.fileSize - sizeof(sh3_arc_file_header_t)];
         gzread(fHandle, file->fname, file->header.fileSize - sizeof(sh3_arc_file_header_t));
-        Log(LOG_INFO, "Read file: %s", file->fname);
+        //Log(LOG_INFO, "Read file: %s", file->fname);
 
         fileEntries[i] = file;
         fileList[file->fname] = file->header.arcIndex; // Map the file name to its subarc index
-        Log(LOG_INFO, "Added file to file list!");
+        //Log(LOG_INFO, "Added file to file list!");
     }
 
     return res;

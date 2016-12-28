@@ -1,0 +1,4 @@
+===SILENT HILL 3 REDUX===
+Copyright 2016-2017 Palm Studios
+
+E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!

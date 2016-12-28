@@ -13,14 +13,18 @@ Abstract:
 
                     arc.arc (MFT)
                         |
-                        | (File name translation to section:offset)
+                        | (File name translation to section name)
             /-----/-----|-----\-----\
+           |     |      |      |     |
         pic.arc  chrbg.arc msg.arc tex.arc
+           |         |        |       |    (Translation to section offset)
+           |         |        |       |
+          File      File     File    File
 
         The files branching from the MFT are NOT compressed, however, arc.arc is compressed using
         gzip compression format. arc.arc basically acts as a Master File Table (or rather a root directory).
 
-        It is probably a good idea to (at launch) load the MFT and map each file in a vector<>
+        It is probably a good idea to (at launch) load the MFT and map each file in a map<>
         so that we can quickly look up and load a file in a section without having to transverse the MFT everytime,
         though it can be made quicker by skipping sections (which is most likely how Konami implemented it).
 
@@ -42,9 +46,11 @@ Environment:
 Notes:
 
 Revision History:
-        14-12-2016: File Created                                        [Quaker762]
-        17-12-2016: Finished adding base types                          [Quaker762]
-        22-12-2016: Added sh3_arc::LoadFile() prototype                 [Quaker762]
+        14-12-2016: File Created                                            [Quaker762]
+        17-12-2016: Finished adding base types                              [Quaker762]
+        22-12-2016: Added sh3_arc::LoadFile() prototype                     [Quaker762]
+        27-12-2016: Added call to Load( ) to the default constructor        [Quaker762]
+                    of sh3_arc()
 
 --*/
 #ifndef SH3_ARC_TYPES_HPP_INCLUDED
@@ -56,7 +62,9 @@ Revision History:
 #include <string>
 #include <zlib.h>
 
-#define ARCARC_MAGIC 0x20030417
+#define ARCARC_MAGIC        0x20030417
+#define ARC_FILE_NOT_FOUND  -1
+#define ARC_NUM_SECTIONS    30
 
 //////////////////////////////FILE AND TYPE HEADERS////////////////////////////////////////////////
 
@@ -114,7 +122,7 @@ public:
     char* sectionName; // Name of this section
 
     // Should this be private?!?!
-    std::map<char*, uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
+    std::map<std::string, uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
 
     // FUNCTION DECLARATIONS
     int Load(gzFile fHandle);
@@ -128,7 +136,7 @@ public:
     sh3_arc_data_header_t   s_infoHeader;   // Information about the MFT
     sh3_arc_section*        c_pSections;    // List of all the sections in arc.arc
 
-    sh3_arc(){};
+    sh3_arc(){Load();};
     ~sh3_arc(){safedelete_arr(c_pSections);};
 
     // FUNCTION DECLARATIONS
