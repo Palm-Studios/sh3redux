@@ -43,12 +43,14 @@ Return Type:
 --*/
 SHSTATUS main(int argc, char** argv)
 {
-    sh3_config config;
-
     Log(LOG_INFO, "===SILENT HILL 3 REDUX===");
     Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
 
-    config.Load();
+    sh3_config config;
+    sh3_arc arc;
+
+    arc.Load();
+    arc.LoadFile("data/eff_tex/fire00_tr.pic", NULL);
 
     sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 

@@ -8,7 +8,7 @@ Module Name:
 Abstract:
         Defines some common types, static functions and macros commonly used.
 
-        All other headers should include this header!
+        All other headers/source files should include this header!
 
 Author:
         Quaker762
