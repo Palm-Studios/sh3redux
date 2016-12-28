@@ -1212,20 +1212,20 @@
 1482906689 source:e:\users\jesse\documents\palm studios\sh3redux\source\arc\sh3_arc_section.cpp
 	<SH3/arc/sh3_arc_types.hpp>
 
-1482906550 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\arc\sh3_arc_types.hpp
+1482920733 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\arc\sh3_arc_types.hpp
 	<SH3/stdtype.hpp>
 	<cstdint>
 	<map>
 	<string>
 	<zlib.h>
 
-1482669696 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\stdtype.hpp
+1482920338 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\stdtype.hpp
 	<cstdio>
 	<cstring>
 	<cstdarg>
 	<windows.h>
 
-1482906185 source:e:\users\jesse\documents\palm studios\sh3redux\source\sh3main.cpp
+1482924232 source:e:\users\jesse\documents\palm studios\sh3redux\source\sh3main.cpp
 	<SH3/stdtype.hpp>
 	<SH3/sh3math.hpp>
 	<SH3/arc/sh3_arc_types.hpp>
@@ -1233,9 +1233,9 @@
 	<SH3/system/sh3_config.hpp>
 	<iostream>
 
-1481953160 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\sh3math.hpp
+1482924702 e:\users\jesse\documents\palm studios\sh3redux\include\sh3\sh3math.hpp
 
-1482906653 source:e:\users\jesse\documents\palm studios\sh3redux\source\arc\sh3_arc.cpp
+1482920031 source:e:\users\jesse\documents\palm studios\sh3redux\source\arc\sh3_arc.cpp
 	<SH3/arc/sh3_arc_types.hpp>
 	<SH3/arc/sh3_arc_section.hpp>
 

@@ -27,6 +27,11 @@ Revision History:
 #include <SH3/system/sh3_config.hpp>
 #include <iostream>
 
+typedef struct
+{
+    float x, y, z, w;
+} test;
+
 /*++
 
 Routine Description:
@@ -46,13 +51,22 @@ SHSTATUS main(int argc, char** argv)
     Log(LOG_INFO, "===SILENT HILL 3 REDUX===");
     Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
 
-    sh3_config config;
-    sh3_arc arc;
+    test t1 = {1, 2, 3, 4};
+    test t2 = {4, 5, 6, 7};
+    test ret;
 
-    arc.Load();
-    arc.LoadFile("data/eff_tex/fire00_tr.pic", NULL);
+    ret = __sse_vector_add(t1, t2);
 
-    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
+    std::cout << ret.x;
+
+//    sh3_config config;
+//    sh3_arc arc;
+//
+//    arc.Load();
+//    arc.LoadFile("data/eff_tex/fire00_tr.pic", NULL);
+//
+//    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
+
 
     return SHTRUE;
 }
