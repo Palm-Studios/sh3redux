@@ -101,7 +101,7 @@ static inline void messagebox(const char* title, const char* str, ...)
 
 #ifdef _WIN32
     #define BADALLOC (void*)0xBAADF00D; // This is the nullptr on Windows Systems (I think...)
-#elif
+#else
     #define BADALLOC (void*)0; // Not sure what Linux/OSX define this as...
 #endif
 
