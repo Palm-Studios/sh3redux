@@ -67,7 +67,7 @@ static inline void messagebox(const char* title, const char* str, ...)
 
     // Get our variable args, like %x, %s etcetc
     va_start(args, str);
-    vsprintf(buff, str, args);
+    vsnprintf(buff, sizeof(buff), str, args);
     va_end(args);
 
     // Cross platform ;)
