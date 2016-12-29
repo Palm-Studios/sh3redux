@@ -75,7 +75,7 @@ template<typename T> static T __sse_vector_add(const T* v1, const T* v2)
     #ifdef SH3_64 // 64-bit build
     __asm__
     (
-
+        ""
     );
     #else // 32-bit build
     __asm__
@@ -112,7 +112,7 @@ template<typename T> static T __sse_vector_muls(const T* v1, const T* v2)
     #ifdef SH3_64 // 64-bit build
     __asm__
     (
-
+        ""
     );
     #else // 32-bit build
     __asm__
