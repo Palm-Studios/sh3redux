@@ -52,12 +52,12 @@ SHSTATUS main(int argc, char** argv)
     Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
 
     test t1 = {1, 2, 3, 4};
-    test t2 = {4, 5, 6, 7};
+    test t2 = {0, 2, 0, 0};
     test ret;
 
-    ret = __sse_vector_add(t1, t2);
+    ret = __sse_vector_muls(&t1, &t2);
 
-    std::cout << ret.x;
+    printf("%f", ret.y);
 
 //    sh3_config config;
 //    sh3_arc arc;

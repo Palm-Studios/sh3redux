@@ -24,6 +24,8 @@ Revision History:
 #ifndef SH3MATH_HPP_INCLUDED
 #define SH3MATH_HPP_INCLUDED
 
+#include <iostream>
+
 /*++
 
 Routine Description:
@@ -66,35 +68,66 @@ Return Type:
         typename T
 
 --*/
-template<typename T> static T __sse_vector_add(const T& v1, const T& v2)
+template<typename T> static T __sse_vector_add(const T* v1, const T* v2)
 {
-    T ret = {0, 0, 0, 0}; // This is pushed onto the stack first (ESP+12)
+    T ret; // This is pushed onto the stack first (ESP+12)
 
+    #ifdef SH3_64 // 64-bit build
     __asm__
     (
-        "MOV EBP, ESP\n"
-        "MOV EAX, [EBP+4]\n"               // Store pointer to v1 in EBX
-        "MOV EBX, [EBP+8]\n"               // Store pointer to v2 in EBX
+
+    );
+    #else // 32-bit build
+    __asm__
+    (
+        "MOV EAX, [ESP+12]\n"        // EAX contains pointer to v1
+        "MOV EBX, [ESP+16]\n"        // EBX contains pointer to v2
         "MOVUPS XMM0, [EAX]\n"
         "MOVUPS XMM1, [EBX]\n"
-        "ADDPS XMM0, XMM1\n"
-        "MOVUPS [ESP+12], XMM0\n"
+        "MULPS XMM0, XMM1\n"
+        "MOVUPS [ESP+8], XMM0"
     );
+    #endif
 
     return ret;
 }
 
-static int __test_asm(int x)
-{
-    int y = 0;
+/*++
 
+Routine Description:
+        Multiply a vector by a scalar using SSE3 Registers and operations
+
+Arguments:
+        T& v1 - Reference to the first vector/vertex
+        flt x - Scalar
+
+Return Type:
+        typename T
+
+--*/
+template<typename T> static T __sse_vector_muls(const T* v1, const T* v2)
+{
+    T ret; // This is pushed onto the stack first (ESP+12)
+
+    #ifdef SH3_64 // 64-bit build
     __asm__
     (
-        "movw EAX, [EBP+8]\n"   // x is here
-        "movw [ESP+12], EAX"    // y is here
-    );
 
-    return y;
+    );
+    #else // 32-bit build
+    __asm__
+    (
+        "MOV EAX, [ESP+12]\n"        // EAX contains pointer to v1
+        "MOV EBX, [ESP+16]\n"        // EBX contains pointer to v2
+        "MOV ECX, [ESP+8]\n"
+        "MOVUPS XMM0, [EAX]\n"
+        "MOVUPS XMM1, [EBX]\n"
+        "MULPS XMM0, XMM1\n"
+        "MOVUPS [ECX], XMM0"
+    );
+    #endif
+
+    return ret;
 }
 
 #endif // SH3MATH_HPP_INCLUDED
