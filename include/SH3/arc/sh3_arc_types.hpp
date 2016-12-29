@@ -117,7 +117,7 @@ public:
     sh3_arc_file_entry_t**      fileEntries;
 
     sh3_arc_section(){};
-    ~sh3_arc_section(){safedelete_arr(fileEntries);};
+    ~sh3_arc_section(){delete[] fileEntries;};
 
     char* sectionName; // Name of this section
 
@@ -137,7 +137,7 @@ public:
     sh3_arc_section*        c_pSections;    // List of all the sections in arc.arc
 
     sh3_arc(){Load();};
-    ~sh3_arc(){safedelete_arr(c_pSections);};
+    ~sh3_arc(){delete[] c_pSections;};
 
     // FUNCTION DECLARATIONS
     int Load();
