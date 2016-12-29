@@ -22,11 +22,8 @@ Revision History:
                     Added a new type, LOG_NONE
 
 --*/
-#define LOG_INFO    0
-#define LOG_WARN    1
-#define LOG_ERROR   2
-#define LOG_FATAL   3
-#define LOG_NONE    4
+
+#include "SH3/stdtype.hpp"
 
 #include <cstdio>
 #include <cstring>
@@ -34,67 +31,52 @@ Revision History:
 
 void Log(int logType, const char* str, ...)
 {
-    static int  firstOpen = 1;
+    static const char* filename = "log.txt";
+    static FILE*       logfile  = nullptr;
 
-    const char* filename = "log.txt";
-    char        buff[4096];
-    FILE*       logfile = NULL;
-    va_list     args;
-    unsigned int         res;
+    va_list args;
 
-    if(firstOpen)
+    if(!logfile)
     {
-        if((logfile = fopen(filename, "w+")) == NULL)
+        if(!(logfile = fopen(filename, "w+")))
         {
             fprintf(stderr, "Unable to open a handle to %s", filename);
-            return;
+            // fallback to stderr then
+            logfile = stderr;
         }
-
-        firstOpen = 0;
     }
 
     switch(logType)
     {
-    case LOG_NONE: // Lmao
-        break;
-
     case LOG_INFO:
-        strcpy(buff, "[info]");
+        fputs("[info] ", logfile);
         break;
 
     case LOG_WARN:
-        strcpy(buff, "[warning]");
+        fputs("[warning] ", logfile);
         break;
 
     case LOG_ERROR:
-        strcpy(buff, "[error]");
+        fputs("[error] ", logfile);
         break;
 
     case LOG_FATAL:
-        strcpy(buff, "[fatal]");
+        fputs("[fatal] ", logfile);
         break;
 
+    case LOG_NONE: // Lmao
     default:
         break;
     }
 
-    if((logfile = fopen(filename, "a+")) == NULL) // Open the file to append, so we don't wipe the entire contents!
-    {
-        fprintf(stderr, "Unable to open a handle to %s", filename);
-        return;
-    }
-
-    // Get our variable args, like %x, %s etcetc
     va_start(args, str);
-    vsprintf(buff, str, args);
-    va_end(args);
-
-    if((res = fwrite(buff, 1, strlen(buff), logfile)) != strlen(buff))
+    if(vfprintf(logfile, str, args) < 0)
     {
         fprintf(stderr, "Unable to write to flush info log!");
-        return;
     }
-
-    fprintf(logfile, "\n"); // Add a new line!
-    fclose(logfile);
+    else
+    {
+        fputc('\n', logfile);
+    }
+    va_end(args);
 }
