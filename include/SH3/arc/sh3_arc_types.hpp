@@ -60,6 +60,7 @@ Revision History:
 #include <cstdint>
 #include <map>
 #include <string>
+#include <vector>
 #include <zlib.h>
 
 #define ARCARC_MAGIC        0x20030417
@@ -115,11 +116,11 @@ typedef struct
 class sh3_arc_section
 {
 public:
-    sh3_arc_section_header_t    header;
-    sh3_arc_file_entry_t**      fileEntries;
+    sh3_arc_section_header_t          header;
+    std::vector<sh3_arc_file_entry_t> fileEntries;
 
     sh3_arc_section(){};
-    ~sh3_arc_section(){delete[] fileEntries;};
+    ~sh3_arc_section(){};
 
     std::string sectionName; // Name of this section
 
@@ -134,12 +135,12 @@ public:
 class sh3_arc
 {
 public:
-    sh3_arc_mft_header_t    s_fileHeader;   // First 16 bytes of the file. Contains the file signature
-    sh3_arc_data_header_t   s_infoHeader;   // Information about the MFT
-    sh3_arc_section*        c_pSections;    // List of all the sections in arc.arc
+    sh3_arc_mft_header_t         s_fileHeader;   // First 16 bytes of the file. Contains the file signature
+    sh3_arc_data_header_t        s_infoHeader;   // Information about the MFT
+    std::vector<sh3_arc_section> c_sections;    // List of all the sections in arc.arc
 
     sh3_arc(){Load();};
-    ~sh3_arc(){delete[] c_pSections;};
+    ~sh3_arc(){};
 
     // FUNCTION DECLARATIONS
     bool Load();
