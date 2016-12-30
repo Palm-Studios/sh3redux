@@ -68,5 +68,5 @@ SHSTATUS main(int argc, char** argv)
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
 
-    return SHTRUE;
+    return 0;
 }
