@@ -28,6 +28,7 @@ Revision History:
 --*/
 #include <SH3/arc/sh3_arc_types.hpp>
 #include <SH3/arc/sh3_arc_section.hpp>
+#include <SH3/arc/sh3_arc_file.hpp>
 
 const char* defaultPath = "data/arc.arc";
 
@@ -42,15 +43,14 @@ Arguments:
         path - Path to arc.arc
 
 Return Type:
-        int - Number of bytes read, otherwise exits
+        bool
 
 --*/
-int sh3_arc::Load()
+bool sh3_arc::Load()
 {
-    gzFile  aHandle = NULL;
-    int     res;
+    sh3_arc_file file(defaultPath);;
 
-    if((aHandle = gzopen(defaultPath, "rb")) == NULL) // Open a handle to arc.arc
+    if(!file.is_open())
     {
         Log(LOG_FATAL, "E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
         messagebox("Fatal Error", "E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
@@ -58,7 +58,7 @@ int sh3_arc::Load()
     }
 
     // Now, we read in the first 16 bytes (the header) and make sure this really is arc.arc!
-    if((res = gzread(aHandle, (voidp)&s_fileHeader, sizeof(sh3_arc_mft_header_t))) != sizeof(sh3_arc_mft_header_t))
+    if(file.ReadObject(s_fileHeader) != sh3_arc_file::read_result::Success)
     {
         Log(LOG_FATAL, "E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
         messagebox("Fatal Error", "E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
@@ -81,7 +81,7 @@ int sh3_arc::Load()
        each section (or as I like to call them, sub arcs).
     */
 
-    if((res = gzread(aHandle, (voidp)&s_infoHeader, sizeof(sh3_arc_data_header_t))) != sizeof(sh3_arc_data_header_t))
+    if(file.ReadObject(s_infoHeader) != sh3_arc_file::read_result::Success)
     {
         Log(LOG_FATAL, "E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
         messagebox("Fatal Error", "E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
@@ -92,11 +92,10 @@ int sh3_arc::Load()
 
     for(unsigned int i = 0; i < s_infoHeader.sectionCount; i++)
     {
-        c_pSections[i].Load(aHandle);
+        c_pSections[i].Load(file);
     }
 
-    gzclose(aHandle);
-    return res;
+    return true;
 }
 
 /*++
@@ -128,10 +127,10 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
         else // We've found it, get some info we need!
         {
             index = c_pSections[i].fileList[filename];
-            if((sectionHandle = fopen(c_pSections[i].sectionName, "rb")) == NULL)
+            if((sectionHandle = fopen(c_pSections[i].sectionName.c_str(), "rb")) == NULL)
             {
-                Log(LOG_FATAL, "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName);
-                messagebox("Fatal Error", "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName);
+                Log(LOG_FATAL, "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
+                messagebox("Fatal Error", "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
                 exit(-1);
             }
 
@@ -156,8 +155,8 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
     {
         if(header.magic != ARCSECTION_MAGIC)
         {
-            Log(LOG_FATAL, "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName);
-            messagebox("Fatal Error", "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName);
+            Log(LOG_FATAL, "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
+            messagebox("Fatal Error", "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
             exit(-1);
         }
     }
