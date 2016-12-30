@@ -30,6 +30,10 @@ Revision History:
 #include <SH3/arc/sh3_arc_section.hpp>
 #include <SH3/arc/sh3_arc_file.hpp>
 
+#include <algorithm>
+#include <iterator>
+#include <utility>
+
 const char* defaultPath = "data/arc.arc";
 
 //////////////////////////////////////////////////////////////////////////////
@@ -80,11 +84,11 @@ bool sh3_arc::Load()
         die("E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
     }
 
-    c_pSections = new sh3_arc_section[s_infoHeader.sectionCount];
+    c_sections.resize(s_infoHeader.sectionCount);
 
-    for(unsigned int i = 0; i < s_infoHeader.sectionCount; i++)
+    for(sh3_arc_section& section : c_sections)
     {
-        c_pSections[i].Load(file);
+        section.Load(file);
     }
 
     return true;
@@ -104,33 +108,35 @@ Return Type:
 --*/
 int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
 {
-    int         i;
-    int         index;
-    uint8_t*    buff;
-    FILE*       sectionHandle;
+    uint32_t         index;
+    uint8_t*         buff;
+    FILE*            sectionHandle;
+    sh3_arc_section* section = nullptr;
 
     // Find what section the file is in
-    for(i = 0; i < s_infoHeader.sectionCount; i++)
+    for(sh3_arc_section& candidate : c_sections)
     {
-        if(c_pSections[i].fileList.count(filename) != 1)
+        auto files = candidate.fileList.equal_range(filename);
+        if(files.first == files.second)
         {
             continue; // No filename found in this section, continue over
         }
-        else // We've found it, get some info we need!
+        else // We've found it
         {
-            index = c_pSections[i].fileList[filename];
-            if((sectionHandle = fopen(c_pSections[i].sectionName.c_str(), "rb")) == NULL)
-            {
-                die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
-            }
-
+            section = &candidate;
+            index = files.first->second;
             break;
         }
     }
 
-    if(i >= s_infoHeader.sectionCount - 1) // Check for the end of the
+    if(!section)
     {
         return ARC_FILE_NOT_FOUND;
+    }
+
+    if((sectionHandle = fopen(section->sectionName.c_str(), "rb")) == nullptr)
+    {
+        die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->sectionName.c_str());
     }
 
     /*
@@ -143,10 +149,7 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
 
     if(header.magic != ARCSECTION_MAGIC) // Validate the magic number to make sure we're really reading a .arc file!
     {
-        if(header.magic != ARCSECTION_MAGIC)
-        {
-            die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
-        }
+        die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", section->sectionName.c_str());
     }
 
     fseek(sectionHandle, index * sizeof(sh3_subarc_file_t), SEEK_CUR); // Seek to the file entry
