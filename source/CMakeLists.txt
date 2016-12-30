@@ -12,6 +12,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"sh3main.cpp"
 	
 	"arc/sh3_arc.cpp"
+	"arc/sh3_arc_file.cpp"
 	"arc/sh3_arc_section.cpp"
 	
 	"system/sh3_config.cpp"

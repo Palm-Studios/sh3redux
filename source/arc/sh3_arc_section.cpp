@@ -20,6 +20,7 @@ Revision History:
 
 --*/
 #include <SH3/arc/sh3_arc_types.hpp>
+#include <SH3/arc/sh3_arc_file.hpp>
 
 /*++
 
@@ -27,32 +28,30 @@ Routine Description:
         Load a section from arc.arc
 
 Arguments:
-        fHandle - Handle to arc.arc
+        arcFile - a sh3_arc_file
 
 Return Type:
-        int
+        bool
 
 --*/
-int sh3_arc_section::Load(gzFile fHandle)
-{
-    int res;
 
-    if(fHandle == nullptr || fHandle == NULL)
+bool sh3_arc_section::Load(sh3_arc_file& arcFile)
+{
+    if(!arcFile.is_open())
     {
         Log(LOG_FATAL, "E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
         messagebox("Fatal Error", "E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
         exit(-1);
     }
 
-    if((res = gzread(fHandle, (voidp)&header, sizeof(sh3_arc_section_header_t))) != sizeof(sh3_arc_section_header_t))
+    if(arcFile.ReadObject(header) != sh3_arc_file::read_result::Success)
     {
         Log(LOG_FATAL, "E00006: sh3_arc_section::Load( ): Invalid read of arc.arc section!");
         messagebox("Fatal Error", "E00006: sh3_arc_section::Load( ): Invalid read of arc.arc section!");
         exit(-1);
     }
 
-    sectionName = new char[header.hsize - sizeof(sh3_arc_section_header_t)]; // Allocate some memory for the section name
-    gzread(fHandle, (voidp)sectionName, header.hsize - sizeof(sh3_arc_section_header_t)); // No error checking, how naughty ;)
+    arcFile.ReadString(sectionName, header.hsize - sizeof(header));
 
     // We have now loaded information about the section, so we can start
     // reading in all the files located in it (not in full, obviously...)
@@ -61,16 +60,15 @@ int sh3_arc_section::Load(gzFile fHandle)
     for(unsigned int i = 0; i < header.numFiles; i++)
     {
         sh3_arc_file_entry_t* file = new sh3_arc_file_entry_t;
-        gzread(fHandle, (voidp)&file->header, sizeof(sh3_arc_file_header_t));
+        arcFile.ReadObject(file->header);
 
-        file->fname = new char[file->header.fileSize - sizeof(sh3_arc_file_header_t)];
-        gzread(fHandle, file->fname, file->header.fileSize - sizeof(sh3_arc_file_header_t));
-        //Log(LOG_INFO, "Read file: %s", file->fname);
+        arcFile.ReadString(file->fname, file->header.fileSize - sizeof(file->header));
+        //Log(LOG_INFO, "Read file: %s", file->fname.c_str());
 
         fileEntries[i] = file;
         fileList[file->fname] = file->header.arcIndex; // Map the file name to its subarc index
         //Log(LOG_INFO, "Added file to file list!");
     }
 
-    return res;
+    return true;
 }
