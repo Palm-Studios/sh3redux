@@ -51,18 +51,16 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
 
     // We have now loaded information about the section, so we can start
     // reading in all the files located in it (not in full, obviously...)
-    fileEntries = new sh3_arc_file_entry_t*[header.numFiles];
+    fileEntries.resize(header.numFiles);
 
-    for(unsigned int i = 0; i < header.numFiles; i++)
+    for(sh3_arc_file_entry_t& file : fileEntries)
     {
-        sh3_arc_file_entry_t* file = new sh3_arc_file_entry_t;
-        arcFile.ReadObject(file->header);
+        arcFile.ReadObject(file.header);
 
-        arcFile.ReadString(file->fname, file->header.fileSize - sizeof(file->header));
+        arcFile.ReadString(file.fname, file.header.fileSize - sizeof(file.header));
         //Log(LOG_INFO, "Read file: %s", file->fname.c_str());
 
-        fileEntries[i] = file;
-        fileList[file->fname] = file->header.arcIndex; // Map the file name to its subarc index
+        fileList[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
         //Log(LOG_INFO, "Added file to file list!");
     }
 
