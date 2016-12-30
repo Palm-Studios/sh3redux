@@ -32,7 +32,7 @@ class sh3_window
 {
 public:
     sh3_window(int width, int height, std::string title);
-    ~sh3_window(){safedelete(context);}
+    ~sh3_window(){delete context;}
 
     SDL_Window*     hwnd;
 
