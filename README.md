@@ -4,10 +4,10 @@ SILENT HILL 3 Engine Remake in OpenGL and C++
 ## Building
 Currently, the libraries required to build sh3redux are as follows:
 
-+SDL2
-+GLEW
-+FTGL and Freetype
-+zlib
+1.SDL2
+2.GLEW
+3.FTGL and Freetype
+4.zlib
 
 Once you have the required libraries, there are two ways to build:
 
