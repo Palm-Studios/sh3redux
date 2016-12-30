@@ -30,7 +30,8 @@
 *.layout
 *.res
 
-
+#Logging
+log.txt
 
 
 ### All the settings in this below were came from GitHub official GitIgnore repo
