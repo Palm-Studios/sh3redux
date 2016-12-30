@@ -66,6 +66,8 @@ Revision History:
 #define ARC_FILE_NOT_FOUND  -1
 #define ARC_NUM_SECTIONS    30
 
+struct sh3_arc_file;
+
 //////////////////////////////FILE AND TYPE HEADERS////////////////////////////////////////////////
 
 // Type check header (an unfortunate waste of space)
@@ -105,7 +107,7 @@ typedef struct
 typedef struct
 {
     sh3_arc_file_header_t   header;     // File info header
-    char*                   fname;      // File path and name (plus ext and NULL terminator)
+    std::string             fname;      // File path and name (plus ext and NULL terminator)
 } sh3_arc_file_entry_t;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,13 +121,13 @@ public:
     sh3_arc_section(){};
     ~sh3_arc_section(){delete[] fileEntries;};
 
-    char* sectionName; // Name of this section
+    std::string sectionName; // Name of this section
 
     // Should this be private?!?!
     std::map<std::string, uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
 
     // FUNCTION DECLARATIONS
-    int Load(gzFile fHandle);
+    bool Load(sh3_arc_file& fHandle);
 
 };
 
@@ -140,7 +142,7 @@ public:
     ~sh3_arc(){delete[] c_pSections;};
 
     // FUNCTION DECLARATIONS
-    int Load();
+    bool Load();
     int LoadFile(char* filename, uint8_t* buffer);
 
 };
