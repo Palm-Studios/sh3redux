@@ -25,7 +25,7 @@ Revision History:
 #include <vector>
 
 sh3_arc_file::sh3_arc_file(const std::string& path)
-    :gzHandle(gzopen(path.c_str(), "rb"), gzclose)
+    :gzHandle(gzopen(path.c_str(), "rb"))
 {
 }
 
