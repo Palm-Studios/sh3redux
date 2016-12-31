@@ -120,14 +120,12 @@ void sh3_glcontext::GetExtensions()
     GLint i;
 
     glGetIntegerv(GL_NUM_EXTENSIONS, &numExts); // Get the number of extensions the system supports
-    extensions = new char*[numExts];
+    extensions.resize(numExts);
 
     // Iterate over each extension the graphics card supports and store it
     for(i = 0; i < numExts; i++)
     {
-        char* extName = (char*)glGetStringi(GL_EXTENSIONS, i);
-        extensions[i] = new char[strlen(extName)];
-        extensions[i] = extName;
+        extensions[i] = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
     }
 }
 
