@@ -24,6 +24,7 @@ Revision History:
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
 #include <memory>
+#include <vector>
 #include <GL/glew.h>
 #include <SH3/system/sh3_sdl_destroyer.hpp>
 
@@ -46,7 +47,7 @@ private:
 
 private:
     std::unique_ptr<flat_sdl_glcontext, sdl_destroyer> glContext;
-    char**        extensions;
+    std::vector<const char*> extensions;
 
 };
 
