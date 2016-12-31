@@ -18,10 +18,11 @@ Notes:
 Revision History:
         22-12-2016: File Created                                        [Quaker762]
 --*/
-#include <stdio.h>
+#include <cstdio>
 
 #include <SH3/stdtype.hpp>
 #include <SH3/system/sh3_glcontext.hpp>
+#include <SH3/system/sh3_window.hpp>
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
