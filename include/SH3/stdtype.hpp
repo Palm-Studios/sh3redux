@@ -86,6 +86,9 @@ static inline void messagebox(const char* title, const char* str, ...)
 #define SHFALSE 0
 #define SHTRUE  1
 
+#define SH_OK   0
+#define SH_BAD  -1
+
 /**++
     These allow us to check more specifically for a bad allocation across multiple systems
     though the compiler/stdlib really should take care of it for us
@@ -101,7 +104,7 @@ static inline void messagebox(const char* title, const char* str, ...)
     #define BADALLOC (void*)0; // Not sure what Linux/OSX define this as...
 #endif
 
-typedef int SHSTATUS;
+typedef int SHSTATUS; // Return type for functions
 
 
 
@@ -115,8 +118,37 @@ typedef int SHSTATUS;
 
 
 /************************************************************/
-/*                  TEMPLATE FUNCTIONS                      */
+/*                  HELPER FUNCTIONS                        */
+/* Functions that are used throughout the project used to   */
+/* redduce code volume/repitition                           */
 /*                                                          */
 /************************************************************/
+
+/*++
+
+Routine Description:
+        Kill the process due to a fatal error being encountered
+        and inform the user of the problem (as well as writing to
+        the error log, log.txt)
+
+Arguments:
+        str - String to display to the user
+
+Return Type:
+        None
+
+--*/
+static inline void die(const char* str, ...)
+{
+    va_list args;
+    char    buff[4096];
+
+    va_start(args, str);
+    vsnprintf(buff, sizeof(buff), str, args);
+    Log(LOG_FATAL, buff);
+    messagebox("Fatal Error", buff);
+    va_end(args);
+    exit(SH_BAD);
+}
 
 #endif // STDTYPE_HPP_INCLUDED
