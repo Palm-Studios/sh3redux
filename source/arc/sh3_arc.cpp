@@ -52,25 +52,19 @@ bool sh3_arc::Load()
 
     if(!file.is_open())
     {
-        Log(LOG_FATAL, "E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
-        messagebox("Fatal Error", "E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
-        exit(-1); // Just exit, there's no point continuing.
+        die("E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
     }
 
     // Now, we read in the first 16 bytes (the header) and make sure this really is arc.arc!
     if(file.ReadObject(s_fileHeader) != sh3_arc_file::read_result::Success)
     {
-        Log(LOG_FATAL, "E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
-        messagebox("Fatal Error", "E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
-        exit(-1);
+        die("E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
     }
 
     // Check the first 4-bytes of the header to make sure we're not about to read a whole lot of garbage!
     if(s_fileHeader.file_marker != ARCARC_MAGIC)
     {
-        Log(LOG_FATAL, "E00003: sh3_arc::Load( ): arc.arc, Invalid File Marker!!!");
-        messagebox("Fatal Error", "E00003: sh3_arc::Load( ): arc.arc, Invalid File Marker!!!");
-        exit(-1);
+        die("E00003: sh3_arc::Load( ): arc.arc, Invalid File Marker!!!");
     }
 
     /* Okay, so we now know that
@@ -83,9 +77,7 @@ bool sh3_arc::Load()
 
     if(file.ReadObject(s_infoHeader) != sh3_arc_file::read_result::Success)
     {
-        Log(LOG_FATAL, "E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
-        messagebox("Fatal Error", "E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
-        exit(-1);
+        die("E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
     }
 
     c_pSections = new sh3_arc_section[s_infoHeader.sectionCount];
@@ -129,9 +121,7 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
             index = c_pSections[i].fileList[filename];
             if((sectionHandle = fopen(c_pSections[i].sectionName.c_str(), "rb")) == NULL)
             {
-                Log(LOG_FATAL, "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
-                messagebox("Fatal Error", "E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
-                exit(-1);
+                die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", c_pSections[i].sectionName.c_str());
             }
 
             break;
@@ -155,9 +145,7 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
     {
         if(header.magic != ARCSECTION_MAGIC)
         {
-            Log(LOG_FATAL, "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
-            messagebox("Fatal Error", "sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
-            exit(-1);
+            die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", c_pSections[i].sectionName.c_str());
         }
     }
 
