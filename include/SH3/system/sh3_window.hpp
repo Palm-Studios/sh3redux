@@ -22,26 +22,27 @@ Revision History:
 #ifndef SH3_WINDOW_HPP_INCLUDED
 #define SH3_WINDOW_HPP_INCLUDED
 
+#include <memory>
 #include <string>
-#include <SDL2/SDL.h>
+#include <SDL2/SDL_video.h>
 #include <SH3/stdtype.hpp>
-
-class sh3_glcontext;
+#include <SH3/system/sh3_glcontext.hpp>
 
 class sh3_window
 {
-public:
-    sh3_window(int width, int height, std::string title);
-    ~sh3_window(){delete context;}
+private:
 
-    SDL_Window*     hwnd;
+public:
+    sh3_window(int width, int height, const std::string& title);
+
+    std::unique_ptr<SDL_Window, sdl_destroyer> hwnd;
 
 private:
     int width;
     int height;
     std::string title;
 
-    sh3_glcontext*  context;
+    sh3_glcontext context;
 };
 
 

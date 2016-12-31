@@ -24,7 +24,8 @@ Revision History:
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
 #include <SDL2/SDL.h>
-#include <SH3/system/sh3_window.hpp>
+
+class sh3_window;
 
 class sh3_glcontext
 {
