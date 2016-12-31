@@ -22,7 +22,7 @@
 				<Linker>
 					<Add option="-m32" />
 					<Add option="-m32 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew32" />
-					<Add directory="lib/i686/lib" />
+					<Add directory="lib/i686" />
 				</Linker>
 			</Target>
 			<Target title="Release i686">
@@ -42,7 +42,7 @@
 					<Add option="-s" />
 					<Add option="-m32" />
 					<Add option="-m32 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -glew32" />
-					<Add directory="lib/i686/lib" />
+					<Add directory="lib/i686" />
 				</Linker>
 			</Target>
 			<Target title="Debug x86_64">
@@ -60,7 +60,7 @@
 				<Linker>
 					<Add option="-m64" />
 					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew64" />
-					<Add directory="lib/x86_64/lib" />
+					<Add directory="lib/x86_64" />
 				</Linker>
 			</Target>
 			<Target title="Release x86_64">
@@ -80,7 +80,7 @@
 					<Add option="-s" />
 					<Add option="-m64" />
 					<Add option="-m64 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew64" />
-					<Add directory="lib/x86_64/lib" />
+					<Add directory="lib/x86_64" />
 				</Linker>
 			</Target>
 		</Build>
@@ -116,6 +116,7 @@
 			<Option target="Release x86_64" />
 		</Unit>
 		<Unit filename="source/arc/sh3_arc.cpp" />
+		<Unit filename="source/arc/sh3_arc_file.cpp" />
 		<Unit filename="source/arc/sh3_arc_section.cpp" />
 		<Unit filename="source/sh3main.cpp" />
 		<Unit filename="source/system/sh3_config.cpp" />
