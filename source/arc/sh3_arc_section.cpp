@@ -39,16 +39,12 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
 {
     if(!arcFile.is_open())
     {
-        Log(LOG_FATAL, "E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
-        messagebox("Fatal Error", "E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
-        exit(-1);
+        die("E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
     }
 
     if(arcFile.ReadObject(header) != sh3_arc_file::read_result::Success)
     {
-        Log(LOG_FATAL, "E00006: sh3_arc_section::Load( ): Invalid read of arc.arc section!");
-        messagebox("Fatal Error", "E00006: sh3_arc_section::Load( ): Invalid read of arc.arc section!");
-        exit(-1);
+        die("E00006: sh3_arc_section::Load( ): Invalid read of arc.arc section!");
     }
 
     arcFile.ReadString(sectionName, header.hsize - sizeof(header));
