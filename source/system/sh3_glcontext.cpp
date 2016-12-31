@@ -32,7 +32,7 @@ sh3_glcontext::sh3_glcontext(sh3_window* hwnd)
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-    glContext = SDL_GL_CreateContext(hwnd->hwnd);
+    glContext.reset(SDL_GL_CreateContext(hwnd->hwnd.get()));
 
     if(glewInit() != GLEW_OK) // Initialise GLEW!
     {

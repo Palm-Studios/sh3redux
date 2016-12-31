@@ -23,7 +23,8 @@ Revision History:
 #ifndef SH3_GLCONTEXT_HPP_INCLUDED
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
-#include <SDL2/SDL.h>
+#include <memory>
+#include <SH3/system/sh3_sdl_destroyer.hpp>
 
 class sh3_window;
 
@@ -31,7 +32,6 @@ class sh3_glcontext
 {
 public:
     sh3_glcontext(sh3_window* hwnd);
-    ~sh3_glcontext(){if(glContext!=NULL)SDL_GL_DeleteContext(glContext);}
 
     char* GetVendor();
     char* GetVersion();
@@ -41,8 +41,8 @@ public:
     void PrintInfo();
 
 private:
-        SDL_GLContext   glContext;
-        char**          extensions;
+    std::unique_ptr<flat_sdl_glcontext, sdl_destroyer> glContext;
+    char**        extensions;
 
 };
 
