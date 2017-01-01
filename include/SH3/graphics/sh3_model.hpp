@@ -9,14 +9,14 @@ Abstract:
         Data structures and class to load and draw a SILENT HILL 3 Model file
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        27-12-2016: File Created                                                [Quaker762]
+        27-12-2016: File Created                                                [jbuhagiar]
 
 --*/
 #ifndef SH3_MODEL_HPP_INCLUDED

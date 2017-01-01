@@ -9,18 +9,18 @@ Abstract:
         Implementation of functions found in the class sh3_arc
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        17-12-2016: File Created                                                [Quaker762]
-        17-12-2016: Started an implementation of Load( )                        [Quaker762]
-        22-12-2016: Finished Implementation of Load( )                          [Quaker762]
+        17-12-2016: File Created                                                [jbuhagiar]
+        17-12-2016: Started an implementation of Load( )                        [jbuhagiar]
+        22-12-2016: Finished Implementation of Load( )                          [jbuhagiar]
                     Started an implementation of LoadFile( )
-        27-12-2016: Reworked LoadFile( )                                        [Quaker762]
+        27-12-2016: Reworked LoadFile( )                                        [jbuhagiar]
                     Fixed an issue where program would segfault due to not finishing the
                     for loop and then trying to read from the handle
                     Added a few constants (no magic numbers in THIS Dojo!)

@@ -10,7 +10,7 @@ Abstract:
         CPU specific features (like SSE)
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
@@ -18,7 +18,7 @@ Notes:
     http://neilkemp.us/src/sse_tutorial/sse_tutorial.html
 
 Revision History:
-        17-12-2016: File Created [Quaker762]
+        17-12-2016: File Created [jbuhagiar]
 
 --*/
 #ifndef SH3MATH_HPP_INCLUDED

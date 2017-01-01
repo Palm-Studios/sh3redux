@@ -10,14 +10,14 @@ Abstract:
         across translation units!
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        24-12-2016: File Created                                                    [Quaker762]
+        24-12-2016: File Created                                                    [jbuhagiar]
                     Function copied and implemented
                     Added a new type, LOG_NONE
 

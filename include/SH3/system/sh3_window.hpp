@@ -9,14 +9,14 @@ Abstract:
         Window class and related functions
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        22-12-2016: File Created                                    [Quaker762]
+        22-12-2016: File Created                                    [jbuhagiar]
 
 --*/
 #ifndef SH3_WINDOW_HPP_INCLUDED

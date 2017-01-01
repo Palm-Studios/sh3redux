@@ -9,7 +9,7 @@ Abstract:
         CPU Architecture checking functions etc
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
@@ -54,7 +54,7 @@ Notes:
             AMD Family 16h CPU.
 
 Revision History:
-        17-12-2016: File Created [Quaker762]
+        17-12-2016: File Created [jbuhagiar]
 
 --*/
 #ifndef SH3ARCH_HPP_INCLUDED
