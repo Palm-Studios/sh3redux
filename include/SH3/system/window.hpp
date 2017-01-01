@@ -26,7 +26,7 @@ Revision History:
 #include <string>
 #include <SDL2/SDL_video.h>
 #include "SH3/stdtype.hpp"
-#include "SH3/system/sh3_glcontext.hpp"
+#include "SH3/system/glcontext.hpp"
 
 class sh3_window
 {

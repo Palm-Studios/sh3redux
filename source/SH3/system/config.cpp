@@ -19,7 +19,7 @@ Revision History:
         27-12-2016: File Created                                                    [jbuhagiar]
 
 --*/
-#include "SH3/system/sh3_config.hpp"
+#include "SH3/system/config.hpp"
 #include "SH3/stdtype.hpp"
 
 #include <sstream>
