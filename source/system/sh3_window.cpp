@@ -9,14 +9,14 @@ Abstract:
         Implementation of sh3_window.hpp
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        22-12-2016: File Created                                    [Quaker762]
+        22-12-2016: File Created                                    [jbuhagiar]
 
 
 --*/

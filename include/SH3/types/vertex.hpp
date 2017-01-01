@@ -8,14 +8,14 @@ Module Name:
 Abstract:
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        14-12-2016: Initial Revision [Quaker762]
+        14-12-2016: Initial Revision [jbuhagiar]
 --*/
 
 #ifndef VERTEX_HPP_INCLUDED

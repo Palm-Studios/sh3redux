@@ -9,14 +9,14 @@ Abstract:
         Implementation of sh3_config.hpp
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        27-12-2016: File Created                                                    [Quaker762]
+        27-12-2016: File Created                                                    [jbuhagiar]
 
 --*/
 #include <SH3/system/sh3_config.hpp>
