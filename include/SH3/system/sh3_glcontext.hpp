@@ -23,25 +23,31 @@ Revision History:
 #ifndef SH3_GLCONTEXT_HPP_INCLUDED
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
-#include <SDL2/SDL.h>
-#include <SH3/system/sh3_window.hpp>
+#include <memory>
+#include <vector>
+#include <GL/glew.h>
+#include <SH3/system/sh3_sdl_destroyer.hpp>
+
+class sh3_window;
 
 class sh3_glcontext
 {
 public:
-    sh3_glcontext(sh3_window* hwnd);
-    ~sh3_glcontext(){if(glContext!=NULL)SDL_GL_DeleteContext(glContext);}
+    sh3_glcontext(sh3_window& hwnd);
 
-    char* GetVendor();
-    char* GetVersion();
-    char* GetRenderer();
+    const char* GetVendor() const;
+    const char* GetVersion() const;
+    const char* GetRenderer() const;
 
     void GetExtensions();
-    void PrintInfo();
+    void PrintInfo() const;
 
 private:
-        SDL_GLContext   glContext;
-        char**          extensions;
+    static const char* GlGetString(GLenum name);
+
+private:
+    std::unique_ptr<flat_sdl_glcontext, sdl_destroyer> glContext;
+    std::vector<const char*> extensions;
 
 };
 

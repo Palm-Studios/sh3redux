@@ -18,20 +18,21 @@ Notes:
 Revision History:
         22-12-2016: File Created                                        [Quaker762]
 --*/
-#include <stdio.h>
+#include <cstdio>
 
 #include <SH3/stdtype.hpp>
 #include <SH3/system/sh3_glcontext.hpp>
+#include <SH3/system/sh3_window.hpp>
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
 
-sh3_glcontext::sh3_glcontext(sh3_window* hwnd)
+sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
 {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
 
-    glContext = SDL_GL_CreateContext(hwnd->hwnd);
+    glContext.reset(SDL_GL_CreateContext(hwnd.hwnd.get()));
 
     if(glewInit() != GLEW_OK) // Initialise GLEW!
     {
@@ -59,12 +60,12 @@ Arguments:
         None
 
 Return Type:
-        char* - GLVENDOR String
+        const char* - GLVENDOR String
 
 --*/
-char* sh3_glcontext::GetVendor()
+const char* sh3_glcontext::GetVendor() const
 {
-    return (char*)glGetString(GL_VENDOR);
+    return GlGetString(GL_VENDOR);
 }
 
 /*++
@@ -76,12 +77,12 @@ Arguments:
         None
 
 Return Type:
-        char*
+        const char*
 
 --*/
-char* sh3_glcontext::GetVersion()
+const char* sh3_glcontext::GetVersion() const
 {
-    return (char*)glGetString(GL_VERSION);
+    return GlGetString(GL_VERSION);
 }
 
 /*++
@@ -93,12 +94,12 @@ Arguments:
         None
 
 Return Type:
-        char*
+        const char*
 
 --*/
-char* sh3_glcontext::GetRenderer()
+const char* sh3_glcontext::GetRenderer() const
 {
-    return (char*)glGetString(GL_RENDERER);
+    return GlGetString(GL_RENDERER);
 }
 
 /*++
@@ -119,14 +120,12 @@ void sh3_glcontext::GetExtensions()
     GLint i;
 
     glGetIntegerv(GL_NUM_EXTENSIONS, &numExts); // Get the number of extensions the system supports
-    extensions = new char*[numExts];
+    extensions.resize(numExts);
 
     // Iterate over each extension the graphics card supports and store it
     for(i = 0; i < numExts; i++)
     {
-        char* extName = (char*)glGetStringi(GL_EXTENSIONS, i);
-        extensions[i] = new char[strlen(extName)];
-        extensions[i] = extName;
+        extensions[i] = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
     }
 }
 
@@ -142,7 +141,7 @@ Return Type:
         None
 
 --*/
-void sh3_glcontext::PrintInfo()
+void sh3_glcontext::PrintInfo() const
 {
     Log(LOG_INFO, "GL_VENDOR:\t %s", GetVendor());
     Log(LOG_INFO, "GL_VERSION:\t %s", GetVersion());
@@ -151,4 +150,21 @@ void sh3_glcontext::PrintInfo()
     printf("GL_VENDOR:\t %s\n", GetVendor());
     printf("GL_VERSION:\t %s\n", GetVersion());
     printf("GL_RENDERER:\t %s\n", GetRenderer());
+}
+
+/*++
+
+Routine Description:
+        Retrieve a C-String via glGetString
+
+Arguments:
+        name - the attribute to retrieve
+
+Return Type:
+        const char*
+
+--*/
+const char* sh3_glcontext::GlGetString(GLenum name)
+{
+    return reinterpret_cast<const char*>(glGetString(name));
 }
