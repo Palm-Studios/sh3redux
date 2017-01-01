@@ -23,11 +23,14 @@ Revision History:
 
 --*/
 
+#include "SH3/system/log.hpp"
 #include "SH3/stdtype.hpp"
 
 #include <cstdio>
 #include <cstring>
 #include <cstdarg>
+
+#include <SDL2/SDL_messagebox.h>
 
 void Log(LogLevel logType, const char* str, ...)
 {
