@@ -41,8 +41,16 @@ Return Type:
 
 static inline int __check_sse3()
 {
-    __builtin_cpu_init(); // Tell GCC we want to check for an extension
+    #ifdef __GNUC__
+    #ifndef __clang__
+    // Tell GCC we want to check for an extension
+    // clang does not support thing, but it's also not needed.
+    __builtin_cpu_init();
+    #endif
     if(!__builtin_cpu_supports("sse3")) return -1;
+    #else
+    #error Cannot check CPU extensions with this compiler.
+    #endif
 
     return 0;
 }
