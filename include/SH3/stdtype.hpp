@@ -30,7 +30,7 @@ Revision History:
 #include <cstring>
 #include <cstdarg>
 
-#include <SDL2/SDL_messagebox.h>
+#include "SH3/system/log.hpp"
 
     // Cross platform ;)
 #ifdef _WIN32
@@ -41,41 +41,6 @@ Revision History:
 #elif __linux__
 
 #endif
-
-/************************************************************/
-/*                  STATIC FUNCTIONS                        */
-/* These functions are commonly used throughout the project */
-/* so they're implemented in a common header file           */
-/*                                                          */
-/************************************************************/
-
-#define LOG_INFO    0
-#define LOG_WARN    1
-#define LOG_ERROR   2
-#define LOG_FATAL   3
-#define LOG_NONE    4
-
-/*
-    We need this here to avoid the stupid overwriting bug we get (well, not really
-    a bug because each file gets its own copy of the static function) so we stick an
-    external defintion here and implement in another file!! :^]
-*/
-extern void Log(int logType, const char* str, ...);
-
-static inline void messagebox(const char* title, const char* str, ...)
-{
-    char        buff[4096];
-    va_list     args;
-
-    // Get our variable args, like %x, %s etcetc
-    va_start(args, str);
-    vsnprintf(buff, sizeof(buff), str, args);
-    va_end(args);
-
-    // TODO: properly get window parent
-    SDL_ShowSimpleMessageBox(0, title, buff, nullptr);
-}
-
 
 /************************************************************/
 /*                   TYPE DEFINITIONS                       */
@@ -105,50 +70,5 @@ static inline void messagebox(const char* title, const char* str, ...)
 #endif
 
 typedef int SHSTATUS; // Return type for functions
-
-
-
-
-
-
-
-
-
-
-
-
-/************************************************************/
-/*                  HELPER FUNCTIONS                        */
-/* Functions that are used throughout the project used to   */
-/* redduce code volume/repitition                           */
-/*                                                          */
-/************************************************************/
-
-/*++
-
-Routine Description:
-        Kill the process due to a fatal error being encountered
-        and inform the user of the problem (as well as writing to
-        the error log, log.txt)
-
-Arguments:
-        str - String to display to the user
-
-Return Type:
-        None
-
---*/
-static inline void die(const char* str, ...)
-{
-    va_list args;
-    char    buff[4096];
-
-    va_start(args, str);
-    vsnprintf(buff, sizeof(buff), str, args);
-    Log(LOG_FATAL, buff);
-    messagebox("Fatal Error", buff);
-    va_end(args);
-    exit(SH_BAD);
-}
 
 #endif // STDTYPE_HPP_INCLUDED

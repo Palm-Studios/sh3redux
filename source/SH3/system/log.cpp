@@ -23,13 +23,16 @@ Revision History:
 
 --*/
 
+#include "SH3/system/log.hpp"
 #include "SH3/stdtype.hpp"
 
 #include <cstdio>
 #include <cstring>
 #include <cstdarg>
 
-void Log(int logType, const char* str, ...)
+#include <SDL2/SDL_messagebox.h>
+
+void Log(LogLevel logType, const char* str, ...)
 {
     static const char* filename = "log.txt";
     static FILE*       logfile  = nullptr;
@@ -46,31 +49,31 @@ void Log(int logType, const char* str, ...)
         }
     }
 
+    const char* label = "";
     switch(logType)
     {
-    case LOG_INFO:
-        fputs("[info] ", logfile);
+    case LogLevel::Info:
+        label = "[info] ";
         break;
 
-    case LOG_WARN:
-        fputs("[warning] ", logfile);
+    case LogLevel::Warn:
+        label = "[warning] ";
         break;
 
-    case LOG_ERROR:
-        fputs("[error] ", logfile);
+    case LogLevel::Error:
+        label = "[error] ";
         break;
 
-    case LOG_FATAL:
-        fputs("[fatal] ", logfile);
+    case LogLevel::Fatal:
+        label = "[fatal] ";
         break;
 
-    case LOG_NONE: // Lmao
-    default:
+    case LogLevel::None:
         break;
     }
 
     va_start(args, str);
-    if(vfprintf(logfile, str, args) < 0)
+    if(fputs(label, logfile) < 0 || vfprintf(logfile, str, args) < 0)
     {
         fprintf(stderr, "Unable to write to flush info log!");
     }
@@ -79,4 +82,17 @@ void Log(int logType, const char* str, ...)
         fputc('\n', logfile);
     }
     va_end(args);
+}
+
+void die(const char* str, ...)
+{
+    va_list args;
+    char    buff[4096];
+
+    va_start(args, str);
+    vsnprintf(buff, sizeof(buff), str, args);
+    Log(LogLevel::Fatal, buff);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
+    va_end(args);
+    exit(SH_BAD);
 }

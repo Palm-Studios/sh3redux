@@ -58,10 +58,10 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
         arcFile.ReadObject(file.header);
 
         arcFile.ReadString(file.fname, file.header.fileSize - sizeof(file.header));
-        //Log(LOG_INFO, "Read file: %s", file->fname.c_str());
+        //Log(LogLevel::Info, "Read file: %s", file->fname.c_str());
 
         fileList[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
-        //Log(LOG_INFO, "Added file to file list!");
+        //Log(LogLevel::Info, "Added file to file list!");
     }
 
     return true;

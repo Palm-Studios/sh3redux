@@ -36,7 +36,7 @@ sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
 
     if(glewInit() != GLEW_OK) // Initialise GLEW!
     {
-        Log(LOG_FATAL, "sh3_glcontext::sh3_glcontext( ): GLEW Init failed!");
+        Log(LogLevel::Fatal, "sh3_glcontext::sh3_glcontext( ): GLEW Init failed!");
         exit(-1);
     }
 
@@ -143,9 +143,9 @@ Return Type:
 --*/
 void sh3_glcontext::PrintInfo() const
 {
-    Log(LOG_INFO, "GL_VENDOR:\t %s", GetVendor());
-    Log(LOG_INFO, "GL_VERSION:\t %s", GetVersion());
-    Log(LOG_INFO, "GL_RENDERER:\t %s", GetRenderer());
+    Log(LogLevel::Info, "GL_VENDOR:\t %s", GetVendor());
+    Log(LogLevel::Info, "GL_VERSION:\t %s", GetVersion());
+    Log(LogLevel::Info, "GL_RENDERER:\t %s", GetRenderer());
 
     printf("GL_VENDOR:\t %s\n", GetVendor());
     printf("GL_VERSION:\t %s\n", GetVersion());
