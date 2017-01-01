@@ -21,6 +21,7 @@ Revision History:
 #include "SH3/arc/file.hpp"
 
 #include <cassert>
+#include <cstddef>
 #include <iterator>
 #include <vector>
 
@@ -42,7 +43,7 @@ Return Type:
         sh3_arc_file::read_result
 
 --*/
-sh3_arc_file::read_result sh3_arc_file::ReadData(void* destination, size_t len)
+sh3_arc_file::read_result sh3_arc_file::ReadData(void* destination, std::size_t len)
 {
     assert(static_cast<int>(len) > 0); // overflow check
 
@@ -79,7 +80,7 @@ Return Type:
         sh3_arc_file::read_result
 
 --*/
-sh3_arc_file::read_result sh3_arc_file::ReadString(std::string& destination, size_t len)
+sh3_arc_file::read_result sh3_arc_file::ReadString(std::string& destination, std::size_t len)
 {
     assert(static_cast<int>(len) > 0); // overflow check
 
