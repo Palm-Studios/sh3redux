@@ -80,6 +80,6 @@ endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
 
-string(CONCAT CMAKE_CXX_FLAGS "${CXX_FLAGS}" "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
 add_subdirectory(source)
