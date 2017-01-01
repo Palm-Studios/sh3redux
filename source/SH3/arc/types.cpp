@@ -26,9 +26,9 @@ Revision History:
                     Added a few constants (no magic numbers in THIS Dojo!)
 
 --*/
-#include "SH3/arc/sh3_arc_types.hpp"
-#include "SH3/arc/sh3_arc_section.hpp"
-#include "SH3/arc/sh3_arc_file.hpp"
+#include "SH3/arc/types.hpp"
+#include "SH3/arc/section.hpp"
+#include "SH3/arc/file.hpp"
 
 #include <algorithm>
 #include <iterator>

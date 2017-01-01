@@ -21,10 +21,10 @@ Revision History:
 --*/
 
 #include "SH3/stdtype.hpp"
-#include "SH3/sh3math.hpp"
-#include "SH3/arc/sh3_arc_types.hpp"
-#include "SH3/system/sh3_window.hpp"
-#include "SH3/system/sh3_config.hpp"
+#include "SH3/math.hpp"
+#include "SH3/arc/types.hpp"
+#include "SH3/system/window.hpp"
+#include "SH3/system/config.hpp"
 #include <iostream>
 
 typedef struct
