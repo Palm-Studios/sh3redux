@@ -9,14 +9,14 @@ Abstract:
         SILENT HILL 3: Redux Configuration parser
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        27-12-2016: File Created                                                                    [Quaker762]
+        27-12-2016: File Created                                                                    [jbuhagiar]
                     Base class created
 
 --*/
