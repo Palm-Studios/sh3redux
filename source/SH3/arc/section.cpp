@@ -19,8 +19,8 @@ Revision History:
         17-12-2016: File Created [jbuhagiar]
 
 --*/
-#include <SH3/arc/sh3_arc_types.hpp>
-#include <SH3/arc/sh3_arc_file.hpp>
+#include "SH3/arc/types.hpp"
+#include "SH3/arc/file.hpp"
 
 /*++
 
