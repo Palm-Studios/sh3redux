@@ -70,6 +70,8 @@ Return Type:
 --*/
 SHSTATUS main(int argc, char** argv)
 {
+    static_cast<void>(argc);
+    static_cast<void>(argv);
     Log(LOG_INFO, "===SILENT HILL 3 REDUX===");
     Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
 
