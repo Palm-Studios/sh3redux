@@ -27,23 +27,23 @@ Revision History:
 #include "SH3/stdtype.hpp"
 
 #include <cstdio>
-#include <cstring>
 #include <cstdarg>
+#include <SDL2/SDL_messagebox.h>
 
 #include <SDL2/SDL_messagebox.h>
 
 void Log(LogLevel logType, const char* str, ...)
 {
     static const char* filename = "log.txt";
-    static FILE*       logfile  = nullptr;
+    static std::FILE*  logfile  = nullptr;
 
-    va_list args;
+    std::va_list args;
 
     if(!logfile)
     {
-        if(!(logfile = fopen(filename, "w+")))
+        if(!(logfile = std::fopen(filename, "w+")))
         {
-            fprintf(stderr, "Unable to open a handle to %s", filename);
+            std::fprintf(stderr, "Unable to open a handle to %s", filename);
             // fallback to stderr then
             logfile = stderr;
         }
@@ -73,24 +73,24 @@ void Log(LogLevel logType, const char* str, ...)
     }
 
     va_start(args, str);
-    if(fputs(label, logfile) < 0 || vfprintf(logfile, str, args) < 0)
+    if(std::fputs(label, logfile) < 0 || std::vfprintf(logfile, str, args) < 0)
     {
-        fprintf(stderr, "Unable to write to flush info log!");
+        std::fprintf(stderr, "Unable to write to flush info log!");
     }
     else
     {
-        fputc('\n', logfile);
+        std::fputc('\n', logfile);
     }
     va_end(args);
 }
 
 void die(const char* str, ...)
 {
-    va_list args;
-    char    buff[4096];
+    std::va_list args;
+    char         buff[4096];
 
     va_start(args, str);
-    vsnprintf(buff, sizeof(buff), str, args);
+    std::vsnprintf(buff, sizeof(buff), str, args);
     Log(LogLevel::Fatal, buff);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);

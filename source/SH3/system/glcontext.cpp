@@ -19,6 +19,7 @@ Revision History:
         22-12-2016: File Created                                        [jbuhagiar]
 --*/
 #include <cstdio>
+#include <cstdlib>
 
 #include "SH3/stdtype.hpp"
 #include "SH3/system/glcontext.hpp"
@@ -37,7 +38,7 @@ sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
     if(glewInit() != GLEW_OK) // Initialise GLEW!
     {
         Log(LogLevel::Fatal, "sh3_glcontext::sh3_glcontext( ): GLEW Init failed!");
-        exit(-1);
+        std::exit(-1);
     }
 
     // Set the colour size for OpenGL!
@@ -147,9 +148,9 @@ void sh3_glcontext::PrintInfo() const
     Log(LogLevel::Info, "GL_VERSION:\t %s", GetVersion());
     Log(LogLevel::Info, "GL_RENDERER:\t %s", GetRenderer());
 
-    printf("GL_VENDOR:\t %s\n", GetVendor());
-    printf("GL_VERSION:\t %s\n", GetVersion());
-    printf("GL_RENDERER:\t %s\n", GetRenderer());
+    std::printf("GL_VENDOR:\t %s\n", GetVendor());
+    std::printf("GL_VERSION:\t %s\n", GetVersion());
+    std::printf("GL_RENDERER:\t %s\n", GetRenderer());
 }
 
 /*++

@@ -23,6 +23,7 @@ Revision History:
 
 #include <zlib.h>
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <type_traits>
@@ -50,13 +51,13 @@ public:
 
     bool is_open() const {return static_cast<bool>(gzHandle);}
 
-    read_result ReadData(void* destination, size_t len);
+    read_result ReadData(void* destination, std::size_t len);
     template<typename T, typename = std::enable_if<std::is_standard_layout<T>::value>>
-    read_result ReadObject(T& destination, size_t len = sizeof(T))
+    read_result ReadObject(T& destination, std::size_t len = sizeof(T))
     {
         return ReadData(&destination, len);
     }
-    read_result ReadString(std::string& destination, size_t len);
+    read_result ReadString(std::string& destination, std::size_t len);
 
 private:
     std::unique_ptr<gzFile_s, gz_file_closer> gzHandle;
