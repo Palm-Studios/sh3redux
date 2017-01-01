@@ -9,16 +9,16 @@ find_package(ZLIB REQUIRED)
 include_directories("../include")
 
 add_executable("${CMAKE_PROJECT_NAME}"
-	"sh3main.cpp"
+	"main.cpp"
 	
-	"arc/sh3_arc.cpp"
-	"arc/sh3_arc_file.cpp"
-	"arc/sh3_arc_section.cpp"
+	"SH3/arc/file.cpp"
+	"SH3/arc/section.cpp"
+	"SH3/arc/types.cpp"
 	
-	"system/sh3_config.cpp"
-	"system/sh3_glcontext.cpp"
-	"system/sh3_log.cpp"
-	"system/sh3_window.cpp"
+	"SH3/system/config.cpp"
+	"SH3/system/glcontext.cpp"
+	"SH3/system/log.cpp"
+	"SH3/system/window.cpp"
 	
 	"../${BINARY_RESOURCE_FILE}"
 )

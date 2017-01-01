@@ -26,7 +26,7 @@ Revision History:
 #include <memory>
 #include <vector>
 #include <GL/glew.h>
-#include "SH3/system/sh3_sdl_destroyer.hpp"
+#include "SH3/system/sdl_destroyer.hpp"
 
 class sh3_window;
 
