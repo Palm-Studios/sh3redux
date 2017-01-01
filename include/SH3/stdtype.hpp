@@ -127,17 +127,6 @@ Return Type:
         None
 
 --*/
-static inline void die(const char* str, ...)
-{
-    va_list args;
-    char    buff[4096];
-
-    va_start(args, str);
-    vsnprintf(buff, sizeof(buff), str, args);
-    Log(LogLevel::Fatal, buff);
-    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
-    va_end(args);
-    exit(SH_BAD);
-}
+void die(const char* str, ...);
 
 #endif // STDTYPE_HPP_INCLUDED

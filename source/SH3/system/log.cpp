@@ -79,3 +79,16 @@ void Log(LogLevel logType, const char* str, ...)
     }
     va_end(args);
 }
+
+void die(const char* str, ...)
+{
+    va_list args;
+    char    buff[4096];
+
+    va_start(args, str);
+    vsnprintf(buff, sizeof(buff), str, args);
+    Log(LogLevel::Fatal, buff);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
+    va_end(args);
+    exit(SH_BAD);
+}
