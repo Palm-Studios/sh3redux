@@ -30,7 +30,7 @@ Revision History:
 #include <cstring>
 #include <cstdarg>
 
-#include <SDL2/SDL_messagebox.h>
+#include "SH3/system/log.hpp"
 
     // Cross platform ;)
 #ifdef _WIN32
@@ -41,30 +41,6 @@ Revision History:
 #elif __linux__
 
 #endif
-
-/************************************************************/
-/*                  STATIC FUNCTIONS                        */
-/* These functions are commonly used throughout the project */
-/* so they're implemented in a common header file           */
-/*                                                          */
-/************************************************************/
-
-enum class LogLevel
-{
-    Info,
-    Warn,
-    Error,
-    Fatal,
-    None,
-};
-
-/*
-    We need this here to avoid the stupid overwriting bug we get (well, not really
-    a bug because each file gets its own copy of the static function) so we stick an
-    external defintion here and implement in another file!! :^]
-*/
-extern void Log(LogLevel logType, const char* str, ...);
-
 
 /************************************************************/
 /*                   TYPE DEFINITIONS                       */
@@ -94,39 +70,5 @@ extern void Log(LogLevel logType, const char* str, ...);
 #endif
 
 typedef int SHSTATUS; // Return type for functions
-
-
-
-
-
-
-
-
-
-
-
-
-/************************************************************/
-/*                  HELPER FUNCTIONS                        */
-/* Functions that are used throughout the project used to   */
-/* redduce code volume/repitition                           */
-/*                                                          */
-/************************************************************/
-
-/*++
-
-Routine Description:
-        Kill the process due to a fatal error being encountered
-        and inform the user of the problem (as well as writing to
-        the error log, log.txt)
-
-Arguments:
-        str - String to display to the user
-
-Return Type:
-        None
-
---*/
-void die(const char* str, ...);
 
 #endif // STDTYPE_HPP_INCLUDED
