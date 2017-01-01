@@ -20,8 +20,8 @@ Revision History:
 
 
 --*/
-#include <SH3/system/sh3_glcontext.hpp>
-#include <SH3/system/sh3_window.hpp>
+#include "SH3/system/sh3_glcontext.hpp"
+#include "SH3/system/sh3_window.hpp"
 
 sh3_window::sh3_window(int width, int height, const std::string& title)
     : hwnd(SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_UNDEFINED,SDL_WINDOWPOS_UNDEFINED, width, height, SDL_WINDOW_OPENGL))

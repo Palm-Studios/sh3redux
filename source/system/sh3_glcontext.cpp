@@ -20,9 +20,9 @@ Revision History:
 --*/
 #include <cstdio>
 
-#include <SH3/stdtype.hpp>
-#include <SH3/system/sh3_glcontext.hpp>
-#include <SH3/system/sh3_window.hpp>
+#include "SH3/stdtype.hpp"
+#include "SH3/system/sh3_glcontext.hpp"
+#include "SH3/system/sh3_window.hpp"
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
