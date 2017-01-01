@@ -65,20 +65,6 @@ enum class LogLevel
 */
 extern void Log(LogLevel logType, const char* str, ...);
 
-static inline void messagebox(const char* title, const char* str, ...)
-{
-    char        buff[4096];
-    va_list     args;
-
-    // Get our variable args, like %x, %s etcetc
-    va_start(args, str);
-    vsnprintf(buff, sizeof(buff), str, args);
-    va_end(args);
-
-    // TODO: properly get window parent
-    SDL_ShowSimpleMessageBox(0, title, buff, nullptr);
-}
-
 
 /************************************************************/
 /*                   TYPE DEFINITIONS                       */
@@ -149,7 +135,7 @@ static inline void die(const char* str, ...)
     va_start(args, str);
     vsnprintf(buff, sizeof(buff), str, args);
     Log(LogLevel::Fatal, buff);
-    messagebox("Fatal Error", buff);
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);
     exit(SH_BAD);
 }
