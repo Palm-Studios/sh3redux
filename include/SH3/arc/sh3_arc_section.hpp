@@ -9,14 +9,14 @@ Abstract:
         Related data structures for a sub arc
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        25-12-2016: File Created                                                    [Quaker762]
+        25-12-2016: File Created                                                    [jbuhagiar]
 
 --*/
 #ifndef SH3_ARC_SECTION_HPP_INCLUDED

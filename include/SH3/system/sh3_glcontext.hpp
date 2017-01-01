@@ -9,7 +9,7 @@ Abstract:
         Defines a logical OpenGL Context
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
@@ -17,7 +17,7 @@ Notes:
     https://www.khronos.org/opengl/wiki/GLAPI/glGet
 
 Revision History:
-        22-12-2016: File Created                                    [Quaker762]
+        22-12-2016: File Created                                    [jbuhagiar]
 
 --*/
 #ifndef SH3_GLCONTEXT_HPP_INCLUDED

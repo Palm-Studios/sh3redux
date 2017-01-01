@@ -11,16 +11,16 @@ Abstract:
         All other headers/source files should include this header!
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        13-12-2016: Initial Revision [Quaker762]
-        14-12-2016: Added messagebox( ) function [Quaker762]
-        17-12-2016: Added safedel( ) template function [Quaker762]
+        13-12-2016: Initial Revision [jbuhagiar]
+        14-12-2016: Added messagebox( ) function [jbuhagiar]
+        17-12-2016: Added safedel( ) template function [jbuhagiar]
 
 --*/
 #ifndef STDTYPE_HPP_INCLUDED

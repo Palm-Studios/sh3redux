@@ -39,17 +39,17 @@ Abstract:
         sub arc/section, as Mike seems to have not found
 
 Author:
-        Quaker762
+        Jesse Buhagiar
 
 Environment:
 
 Notes:
 
 Revision History:
-        14-12-2016: File Created                                            [Quaker762]
-        17-12-2016: Finished adding base types                              [Quaker762]
-        22-12-2016: Added sh3_arc::LoadFile() prototype                     [Quaker762]
-        27-12-2016: Added call to Load( ) to the default constructor        [Quaker762]
+        14-12-2016: File Created                                            [jbuhagiar]
+        17-12-2016: Finished adding base types                              [jbuhagiar]
+        22-12-2016: Added sh3_arc::LoadFile() prototype                     [jbuhagiar]
+        27-12-2016: Added call to Load( ) to the default constructor        [jbuhagiar]
                     of sh3_arc()
 
 --*/
