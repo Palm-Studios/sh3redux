@@ -72,8 +72,8 @@ SHSTATUS main(int argc, char** argv)
 {
     static_cast<void>(argc);
     static_cast<void>(argv);
-    Log(LOG_INFO, "===SILENT HILL 3 REDUX===");
-    Log(LOG_INFO, "Copyright 2016-2017 Palm Studios\n");
+    Log(LogLevel::Info, "===SILENT HILL 3 REDUX===");
+    Log(LogLevel::Info, "Copyright 2016-2017 Palm Studios\n");
 
     test t1 = {1, 2, 3, 4};
     test t2 = {0, 3, 0, 0};
