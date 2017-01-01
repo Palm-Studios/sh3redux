@@ -1,19 +1,23 @@
 # depslib dependency file v1.0
 1483162516 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\resource32.rc
 
-1483162617 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc.cpp
+1483236341 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc.cpp
 	<SH3/arc/sh3_arc_types.hpp>
 	<SH3/arc/sh3_arc_section.hpp>
 	<SH3/arc/sh3_arc_file.hpp>
+	<algorithm>
+	<iterator>
+	<utility>
 
-1483162617 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_types.hpp
+1483236337 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_types.hpp
 	<SH3/stdtype.hpp>
 	<cstdint>
 	<map>
 	<string>
+	<vector>
 	<zlib.h>
 
-1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\stdtype.hpp
+1483236343 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\stdtype.hpp
 	<cstdio>
 	<cstring>
 	<cstdarg>
@@ -120,17 +124,17 @@
 	"begin_code.h"
 	"close_code.h"
 
-1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_section.hpp
+1483236342 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_section.hpp
 	<cstdint>
 
-1483162617 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_file.hpp
+1483235961 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\sh3_arc_file.hpp
 	<zlib.h>
 	<string>
 	<type_traits>
 	<memory>
 	<SH3/stdtype.hpp>
 
-1483162617 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc_section.cpp
+1483236342 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc_section.cpp
 	<SH3/arc/sh3_arc_types.hpp>
 	<SH3/arc/sh3_arc_file.hpp>
 
@@ -145,10 +149,12 @@
 1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\sh3math.hpp
 	<iostream>
 
-1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_window.hpp
+1483236343 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_window.hpp
+	<memory>
 	<string>
-	<SDL2/SDL.h>
+	<SDL2/SDL_video.h>
 	<SH3/stdtype.hpp>
+	<SH3/system/sh3_glcontext.hpp>
 
 1476935894 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sdl2\sdl.h
 	"SDL_main.h"
@@ -369,10 +375,10 @@
 	"begin_code.h"
 	"close_code.h"
 
-1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_config.hpp
+1483236342 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_config.hpp
 	<map>
 
-1483162516 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_config.cpp
+1483236341 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_config.cpp
 	<SH3/system/sh3_config.hpp>
 	<SH3/stdtype.hpp>
 	<sstream>
@@ -381,17 +387,20 @@
 	<vector>
 	<iostream>
 
-1483162516 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_glcontext.cpp
-	<stdio.h>
+1483236341 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_glcontext.cpp
+	<cstdio>
 	<SH3/stdtype.hpp>
 	<SH3/system/sh3_glcontext.hpp>
+	<SH3/system/sh3_window.hpp>
 	<GL/glew.h>
 	<GL/glu.h>
 	<GL/glext.h>
 
-1483162516 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_glcontext.hpp
-	<SDL2/SDL.h>
-	<SH3/system/sh3_window.hpp>
+1483236343 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_glcontext.hpp
+	<memory>
+	<vector>
+	<GL/glew.h>
+	<SH3/system/sh3_sdl_destroyer.hpp>
 
 1469321978 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\gl\glew.h
 	<stddef.h>
@@ -402,19 +411,22 @@
 	<OpenGL/glu.h>
 	<GL/glu.h>
 
-1483162516 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_log.cpp
+1483236343 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_log.cpp
 	"SH3/stdtype.hpp"
 	<cstdio>
 	<cstring>
 	<cstdarg>
 
-1483162516 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_window.cpp
-	<SH3/system/sh3_window.hpp>
+1483236341 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\system\sh3_window.cpp
 	<SH3/system/sh3_glcontext.hpp>
+	<SH3/system/sh3_window.hpp>
 
-1483162617 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc_file.cpp
+1483235961 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\arc\sh3_arc_file.cpp
 	<SH3/arc/sh3_arc_file.hpp>
 	<cassert>
 	<iterator>
 	<vector>
+
+1483235961 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_sdl_destroyer.hpp
+	<SDL2/SDL_video.h>
 
