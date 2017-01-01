@@ -29,7 +29,7 @@ Revision History:
 #include <cstring>
 #include <cstdarg>
 
-void Log(int logType, const char* str, ...)
+void Log(LogLevel logType, const char* str, ...)
 {
     static const char* filename = "log.txt";
     static FILE*       logfile  = nullptr;
@@ -48,24 +48,23 @@ void Log(int logType, const char* str, ...)
 
     switch(logType)
     {
-    case LOG_INFO:
+    case LogLevel::Info:
         fputs("[info] ", logfile);
         break;
 
-    case LOG_WARN:
+    case LogLevel::Warn:
         fputs("[warning] ", logfile);
         break;
 
-    case LOG_ERROR:
+    case LogLevel::Error:
         fputs("[error] ", logfile);
         break;
 
-    case LOG_FATAL:
+    case LogLevel::Fatal:
         fputs("[fatal] ", logfile);
         break;
 
-    case LOG_NONE: // Lmao
-    default:
+    case LogLevel::None:
         break;
     }
 
