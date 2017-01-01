@@ -28,18 +28,18 @@ Revision History:
 
 typedef struct
 {
-    uint32_t magic;             // File magic number
-    uint32_t numFiles;          // Number of files located in this sub .arc
-    uint32_t dataPointer;       // Pointer to the beginning of the data section
-    uint32_t unused;            // Unused DWORD
+    std::uint32_t magic;             // File magic number
+    std::uint32_t numFiles;          // Number of files located in this sub .arc
+    std::uint32_t dataPointer;       // Pointer to the beginning of the data section
+    std::uint32_t unused;            // Unused DWORD
 } sh3_subarc_header_t;
 
 typedef struct
 {
-    uint32_t offset;            // Offset file resides at
-    uint32_t fileID;            // FileID????
-    uint32_t length;            // Length of this file (in bytes)
-    uint32_t length2;
+    std::uint32_t offset;            // Offset file resides at
+    std::uint32_t fileID;            // FileID????
+    std::uint32_t length;            // Length of this file (in bytes)
+    std::uint32_t length2;
 } sh3_subarc_file_t;
 
 

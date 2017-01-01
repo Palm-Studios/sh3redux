@@ -74,34 +74,34 @@ struct sh3_arc_file;
 // Type check header (an unfortunate waste of space)
 typedef struct
 {
-    uint32_t file_marker;   // File marker for arc.arc, this is ALWAYS 0x20030417
-    uint32_t unused[3];     // 3 filler DWORDs
+    std::uint32_t file_marker;   // File marker for arc.arc, this is ALWAYS 0x20030417
+    std::uint32_t unused[3];     // 3 filler DWORDs
 } sh3_arc_mft_header_t;
 
 // Info about the MFT
 typedef struct
 {
-    uint16_t type;          // This is 1 (for arc.arc info )
-    uint16_t header_size;   // Size of this header
-    uint32_t sectionCount;  // How many sections there are in the mft (i.e how many .arc files in /data/)
-    uint32_t fileCount;     // Number of files in this section
+    std::uint16_t type;          // This is 1 (for arc.arc info )
+    std::uint16_t header_size;   // Size of this header
+    std::uint32_t sectionCount;  // How many sections there are in the mft (i.e how many .arc files in /data/)
+    std::uint32_t fileCount;     // Number of files in this section
 } sh3_arc_data_header_t;
 
 // Info about a section
 typedef struct
 {
-    uint16_t type;      // This is 2 (for an arc section header)
-    uint16_t hsize;     // Size of this header in bytes
-    uint32_t numFiles;  // Number of files in this section
+    std::uint16_t type;      // This is 2 (for an arc section header)
+    std::uint16_t hsize;     // Size of this header in bytes
+    std::uint32_t numFiles;  // Number of files in this section
 } sh3_arc_section_header_t;
 
 // Info about a file in a section
 typedef struct
 {
-    uint16_t type;          // This is 3 (for a file entry)
-    uint16_t fileSize;      // Size of this file entry(in bytes)
-    uint16_t arcIndex;      // Index of this file (in the .arc it is located in)
-    uint16_t sectionIndex;  // Index of the current section we are in.
+    std::uint16_t type;          // This is 3 (for a file entry)
+    std::uint16_t fileSize;      // Size of this file entry(in bytes)
+    std::uint16_t arcIndex;      // Index of this file (in the .arc it is located in)
+    std::uint16_t sectionIndex;  // Index of the current section we are in.
 } sh3_arc_file_header_t;
 
 // Actual file entry
@@ -125,7 +125,7 @@ public:
     std::string sectionName; // Name of this section
 
     // Should this be private?!?!
-    std::map<std::string, uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
+    std::map<std::string, std::uint32_t> fileList; // Maps a file (and its associated virtual path) to it's section index
 
     // FUNCTION DECLARATIONS
     bool Load(sh3_arc_file& fHandle);
@@ -144,7 +144,7 @@ public:
 
     // FUNCTION DECLARATIONS
     bool Load();
-    int LoadFile(char* filename, uint8_t* buffer);
+    int LoadFile(char* filename, std::uint8_t* buffer);
 
 };
 
