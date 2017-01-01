@@ -49,22 +49,23 @@ void Log(LogLevel logType, const char* str, ...)
         }
     }
 
+    const char* label = "";
     switch(logType)
     {
     case LogLevel::Info:
-        fputs("[info] ", logfile);
+        label = "[info] ";
         break;
 
     case LogLevel::Warn:
-        fputs("[warning] ", logfile);
+        label = "[warning] ";
         break;
 
     case LogLevel::Error:
-        fputs("[error] ", logfile);
+        label = "[error] ";
         break;
 
     case LogLevel::Fatal:
-        fputs("[fatal] ", logfile);
+        label = "[fatal] ";
         break;
 
     case LogLevel::None:
@@ -72,7 +73,7 @@ void Log(LogLevel logType, const char* str, ...)
     }
 
     va_start(args, str);
-    if(vfprintf(logfile, str, args) < 0)
+    if(fputs(label, logfile) < 0 || vfprintf(logfile, str, args) < 0)
     {
         fprintf(stderr, "Unable to write to flush info log!");
     }
