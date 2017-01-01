@@ -31,6 +31,12 @@ Revision History:
 
 struct sh3_arc_file final
 {
+private:
+    struct gz_file_closer final
+    {
+    public:
+        void operator()(gzFile file) const { gzclose(file); }
+    };
 public:
     enum class read_result
     {
@@ -53,7 +59,7 @@ public:
     read_result ReadString(std::string& destination, size_t len);
 
 private:
-    std::unique_ptr<gzFile_s, int(&)(gzFile)> gzHandle;
+    std::unique_ptr<gzFile_s, gz_file_closer> gzHandle;
 };
 
 #endif // SH3_ARC_FILE_HPP_INCLUDED
