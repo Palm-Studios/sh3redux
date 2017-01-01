@@ -49,18 +49,21 @@ Revision History:
 /*                                                          */
 /************************************************************/
 
-#define LOG_INFO    0
-#define LOG_WARN    1
-#define LOG_ERROR   2
-#define LOG_FATAL   3
-#define LOG_NONE    4
+enum class LogLevel
+{
+    Info,
+    Warn,
+    Error,
+    Fatal,
+    None,
+};
 
 /*
     We need this here to avoid the stupid overwriting bug we get (well, not really
     a bug because each file gets its own copy of the static function) so we stick an
     external defintion here and implement in another file!! :^]
 */
-extern void Log(int logType, const char* str, ...);
+extern void Log(LogLevel logType, const char* str, ...);
 
 static inline void messagebox(const char* title, const char* str, ...)
 {
@@ -145,7 +148,7 @@ static inline void die(const char* str, ...)
 
     va_start(args, str);
     vsnprintf(buff, sizeof(buff), str, args);
-    Log(LOG_FATAL, buff);
+    Log(LogLevel::Fatal, buff);
     messagebox("Fatal Error", buff);
     va_end(args);
     exit(SH_BAD);
