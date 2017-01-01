@@ -23,11 +23,11 @@ Revision History:
 
 #include <zlib.h>
 
+#include <memory>
 #include <string>
 #include <type_traits>
-#include <memory>
 
-#include <SH3/stdtype.hpp>
+#include "SH3/stdtype.hpp"
 
 struct sh3_arc_file final
 {
