@@ -92,28 +92,30 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="include/SH3/arc/sh3_arc_file.hpp" />
-		<Unit filename="include/SH3/arc/sh3_arc_section.hpp" />
-		<Unit filename="include/SH3/arc/sh3_arc_types.hpp" />
-		<Unit filename="include/SH3/graphics/sh3_model.hpp" />
-		<Unit filename="include/SH3/graphics/sh3_texture.hpp" />
-		<Unit filename="include/SH3/sh3arch.hpp" />
-		<Unit filename="include/SH3/sh3math.hpp" />
-		<Unit filename="include/SH3/sh3util.hpp" />
+		<Unit filename="include/SH3/arc/file.hpp" />
+		<Unit filename="include/SH3/arc/section.hpp" />
+		<Unit filename="include/SH3/arc/types.hpp" />
+		<Unit filename="include/SH3/arch.hpp" />
+		<Unit filename="include/SH3/graphics/model.hpp" />
+		<Unit filename="include/SH3/graphics/texture.hpp" />
+		<Unit filename="include/SH3/math.hpp" />
 		<Unit filename="include/SH3/stdtype.hpp" />
-		<Unit filename="include/SH3/system/sh3_config.hpp" />
-		<Unit filename="include/SH3/system/sh3_glcontext.hpp" />
-		<Unit filename="include/SH3/system/sh3_sdl_destroyer.hpp" />
-		<Unit filename="include/SH3/system/sh3_window.hpp" />
+		<Unit filename="include/SH3/system/config.hpp" />
+		<Unit filename="include/SH3/system/glcontext.hpp" />
+		<Unit filename="include/SH3/system/log.hpp" />
+		<Unit filename="include/SH3/system/sdl_destroyer.hpp" />
+		<Unit filename="include/SH3/system/window.hpp" />
 		<Unit filename="include/SH3/types/vertex.hpp" />
-		<Unit filename="source/arc/sh3_arc.cpp" />
-		<Unit filename="source/arc/sh3_arc_file.cpp" />
-		<Unit filename="source/arc/sh3_arc_section.cpp" />
-		<Unit filename="source/sh3main.cpp" />
-		<Unit filename="source/system/sh3_config.cpp" />
-		<Unit filename="source/system/sh3_glcontext.cpp" />
-		<Unit filename="source/system/sh3_log.cpp" />
-		<Unit filename="source/system/sh3_window.cpp" />
+		<Unit filename="include/SH3/util.hpp" />
+		<Unit filename="source/SH3/arc/file.cpp" />
+		<Unit filename="source/SH3/arc/section.cpp" />
+		<Unit filename="source/SH3/arc/types.cpp" />
+		<Unit filename="source/SH3/graphics/texture.cpp" />
+		<Unit filename="source/SH3/system/config.cpp" />
+		<Unit filename="source/SH3/system/glcontext.cpp" />
+		<Unit filename="source/SH3/system/log.cpp" />
+		<Unit filename="source/SH3/system/window.cpp" />
+		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
