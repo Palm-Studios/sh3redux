@@ -31,6 +31,8 @@ Revision History:
 #include "SH3/arc/file.hpp"
 
 #include <algorithm>
+#include <cstddef>
+#include <cstdint>
 #include <iterator>
 #include <utility>
 
@@ -106,11 +108,11 @@ Return Type:
         int - File length or 0 if none existent
 
 --*/
-int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
+int sh3_arc::LoadFile(char* filename, std::uint8_t* buffer)
 {
-    uint32_t         index;
-    uint8_t*         buff;
-    FILE*            sectionHandle;
+    std::uint32_t    index;
+    std::uint8_t*    buff;
+    std::FILE*       sectionHandle;
     sh3_arc_section* section = nullptr;
 
     // Find what section the file is in
@@ -134,7 +136,7 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
         return ARC_FILE_NOT_FOUND;
     }
 
-    if((sectionHandle = fopen(section->sectionName.c_str(), "rb")) == nullptr)
+    if((sectionHandle = std::fopen(section->sectionName.c_str(), "rb")) == nullptr)
     {
         die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->sectionName.c_str());
     }
@@ -145,26 +147,26 @@ int sh3_arc::LoadFile(char* filename, uint8_t* buffer)
     sh3_subarc_header_t header;
     sh3_subarc_file_t   fileEntry;
 
-    fread(&header, 1, sizeof(sh3_subarc_header_t), sectionHandle); // Read in the header
+    std::fread(&header, 1, sizeof(sh3_subarc_header_t), sectionHandle); // Read in the header
 
     if(header.magic != ARCSECTION_MAGIC) // Validate the magic number to make sure we're really reading a .arc file!
     {
         die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", section->sectionName.c_str());
     }
 
-    fseek(sectionHandle, index * sizeof(sh3_subarc_file_t), SEEK_CUR); // Seek to the file entry
-    fread(&fileEntry, 1, sizeof(sh3_subarc_file_t), sectionHandle);
+    std::fseek(sectionHandle, index * sizeof(sh3_subarc_file_t), SEEK_CUR); // Seek to the file entry
+    std::fread(&fileEntry, 1, sizeof(sh3_subarc_file_t), sectionHandle);
 
-    buff = new uint8_t[fileEntry.length]; // Allocate new buffer
+    buff = new std::uint8_t[fileEntry.length]; // Allocate new buffer
 
-    fseek(sectionHandle, fileEntry.offset, SEEK_SET); // Seek to file Data
-    fread(buff, 1, fileEntry.length, sectionHandle);
+    std::fseek(sectionHandle, fileEntry.offset, SEEK_SET); // Seek to file Data
+    std::fread(buff, 1, fileEntry.length, sectionHandle);
 
-    memcpy(buffer, buff, fileEntry.length); // Copy to param buffer
+    std::memcpy(buffer, buff, fileEntry.length); // Copy to param buffer
 
     delete buff; // No memory leaks in THIS dojo!
 
-    fclose(sectionHandle);
+    std::fclose(sectionHandle);
 
     return fileEntry.length;
 }

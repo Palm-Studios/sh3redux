@@ -46,9 +46,9 @@ Return Type:
 --*/
 int sh3_config::Load()
 {
-    FILE*   cfgfile;
+    std::FILE* cfgfile;
 
-    if((cfgfile = fopen(CFGPATH, "r")) != NULL)
+    if((cfgfile = std::fopen(CFGPATH, "r")) != NULL)
     {
         int         nStrs;
         char        commandc[512];
@@ -56,9 +56,9 @@ int sh3_config::Load()
 
         std::vector<std::string> args;
 
-        while(!feof(cfgfile))
+        while(!std::feof(cfgfile))
         {
-            fgets(commandc, 512, cfgfile); // Get in one command of text
+            std::fgets(commandc, 512, cfgfile); // Get in one command of text
             command = commandc;
 
             // Now, split the command up and store its' value in our map (that we can use later!! :] )

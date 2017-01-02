@@ -25,7 +25,7 @@ Revision History:
 #include "SH3/arc/types.hpp"
 #include "SH3/system/window.hpp"
 #include "SH3/system/config.hpp"
-#include <iostream>
+#include <cstdio>
 
 struct test
 {
@@ -81,11 +81,11 @@ SHSTATUS main(int argc, char** argv)
 
     ret = t1 * t2;
 
-    printf("%f\n", ret.y);
+    std::printf("%f\n", ret.y);
 
     ret = t1 + t2;
 
-    printf("%f\n", ret.y);
+    std::printf("%f\n", ret.y);
 
 //    sh3_config config;
 //    sh3_arc arc;
