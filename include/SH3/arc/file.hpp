@@ -28,8 +28,6 @@ Revision History:
 #include <string>
 #include <type_traits>
 
-#include "SH3/stdtype.hpp"
-
 struct sh3_arc_file final
 {
 private:

@@ -20,7 +20,7 @@ Revision History:
 
 --*/
 #include "SH3/system/config.hpp"
-#include "SH3/stdtype.hpp"
+#include "SH3/system/log.hpp"
 
 #include <sstream>
 #include <cstring>

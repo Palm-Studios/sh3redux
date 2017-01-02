@@ -21,6 +21,7 @@ Revision History:
 --*/
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/file.hpp"
+#include "SH3/system/log.hpp"
 
 /*++
 
