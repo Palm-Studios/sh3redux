@@ -28,13 +28,4 @@ Revision History:
 
 #include "SH3/system/log.hpp"
 
-/************************************************************/
-/*                   TYPE DEFINITIONS                       */
-/* Defines a few common types that are used throughout      */
-/* the Engine                                               */
-/************************************************************/
-
-#define SH_OK   0
-#define SH_BAD  -1
-
 #endif // STDTYPE_HPP_INCLUDED

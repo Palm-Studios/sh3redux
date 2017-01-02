@@ -23,8 +23,9 @@ Revision History:
 #include "SH3/stdtype.hpp"
 #include "SH3/math.hpp"
 #include "SH3/arc/types.hpp"
-#include "SH3/system/window.hpp"
 #include "SH3/system/config.hpp"
+#include "SH3/system/exit_code.hpp"
+#include "SH3/system/window.hpp"
 #include <cstdio>
 
 struct test
@@ -97,5 +98,5 @@ int main(int argc, char** argv)
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
 
-    return 0;
+    exit(exit_code::Success);
 }
