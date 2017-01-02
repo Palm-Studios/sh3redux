@@ -119,14 +119,20 @@ int sh3_arc::LoadFile(char* filename, std::uint8_t* buffer)
     for(sh3_arc_section& candidate : c_sections)
     {
         auto files = candidate.fileList.equal_range(filename);
-        if(files.first == files.second)
+        if(files.first == end(candidate.fileList))
         {
             continue; // No filename found in this section, continue over
         }
         else // We've found it
         {
             section = &candidate;
+            // files.first is the std::map iterator
+            // files.first->second is the value of the entry the iterator is pointing at
             index = files.first->second;
+            if(next(files.first) != files.second)
+            {
+                Log(LogLevel::Warn, "Multiple files with name %s exist.", filename.c_str());
+            }
             break;
         }
     }
