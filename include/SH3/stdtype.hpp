@@ -37,6 +37,4 @@ Revision History:
 #define SH_OK   0
 #define SH_BAD  -1
 
-typedef int SHSTATUS; // Return type for functions
-
 #endif // STDTYPE_HPP_INCLUDED
