@@ -65,10 +65,10 @@ Arguments:
         argv - Arguments list
 
 Return Type:
-        SHSTATUS
+        int
 
 --*/
-SHSTATUS main(int argc, char** argv)
+int main(int argc, char** argv)
 {
     static_cast<void>(argc);
     static_cast<void>(argv);
