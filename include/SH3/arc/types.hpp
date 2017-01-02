@@ -56,7 +56,6 @@ Revision History:
 #ifndef SH3_ARC_TYPES_HPP_INCLUDED
 #define SH3_ARC_TYPES_HPP_INCLUDED
 
-#include "SH3/stdtype.hpp"
 #include <cstdint>
 #include <map>
 #include <string>

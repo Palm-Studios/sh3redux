@@ -21,8 +21,8 @@ Revision History:
 #include <cstdio>
 #include <cstdlib>
 
-#include "SH3/stdtype.hpp"
 #include "SH3/system/glcontext.hpp"
+#include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
 #include <GL/glew.h>
 #include <GL/glu.h>
