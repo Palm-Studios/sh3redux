@@ -91,7 +91,8 @@ SHSTATUS main(int argc, char** argv)
 //    sh3_arc arc;
 //
 //    arc.Load();
-//    arc.LoadFile("data/eff_tex/fire00_tr.pic", NULL);
+//    std::vector<uint8_t> data;
+//    arc.LoadFile("data/eff_tex/fire00_tr.pic", data);
 //
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
