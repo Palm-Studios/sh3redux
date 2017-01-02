@@ -52,7 +52,7 @@ public:
     bool is_open() const {return static_cast<bool>(gzHandle);}
 
     read_result ReadData(void* destination, std::size_t len);
-    template<typename T, typename = std::enable_if<std::is_standard_layout<T>::value>>
+    template<typename T, typename = std::enable_if<std::is_trivially_copyable<T>::value>>
     read_result ReadObject(T& destination, std::size_t len = sizeof(T))
     {
         return ReadData(&destination, len);
