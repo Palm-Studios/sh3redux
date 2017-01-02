@@ -30,26 +30,51 @@ private:
     public:
         void operator()(gzFile file) const { gzclose(file); }
     };
+
 public:
     enum class read_result
     {
         Success,
         Eof,
         PartialRead,
-        Error,
+        GZError,
+    };
+
+    class read_error final
+    {
+    public:
+        operator bool() const { return result != read_result::Success; }
+        read_result get_read_result() const { return result; }
+
+        void set_error(sh3_arc_file::read_result result, gzFile file);
+
+        std::string message() const;
+
+    private:
+        read_result result;
+        int zlib_err;
+        int os_err;
     };
 
     sh3_arc_file(const std::string& path);
 
     bool is_open() const {return static_cast<bool>(gzHandle);}
 
-    read_result ReadData(void* destination, std::size_t len);
+    std::size_t ReadData(void* destination, std::size_t len, read_error& e);
+
     template<typename T, typename = std::enable_if<std::is_trivially_copyable<T>::value>>
-    read_result ReadObject(T& destination, std::size_t len = sizeof(T))
+    size_t ReadObject(T& destination, std::size_t len, read_error& e)
     {
-        return ReadData(&destination, len);
+        return ReadData(&destination, len, e);
     }
-    read_result ReadString(std::string& destination, std::size_t len);
+
+    template<typename T, typename = std::enable_if<std::is_trivially_copyable<T>::value>>
+    size_t ReadObject(T& destination, read_error& e)
+    {
+        return ReadObject(destination, sizeof(destination), e);
+    }
+
+    std::size_t ReadString(std::string& destination, std::size_t len, read_error& e);
 
 private:
     std::unique_ptr<gzFile_s, gz_file_closer> gzHandle;
