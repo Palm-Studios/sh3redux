@@ -25,6 +25,7 @@ Revision History:
 #include "SH3/arc/types.hpp"
 #include "SH3/system/window.hpp"
 #include "SH3/system/config.hpp"
+#include "SH3/graphics/texture.hpp"
 #include <cstdio>
 
 struct test
@@ -96,6 +97,11 @@ SHSTATUS main(int argc, char** argv)
 //
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
+    sh3_arc arc;
+    arc.Load();
+    sh3_graphics::texture tex(arc);
+
+    tex.Load("data/eff_tex/fire00_tr.pic");
 
     return 0;
 }

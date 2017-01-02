@@ -15,8 +15,10 @@
 #ifndef SH3_TEXTURE_H_INCLUDED
 #define SH3_TEXTURE_H_INCLUDED
 
-#include <cstdint>
 #include <SH3/arc/types.hpp>
+
+#include <cstdint>
+#include <vector>
 #include <GL/gl.h>
 
 namespace sh3_graphics
@@ -65,16 +67,21 @@ namespace sh3_graphics
     {
         INVALID_CHUNK,
         TEOF,
+
     };
 
-        texture(std::string& filename){Load(filename);};
-        ~texture(){delete[] pixbuff;}
+        texture(sh3_arc& arcref){arc = arcref;}
+        texture(std::string& filename, sh3_arc& arcref){arc = arcref; Load(filename);}
+        ~texture(){}
 
-        GLuint Load(std::string& path);
+        result Load(const std::string& filename);
 
     private:
-        std::uint8_t*   pixbuff;
-        std::string     texname;
+        std::vector<std::uint8_t>       pixbuff;
+        std::string                     texpath;
+
+        sh3_arc             arc;
+        sh3_texture_header  texheader;
     };
 
 
