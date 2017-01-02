@@ -33,7 +33,9 @@ Revision History:
 #include <algorithm>
 #include <cstddef>
 #include <cstdint>
+#include <fstream>
 #include <iterator>
+#include <type_traits>
 #include <utility>
 
 const char* defaultPath = "data/arc.arc";
@@ -102,17 +104,17 @@ Routine Description:
         Load a file from a section and store it in (an already allocated) buffer
 
 Arguments:
-        buffer* - Pre-alllocated buffer for file
+        filename - path to the file to load
+        buffer - vector for file contents (will be resized if necessary)
+        start - iterator into the vector where contents will be inserted
 
 Return Type:
         int - File length or 0 if none existent
 
 --*/
-int sh3_arc::LoadFile(char* filename, std::uint8_t* buffer)
+int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
 {
     std::uint32_t    index;
-    std::uint8_t*    buff;
-    std::FILE*       sectionHandle;
     sh3_arc_section* section = nullptr;
 
     // Find what section the file is in
@@ -142,38 +144,38 @@ int sh3_arc::LoadFile(char* filename, std::uint8_t* buffer)
         return ARC_FILE_NOT_FOUND;
     }
 
-    if((sectionHandle = std::fopen(section->sectionName.c_str(), "rb")) == nullptr)
+    std::ifstream sectionFile(section->sectionName, std::ios::binary);
+    if(!sectionFile)
     {
         die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->sectionName.c_str());
     }
 
-    /*
-        We now read in the actual file from the appropriate sub arc
-    */
+    // Read the actual file from the appropriate sub arc
     sh3_subarc_header_t header;
     sh3_subarc_file_t   fileEntry;
 
-    std::fread(&header, 1, sizeof(sh3_subarc_header_t), sectionHandle); // Read in the header
-
-    if(header.magic != ARCSECTION_MAGIC) // Validate the magic number to make sure we're really reading a .arc file!
+    // Read header to check validity
+    sectionFile.read(reinterpret_cast<char*>(&header), sizeof(header));
+    if(header.magic != ARCSECTION_MAGIC)
     {
         die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", section->sectionName.c_str());
     }
 
-    std::fseek(sectionHandle, index * sizeof(sh3_subarc_file_t), SEEK_CUR); // Seek to the file entry
-    std::fread(&fileEntry, 1, sizeof(sh3_subarc_file_t), sectionHandle);
+    // Seek to the file entry and read it
+    sectionFile.seekg(index * sizeof(fileEntry), std::ios_base::cur);
+    static_assert(std::is_trivially_copyable<decltype(fileEntry)>::value, "must be deserializable through char*");
+    sectionFile.read(reinterpret_cast<char*>(&fileEntry), sizeof(fileEntry));
 
-    buff = new std::uint8_t[fileEntry.length]; // Allocate new buffer
+    std::size_t space = distance(start, end(buffer));
+    if(space < fileEntry.length)
+    {
+        buffer.resize(fileEntry.length - space);
+    }
 
-    std::fseek(sectionHandle, fileEntry.offset, SEEK_SET); // Seek to file Data
-    std::fread(buff, 1, fileEntry.length, sectionHandle);
-
-    std::memcpy(buffer, buff, fileEntry.length); // Copy to param buffer
-
-    delete buff; // No memory leaks in THIS dojo!
-
-    std::fclose(sectionHandle);
+    sectionFile.seekg(fileEntry.offset);
+    static_assert(std::is_trivially_copyable<std::remove_reference<decltype(*start)>::type>::value, "must be deserializable through char*");
+    sectionFile.read(reinterpret_cast<char*>(&*start), fileEntry.length);
+    advance(start, fileEntry.length);
 
     return fileEntry.length;
 }
-

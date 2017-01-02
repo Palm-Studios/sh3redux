@@ -144,7 +144,8 @@ public:
 
     // FUNCTION DECLARATIONS
     bool Load();
-    int LoadFile(char* filename, std::uint8_t* buffer);
+    int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start);
+    int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer) { auto back = end(buffer); return LoadFile(filename, buffer, back); }
 
 };
 
