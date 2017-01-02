@@ -1,24 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_config.cpp
-
-Abstract:
-        Implementation of sh3_config.hpp
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        27-12-2016: File Created                                                    [jbuhagiar]
-
---*/
+/** @file
+ *
+ *  Implementation of sh3_config.hpp
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 27-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/system/config.hpp"
 #include "SH3/stdtype.hpp"
 
@@ -29,21 +20,17 @@ Revision History:
 
 #include <iostream>
 
+/** Default configuration path */
 const char* CFGPATH = "sh3r.cfg";
 const int   commandSize = 256;
 
-/*++
-
-Routine Description:
-        Load all options and map them to their values in our map
-
-Arguments:
-        None
-
-Return Type:
-        int - Number of Strings read in from the file
-
---*/
+/**
+ *  Load all options and map them to their values in our map
+ *
+ *  @param
+ *
+ *  @returns \c int - Number of Strings read in from the file
+*/
 int sh3_config::Load()
 {
     std::FILE* cfgfile;
@@ -89,18 +76,15 @@ int sh3_config::Load()
     }
 }
 
-/*++
-
-Routine Description:
-
-
-Arguments:
-
-
-Return Type:
-
-
---*/
+/**
+ *  Kill the process due to a fatal error being encountered
+ *  and inform the user of the problem (as well as writing to
+ *  the error log, log.txt)
+ *
+ *  @param str - String to display to the user
+ *
+ *  @returns Nothing
+*/
 int sh3_config::GetOptionValue(std::string option)
 {
     if(values.find(option) == values.end())

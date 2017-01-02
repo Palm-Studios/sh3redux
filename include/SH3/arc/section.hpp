@@ -1,31 +1,31 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_arc_section.hpp
-
-Abstract:
-        Related data structures for a sub arc
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        25-12-2016: File Created                                                    [jbuhagiar]
-
---*/
+/** @file
+ *
+ *  Related data structures for a sub arc
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 26-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #ifndef SH3_ARC_SECTION_HPP_INCLUDED
 #define SH3_ARC_SECTION_HPP_INCLUDED
 
 #include <cstdint>
 
+/** \c arc section magic number */
 #define ARCSECTION_MAGIC 0x20030507
 
+/** @defgroup arc-headers File and type headers
+ *  @{
+ */
+
+/**
+ * Header file for subarc file (*.arc [arc.arc is NOT included])
+ *
+ */
 typedef struct
 {
     std::uint32_t magic;             // File magic number
@@ -34,6 +34,10 @@ typedef struct
     std::uint32_t unused;            // Unused DWORD
 } sh3_subarc_header_t;
 
+/**
+ * File entry in this subarc. The file name for this entry is in arc.arc
+ *
+ */
 typedef struct
 {
     std::uint32_t offset;            // Offset file resides at
@@ -42,5 +46,6 @@ typedef struct
     std::uint32_t length2;
 } sh3_subarc_file_t;
 
+/** @}*/
 
 #endif // SH3_ARC_SECTION_HPP_INCLUDED

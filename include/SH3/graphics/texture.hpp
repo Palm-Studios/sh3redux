@@ -8,7 +8,7 @@
             all of the file types, including all of the textures, meshes and even the motion capture
             skeletal animation that Konami captured. Thanks mate!
  *
- *  \date 2/1/2017
+ *  \date 2-1-2017
  *
  *  \author Jesse Buhagiar
  */
@@ -51,12 +51,6 @@ namespace sh3_graphics
     } sh3_texture_header;
 
     /**
-     * \class texture
-     *
-     * \brief Describes a logical texture and files to
-     *
-     * \note
-     *
      * Defines a few bits of data and some functions to load in a texture
      * from a SILENT HILL 3 .arc section.
      */

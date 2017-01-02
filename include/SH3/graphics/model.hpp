@@ -1,24 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios and Mike M (@perdedork)
-
-Module Name:
-        sh3_model.hpp
-
-Abstract:
-        Data structures and class to load and draw a SILENT HILL 3 Model file
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        27-12-2016: File Created                                                [jbuhagiar]
-
---*/
+/** @file
+ *
+ *  Data structures and class to load and draw a SILENT HILL 3 Model file
+ *
+ *  \copyright 2016  Palm Studios and Mike M (<a href="https://twitter.com/perdedork">\@perdedork</a>)
+ *
+ *  \note
+ *
+ *  \date 27-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #ifndef SH3_MODEL_HPP_INCLUDED
 #define SH3_MODEL_HPP_INCLUDED
 

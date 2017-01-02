@@ -1,6 +1,6 @@
 /** @file
  *
- *  Implementation of texture.hpp
+ *  \brief Implementation of texture.hpp
  *
  *  \copyright 2016  Palm Studios
  *
@@ -16,15 +16,12 @@
 using namespace sh3_graphics;
 
 /**
- * \fn Load
+ *  Load a texture from \c arc.arc.
  *
- * \brief Load a texture and return a result to it
+ *  @param filename Virtual file path to file.
  *
- * \note
- *
- * \return \c result indicating whether the read failed or not
- *
- */
+ *  @returns Nothing if file not found, TEOF on success.
+*/
 texture::result sh3_graphics::texture::Load(const std::string& filename)
 {
     if(arc.LoadFile(filename, pixbuff) == ARC_FILE_NOT_FOUND)

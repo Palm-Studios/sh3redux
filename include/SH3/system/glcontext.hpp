@@ -1,25 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_glcontext.hpp
-
-Abstract:
-        Defines a logical OpenGL Context
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-    https://www.khronos.org/opengl/wiki/GLAPI/glGet
-
-Revision History:
-        22-12-2016: File Created                                    [jbuhagiar]
-
---*/
+/** @file
+ *
+ *  Defines a logical OpenGL Context
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note   https://www.khronos.org/opengl/wiki/GLAPI/glGet
+ *
+ *  \date 22-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #ifndef SH3_GLCONTEXT_HPP_INCLUDED
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
@@ -30,6 +20,9 @@ Revision History:
 
 class sh3_window;
 
+/**
+ * Class that allows us to interact more easily with OpenGL, as well as defining some helper functions
+ */
 class sh3_glcontext
 {
 public:

@@ -1,40 +1,25 @@
-/*++
-
-Copyright (c) 2016  Palm Studios and Mike M (@perdedork)
-
-Module Name:
-        sh3_arc_section.cpp
-
-Abstract:
-        Implementation of functions found in the class sh3_arc_section
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        17-12-2016: File Created [jbuhagiar]
-
---*/
+/** @file
+ *
+ *  Implementation of functions found in the class section.hpp
+ *
+ *  \copyright 2016  Palm Studios and Mike M (<a href="https://twitter.com/perdedork">\@perdedork</a>)
+ *
+ *  \note
+ *
+ *  \date 17-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/file.hpp"
 
-/*++
-
-Routine Description:
-        Load a section from arc.arc
-
-Arguments:
-        arcFile - a sh3_arc_file
-
-Return Type:
-        bool
-
---*/
-
+/**
+ *  Load a section from arc.arc
+ *
+ *  @param sh3_arc_file& - Reference to arc.arc's loader
+ *
+ *  @returns \c true if load successful, otherwise program exits
+*/
 bool sh3_arc_section::Load(sh3_arc_file& arcFile)
 {
     if(!arcFile.is_open())

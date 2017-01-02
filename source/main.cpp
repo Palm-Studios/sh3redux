@@ -1,25 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3main.cpp
-
-Abstract:
-        Program entry point.
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        13-12-2016: Initial Revision [jbuhagiar]
-
---*/
-
+/** @file
+ *
+ *  Program entry point.
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 13-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/stdtype.hpp"
 #include "SH3/math.hpp"
 #include "SH3/arc/types.hpp"

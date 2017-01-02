@@ -1,23 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_arc_file.cpp
-
-Abstract:
-        Implementation of functions found in the class sh3_arc_file
-
-Author:
-        Alexander Hirsch
-
-Environment:
-
-Notes:
-
-Revision History:
-
---*/
+/** @file
+ *
+ *  Implementation of functions found in the class sh3_arc_file
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 1-1-2017
+ *
+ *  \author Alexander Hirsch
+ */
 #include "SH3/arc/file.hpp"
 
 #include <cassert>
@@ -30,19 +22,14 @@ sh3_arc_file::sh3_arc_file(const std::string& path)
 {
 }
 
-/*++
-
-Routine Description:
-        Read binary data from an arc file to a buffer.
-
-Arguments:
-        destination - destination buffer
-        len - amount of bytes to read
-
-Return Type:
-        sh3_arc_file::read_result
-
---*/
+/**
+ *  Read binary data from an arc file to a buffer.
+ *
+ *  @param destination - destination buffer
+ *  @param len - amount of bytes to read
+ *
+ *  @returns \c sh3_arc_file::read_result
+*/
 sh3_arc_file::read_result sh3_arc_file::ReadData(void* destination, std::size_t len)
 {
     assert(static_cast<int>(len) > 0); // overflow check
@@ -66,20 +53,14 @@ sh3_arc_file::read_result sh3_arc_file::ReadData(void* destination, std::size_t 
     return read_result::Error;
 }
 
-
-/*++
-
-Routine Description:
-        Read a string from an arc file.
-
-Arguments:
-        destination - destination string
-        len - amount of bytes to read
-
-Return Type:
-        sh3_arc_file::read_result
-
---*/
+/**
+ *  Read a string from an arc file.
+ *
+ *  @param destination - destination string
+ *  @param len - amount of bytes to read
+ *
+ *  @returns \c sh3_arc_file::read_result.
+*/
 sh3_arc_file::read_result sh3_arc_file::ReadString(std::string& destination, std::size_t len)
 {
     assert(static_cast<int>(len) > 0); // overflow check

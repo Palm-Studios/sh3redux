@@ -1,25 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_window.cpp
-
-Abstract:
-        Implementation of sh3_window.hpp
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        22-12-2016: File Created                                    [jbuhagiar]
-
-
---*/
+/** @file
+ *
+ *  Implementation of sh3_window.hpp
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 22-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/system/glcontext.hpp"
 #include "SH3/system/window.hpp"
 

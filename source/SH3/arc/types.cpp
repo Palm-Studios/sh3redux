@@ -1,31 +1,15 @@
-/*++
-
-Copyright (c) 2016  Palm Studios and Mike M (@perdedork)
-
-Module Name:
-        sh3_arc.cpp
-
-Abstract:
-        Implementation of functions found in the class sh3_arc
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        17-12-2016: File Created                                                [jbuhagiar]
-        17-12-2016: Started an implementation of Load( )                        [jbuhagiar]
-        22-12-2016: Finished Implementation of Load( )                          [jbuhagiar]
-                    Started an implementation of LoadFile( )
-        27-12-2016: Reworked LoadFile( )                                        [jbuhagiar]
-                    Fixed an issue where program would segfault due to not finishing the
-                    for loop and then trying to read from the handle
-                    Added a few constants (no magic numbers in THIS Dojo!)
-
---*/
+/** @file
+ *
+ *  Implementation of functions found in the class types.hpp
+ *
+ *  \copyright 2016  Palm Studios and Mike M (<a href="https://twitter.com/perdedork">\@perdedork</a>)
+ *
+ *  \note
+ *
+ *  \date 17-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/section.hpp"
 #include "SH3/arc/file.hpp"
@@ -40,20 +24,13 @@ Revision History:
 
 const char* defaultPath = "data/arc.arc";
 
-//////////////////////////////////////////////////////////////////////////////
-
-/*++
-
-Routine Description:
-        Open a handle to arc.arc and load each section
-
-Arguments:
-        path - Path to arc.arc
-
-Return Type:
-        bool
-
---*/
+/**
+ *  Open a handle to arc.arc and load each section
+ *
+ *  @param path - Path to arc.arc
+ *
+ *  @returns \c true if load successful, otherwise program exits
+*/
 bool sh3_arc::Load()
 {
     sh3_arc_file file(defaultPath);;
@@ -98,20 +75,15 @@ bool sh3_arc::Load()
     return true;
 }
 
-/*++
-
-Routine Description:
-        Load a file from a section and store it in (an already allocated) buffer
-
-Arguments:
-        filename - path to the file to load
-        buffer - vector for file contents (will be resized if necessary)
-        start - iterator into the vector where contents will be inserted
-
-Return Type:
-        int - File length or 0 if none existent
-
---*/
+/**
+ *  Load a file from a section and store it in (an already allocated) buffer
+ *
+ *  @param filename - path to the file to load
+ *  @param buffer - vector for file contents (will be resized if necessary)
+ *  @param start - iterator into the vector where contents will be inserted
+ *
+ *  @returns \c int - File length or 0 if none existent
+*/
 int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
 {
     std::uint32_t    index;

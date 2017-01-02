@@ -1,28 +1,16 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_log.cpp
-
-Abstract:
-        Implementation of the Log( ) function so we don't have any issues with static variables
-        across translation units!
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        24-12-2016: File Created                                                    [jbuhagiar]
-                    Function copied and implemented
-                    Added a new type, LOG_NONE
-
---*/
-
+/** @file
+ *
+ *  Implementation of the Log( ) function so we don't have any issues with static variables
+ *  across translation units!
+ *
+ *  \copyright 2016  Palm Studios
+ *
+ *  \note
+ *
+ *  \date 24-12-2016
+ *
+ *  \author Jesse Buhagiar
+ */
 #include "SH3/system/log.hpp"
 #include "SH3/stdtype.hpp"
 
@@ -32,6 +20,14 @@ Revision History:
 
 #include <SDL2/SDL_messagebox.h>
 
+/**
+ *  Write a message to the information log
+ *
+ *  @param LogLevel logType - Level of this warning
+ *  @param const char* str - Message and arguments
+ *
+ *  @returns Nothing
+*/
 void Log(LogLevel logType, const char* str, ...)
 {
     static const char* filename = "log.txt";
@@ -84,6 +80,15 @@ void Log(LogLevel logType, const char* str, ...)
     va_end(args);
 }
 
+/**
+ *  Kill the process due to a fatal error being encountered
+ *  and inform the user of the problem (as well as writing to
+ *  the error log, log.txt)
+ *
+ *  @param str - String to display to the user
+ *
+ *  @returns Nothing
+*/
 void die(const char* str, ...)
 {
     std::va_list args;
