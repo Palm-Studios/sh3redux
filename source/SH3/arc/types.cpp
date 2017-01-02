@@ -29,6 +29,7 @@ Revision History:
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/section.hpp"
 #include "SH3/arc/file.hpp"
+#include "SH3/system/log.hpp"
 
 #include <algorithm>
 #include <cstddef>

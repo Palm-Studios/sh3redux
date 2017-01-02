@@ -20,11 +20,11 @@ Revision History:
 
 --*/
 
-#include "SH3/stdtype.hpp"
 #include "SH3/math.hpp"
 #include "SH3/arc/types.hpp"
 #include "SH3/system/config.hpp"
 #include "SH3/system/exit_code.hpp"
+#include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
 #include <cstdio>
 
