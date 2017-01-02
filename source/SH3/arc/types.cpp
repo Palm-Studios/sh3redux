@@ -64,9 +64,11 @@ bool sh3_arc::Load()
     }
 
     // Now, we read in the first 16 bytes (the header) and make sure this really is arc.arc!
-    if(file.ReadObject(s_fileHeader) != sh3_arc_file::read_result::Success)
+    sh3_arc_file::read_error readError;
+    file.ReadObject(s_fileHeader, readError);
+    if(readError)
     {
-        die("E00002: sh3_arc::Load( ): Error reading arc.arc header! Was the handle opened correctly?!");
+        die("E00002: sh3_arc::Load( ): Error reading arc.arc header: %s! Was the handle opened correctly?!", readError.message().c_str());
     }
 
     // Check the first 4-bytes of the header to make sure we're not about to read a whole lot of garbage!
@@ -83,9 +85,10 @@ bool sh3_arc::Load()
        each section (or as I like to call them, sub arcs).
     */
 
-    if(file.ReadObject(s_infoHeader) != sh3_arc_file::read_result::Success)
+    file.ReadObject(s_infoHeader, readError);
+    if(readError)
     {
-        die("E00004: sh3_arc::Load( ): Invalid read of arc.arc information!");
+        die("E00004: sh3_arc::Load( ): Invalid read of arc.arc information: %s!", readError.message().c_str());
     }
 
     c_sections.resize(s_infoHeader.sectionCount);
