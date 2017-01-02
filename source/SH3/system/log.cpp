@@ -23,8 +23,8 @@ Revision History:
 
 --*/
 
+#include "SH3/system/exit_code.hpp"
 #include "SH3/system/log.hpp"
-#include "SH3/stdtype.hpp"
 
 #include <cstdio>
 #include <cstdarg>
@@ -94,5 +94,5 @@ void die(const char* str, ...)
     Log(LogLevel::Fatal, buff);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);
-    exit(SH_BAD);
+    exit(exit_code::Death);
 }
