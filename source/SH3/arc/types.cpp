@@ -151,7 +151,8 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
 
     static_cast<void>(index); // avoid clang warning - index *is* initialized now
 
-    std::ifstream sectionFile(section->sectionName, std::ios::binary);
+    std::string sectionPath = "data/" + section->sectionName + ".arc";
+    std::ifstream sectionFile(sectionPath, std::ios::binary);
     if(!sectionFile)
     {
         die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->sectionName.c_str());
