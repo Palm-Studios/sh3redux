@@ -91,7 +91,7 @@ void die(const char* str, ...)
 
     va_start(args, str);
     std::vsnprintf(buff, sizeof(buff), str, args);
-    Log(LogLevel::FATAL, buff);
+    Log(LogLevel::FATAL, "%s", buff);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);
     exit(exit_code::DEATH);

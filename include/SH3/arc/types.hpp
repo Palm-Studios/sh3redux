@@ -118,9 +118,6 @@ public:
     sh3_arc_section_header_t          header;
     std::vector<sh3_arc_file_entry_t> fileEntries;
 
-    sh3_arc_section(){};
-    ~sh3_arc_section(){};
-
     std::string sectionName; // Name of this section
 
     // Should this be private?!?!
@@ -128,7 +125,6 @@ public:
 
     // FUNCTION DECLARATIONS
     bool Load(sh3_arc_file& fHandle);
-
 };
 
 class sh3_arc
@@ -138,16 +134,12 @@ public:
     sh3_arc_data_header_t        s_infoHeader;   // Information about the MFT
     std::vector<sh3_arc_section> c_sections;    // List of all the sections in arc.arc
 
-    sh3_arc(){Load();};
-    ~sh3_arc(){};
+    sh3_arc(){Load();}
 
     // FUNCTION DECLARATIONS
     bool Load();
     int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start);
     int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer) { auto back = end(buffer); return LoadFile(filename, buffer, back); }
-
 };
-
-
 
 #endif // SH3_ARC_TYPES_HPP_INCLUDED

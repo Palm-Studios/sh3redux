@@ -29,8 +29,7 @@ Revision History:
 
 #include <iostream>
 
-const char* CFGPATH = "sh3r.cfg";
-const int   commandSize = 256;
+static const char*   CFGPATH = "sh3r.cfg";
 
 /*++
 
@@ -50,7 +49,7 @@ int sh3_config::Load()
 
     if((cfgfile = std::fopen(CFGPATH, "r")) != NULL)
     {
-        int         nStrs;
+        int         nStrs = 0;
         char        commandc[512];
         std::string command;
 
@@ -101,13 +100,11 @@ Return Type:
 
 
 --*/
-int sh3_config::GetOptionValue(std::string option)
+int sh3_config::GetOptionValue(const std::string& option)
 {
-    if(values.find(option) == values.end())
+    auto iter = values.find(option);
+    if(iter == end(values))
         return -1;
 
-    return values[option];
+    return iter->second;
 }
-
-
-

@@ -81,6 +81,4 @@ static inline int __check_cpu(const char* cpu)
     return 0;
 }
 
-
-
 #endif // SH3ARCH_HPP_INCLUDED
