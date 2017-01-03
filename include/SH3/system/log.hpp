@@ -23,11 +23,11 @@ Revision History:
 
 enum class LogLevel
 {
-    Info,
-    Warn,
-    Error,
-    Fatal,
-    None,
+    INFO,
+    WARN,
+    ERROR,
+    FATAL,
+    NONE,
 };
 
 void Log(LogLevel logType, const char* str, ...);
