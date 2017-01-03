@@ -21,6 +21,11 @@ Revision History:
 #ifndef SH3_LOG_HPP_INCLUDED
 #define SH3_LOG_HPP_INCLUDED
 
+// windows.h may define this
+#ifdef ERROR
+#undef ERROR
+#endif
+
 enum class LogLevel
 {
     INFO,
