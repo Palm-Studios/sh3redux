@@ -180,6 +180,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     {
         using size_type = std::remove_reference<decltype(buffer)>::type::size_type;
         buffer.resize(fileEntry.length - static_cast<size_type>(space));
+        start = end(buffer) - fileEntry.length;
     }
 
     sectionFile.seekg(fileEntry.offset);
