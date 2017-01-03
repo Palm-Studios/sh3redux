@@ -94,7 +94,7 @@ Return Type:
 --*/
 std::size_t sh3_arc_file::ReadData(void* destination, std::size_t len, read_error& e)
 {
-    assert(std::numeric_limits<int>::max() <= len); // overflow check
+    assert(std::numeric_limits<int>::max() >= len); // overflow check
     int ilen = static_cast<int>(len);
 
     int res = gzread(gzHandle.get(), destination, static_cast<unsigned>(ilen));
