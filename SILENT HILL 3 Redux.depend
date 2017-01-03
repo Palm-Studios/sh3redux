@@ -17,11 +17,11 @@
 	<vector>
 	<zlib.h>
 
-1483236343 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\stdtype.hpp
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\stdtype.hpp
 	<cstdio>
 	<cstring>
 	<cstdarg>
-	<SDL2/SDL_messagebox.h>
+	"SH3/system/log.hpp"
 	<windows.h>
 
 1476935894 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sdl2\sdl_messagebox.h
@@ -429,4 +429,81 @@
 
 1483235961 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sh3_sdl_destroyer.hpp
 	<SDL2/SDL_video.h>
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\main.cpp
+	"SH3/stdtype.hpp"
+	"SH3/math.hpp"
+	"SH3/arc/types.hpp"
+	"SH3/system/window.hpp"
+	"SH3/system/config.hpp"
+	<cstdio>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\log.hpp
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\math.hpp
+	<iostream>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\types.hpp
+	"SH3/stdtype.hpp"
+	<cstdint>
+	<map>
+	<string>
+	<vector>
+	<zlib.h>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\window.hpp
+	<memory>
+	<string>
+	<SDL2/SDL_video.h>
+	"SH3/stdtype.hpp"
+	"SH3/system/glcontext.hpp"
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\glcontext.hpp
+	<memory>
+	<vector>
+	<GL/glew.h>
+	"SH3/system/sdl_destroyer.hpp"
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\sdl_destroyer.hpp
+	<SDL2/SDL_video.h>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\system\config.hpp
+	<map>
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\arc\file.cpp
+	"SH3/arc/file.hpp"
+	<cassert>
+	<cerrno>
+	<cstddef>
+	<iterator>
+	<string>
+	<utility>
+	<vector>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\file.hpp
+	<zlib.h>
+	<cstddef>
+	<memory>
+	<string>
+	<type_traits>
+	"SH3/stdtype.hpp"
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\arc\section.cpp
+	"SH3/arc/types.hpp"
+	"SH3/arc/file.hpp"
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\arc\types.cpp
+	"SH3/arc/types.hpp"
+	"SH3/arc/section.hpp"
+	"SH3/arc/file.hpp"
+	<algorithm>
+	<cstddef>
+	<cstdint>
+	<fstream>
+	<iterator>
+	<type_traits>
+	<utility>
+
+1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\section.hpp
+	<cstdint>
 
