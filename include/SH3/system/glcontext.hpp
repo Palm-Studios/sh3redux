@@ -51,5 +51,4 @@ private:
 
 };
 
-
 #endif // SH3_GLCONTEXT_HPP_INCLUDED

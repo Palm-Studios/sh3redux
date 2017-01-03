@@ -25,19 +25,16 @@ Revision History:
 #define SH3_CONFIG_H_INCLUDED
 
 #include <map>
+#include <string>
 
 class sh3_config
 {
 public:
-    sh3_config(){};
-    ~sh3_config(){};
-
     int Load();
-    int GetOptionValue(std::string option);
+    int GetOptionValue(const std::string& option);
 
 private:
     std::map<std::string, int> values;
 };
-
 
 #endif // SH3_CONFIG_H_INCLUDED
