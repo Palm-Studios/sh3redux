@@ -4,7 +4,6 @@
  *
  *  @copyright 2016  Palm Studios
  *
- *  @note
  *
  *  @date 2-1-2017
  *
