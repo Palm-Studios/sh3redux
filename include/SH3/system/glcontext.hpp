@@ -33,10 +33,13 @@ class sh3_window;
 class sh3_glcontext
 {
 public:
-    sh3_glcontext(sh3_window& hwnd);
+    explicit sh3_glcontext(sh3_window& hwnd);
 
+    // cppcheck-suppress functionStatic
     const char* GetVendor() const;
+    // cppcheck-suppress functionStatic
     const char* GetVersion() const;
+    // cppcheck-suppress functionStatic
     const char* GetRenderer() const;
 
     void GetExtensions();

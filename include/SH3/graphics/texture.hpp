@@ -18,6 +18,7 @@
 #include <SH3/arc/types.hpp>
 
 #include <cstdint>
+#include <limits>
 #include <vector>
 #include <GL/gl.h>
 
@@ -84,11 +85,13 @@ namespace sh3_graphics
         load_result Load(const std::string& filename, sh3_arc& arc);
 
     private:
+        static constexpr std::uint32_t INVALID_TEXTURE = std::numeric_limits<uint32_t>::max();
+
         std::vector<std::uint8_t> pixbuff;
         std::string               texpath;
-        std::uint32_t             texid;
+        std::uint32_t             texid = INVALID_TEXTURE;
 
-        sh3_texture_header texheader;
+        sh3_texture_header texheader = {};
     };
 }
 

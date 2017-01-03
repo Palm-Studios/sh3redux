@@ -36,6 +36,7 @@ struct test
 private:
     using vector = float __attribute__((vector_size(16)));
     const vector& as_vec() const { return reinterpret_cast<const vector&>(*this); }
+    // cppcheck-suppress noExplicitConstructor
     test(const vector& v): test(v[0], v[1], v[2], v[3]) {}
 
 public:
