@@ -51,5 +51,4 @@ typedef struct
     float nx, ny, nz;   // Vertex normals (do we need 3??)
 } vertex4f_tex_t;
 
-
 #endif // VERTEX_HPP_INCLUDED

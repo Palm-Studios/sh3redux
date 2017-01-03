@@ -35,6 +35,4 @@ typedef struct
     std::uint32_t unused[8];             // Jesus Christ, KONAMI.....
 } sh3_model_header_t;
 
-
-
 #endif // SH3_MODEL_HPP_INCLUDED

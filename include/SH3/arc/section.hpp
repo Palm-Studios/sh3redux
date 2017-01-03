@@ -42,5 +42,4 @@ typedef struct
     std::uint32_t length2;
 } sh3_subarc_file_t;
 
-
 #endif // SH3_ARC_SECTION_HPP_INCLUDED

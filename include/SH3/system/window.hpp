@@ -37,12 +37,7 @@ public:
     std::unique_ptr<SDL_Window, sdl_destroyer> hwnd;
 
 private:
-    int width;
-    int height;
-    std::string title;
-
     sh3_glcontext context;
 };
-
 
 #endif // SH3_WINDOW_HPP_INCLUDED
