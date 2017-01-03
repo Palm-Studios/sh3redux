@@ -30,7 +30,7 @@ enum class LogLevel
     NONE,
 };
 
-void Log(LogLevel logType, const char* str, ...);
+[[gnu::format(printf, 2, 3)]] void Log(LogLevel logType, const char* str, ...);
 
 /*++
 
@@ -46,6 +46,6 @@ Return Type:
         None
 
 --*/
-void die(const char* str, ...);
+[[noreturn]] [[gnu::format(printf, 1, 2)]] void die(const char* str, ...);
 
 #endif // SH3_LOG_HPP_INCLUDED

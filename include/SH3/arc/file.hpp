@@ -57,12 +57,12 @@ public:
         std::string message() const;
 
     private:
-        read_result result;
-        int zlib_err;
-        int os_err;
+        read_result result = read_result::SUCCESS;
+        int zlib_err = Z_OK;
+        int os_err = 0;
     };
 
-    sh3_arc_file(const std::string& path);
+    explicit sh3_arc_file(const std::string& path);
 
     bool is_open() const {return static_cast<bool>(gzHandle);}
 

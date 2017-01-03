@@ -32,6 +32,7 @@ Revision History:
 #include "SH3/system/log.hpp"
 
 #include <algorithm>
+#include <cassert>
 #include <cstddef>
 #include <cstdint>
 #include <fstream>
@@ -39,7 +40,7 @@ Revision History:
 #include <type_traits>
 #include <utility>
 
-const char* defaultPath = "data/arc.arc";
+static const char* defaultPath = "data/arc.arc";
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -57,7 +58,7 @@ Return Type:
 --*/
 bool sh3_arc::Load()
 {
-    sh3_arc_file file(defaultPath);;
+    sh3_arc_file file(defaultPath);
 
     if(!file.is_open())
     {
@@ -148,6 +149,8 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
         return ARC_FILE_NOT_FOUND;
     }
 
+    static_cast<void>(index); // avoid clang warning - index *is* initialized now
+
     std::ifstream sectionFile(section->sectionName, std::ios::binary);
     if(!sectionFile)
     {
@@ -170,10 +173,12 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     static_assert(std::is_trivially_copyable<decltype(fileEntry)>::value, "must be deserializable through char*");
     sectionFile.read(reinterpret_cast<char*>(&fileEntry), sizeof(fileEntry));
 
-    std::size_t space = distance(start, end(buffer));
+    auto space = distance(start, end(buffer));
+    assert(space > 0);
     if(space < fileEntry.length)
     {
-        buffer.resize(fileEntry.length - space);
+        using size_type = std::remove_reference<decltype(buffer)>::type::size_type;
+        buffer.resize(fileEntry.length - static_cast<size_type>(space));
     }
 
     sectionFile.seekg(fileEntry.offset);
@@ -181,5 +186,6 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     sectionFile.read(reinterpret_cast<char*>(&*start), fileEntry.length);
     advance(start, fileEntry.length);
 
-    return fileEntry.length;
+    //FIXME: use error_code pattern like sh3_arc_file.ReadFile
+    return static_cast<int>(fileEntry.length);
 }

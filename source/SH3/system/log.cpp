@@ -34,13 +34,13 @@ Revision History:
 
 void Log(LogLevel logType, const char* str, ...)
 {
-    static const char* filename = "log.txt";
-    static std::FILE*  logfile  = nullptr;
+    static std::FILE* logfile = nullptr;
 
     std::va_list args;
 
     if(!logfile)
     {
+        static const char* filename = "log.txt";
         if(!(logfile = std::fopen(filename, "w+")))
         {
             std::fprintf(stderr, "Unable to open a handle to %s", filename);
@@ -91,7 +91,7 @@ void die(const char* str, ...)
 
     va_start(args, str);
     std::vsnprintf(buff, sizeof(buff), str, args);
-    Log(LogLevel::FATAL, buff);
+    Log(LogLevel::FATAL, "%s", buff);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);
     exit(exit_code::DEATH);

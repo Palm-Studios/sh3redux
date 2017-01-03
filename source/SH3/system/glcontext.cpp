@@ -18,8 +18,10 @@ Notes:
 Revision History:
         22-12-2016: File Created                                        [jbuhagiar]
 --*/
+#include <cassert>
 #include <cstdio>
 #include <cstdlib>
+#include <limits>
 
 #include "SH3/system/glcontext.hpp"
 #include "SH3/system/log.hpp"
@@ -121,12 +123,14 @@ void sh3_glcontext::GetExtensions()
     GLint i;
 
     glGetIntegerv(GL_NUM_EXTENSIONS, &numExts); // Get the number of extensions the system supports
-    extensions.resize(numExts);
+    static_assert(std::numeric_limits<std::size_t>::max() >= std::numeric_limits<GLint>::max(), "std::size_t must be able to represent all positive GLint");
+    assert(numExts >= 0);
+    extensions.reserve(static_cast<std::size_t>(numExts));
 
     // Iterate over each extension the graphics card supports and store it
     for(i = 0; i < numExts; i++)
     {
-        extensions[i] = reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i));
+        extensions.push_back(reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
     }
 }
 

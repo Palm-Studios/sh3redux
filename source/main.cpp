@@ -36,6 +36,7 @@ struct test
 private:
     using vector = float __attribute__((vector_size(16)));
     const vector& as_vec() const { return reinterpret_cast<const vector&>(*this); }
+    // cppcheck-suppress noExplicitConstructor
     test(const vector& v): test(v[0], v[1], v[2], v[3]) {}
 
 public:
@@ -82,11 +83,11 @@ int main(int argc, char** argv)
 
     ret = t1 * t2;
 
-    std::printf("%f\n", ret.y);
+    std::printf("%f\n", static_cast<double>(ret.y));
 
     ret = t1 + t2;
 
-    std::printf("%f\n", ret.y);
+    std::printf("%f\n", static_cast<double>(ret.y));
 
 //    sh3_config config;
 //    sh3_arc arc;
@@ -96,7 +97,6 @@ int main(int argc, char** argv)
 //    arc.LoadFile("data/eff_tex/fire00_tr.pic", data);
 //
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
-
 
     exit(exit_code::SUCCESS);
 }
