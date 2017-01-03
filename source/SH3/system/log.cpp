@@ -34,13 +34,13 @@ Revision History:
 
 void Log(LogLevel logType, const char* str, ...)
 {
-    static const char* filename = "log.txt";
-    static std::FILE*  logfile  = nullptr;
+    static std::FILE* logfile = nullptr;
 
     std::va_list args;
 
     if(!logfile)
     {
+        static const char* filename = "log.txt";
         if(!(logfile = std::fopen(filename, "w+")))
         {
             std::fprintf(stderr, "Unable to open a handle to %s", filename);
