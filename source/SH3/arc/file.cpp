@@ -23,6 +23,7 @@ Revision History:
 #include <cassert>
 #include <cerrno>
 #include <cstddef>
+#include <cstring>
 #include <iterator>
 #include <string>
 #include <utility>
