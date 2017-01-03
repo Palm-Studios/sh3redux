@@ -174,7 +174,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     sectionFile.read(reinterpret_cast<char*>(&fileEntry), sizeof(fileEntry));
 
     auto space = distance(start, end(buffer));
-    assert(space > 0);
+    assert(space >= 0);
     if(space < fileEntry.length)
     {
         using size_type = std::remove_reference<decltype(buffer)>::type::size_type;
