@@ -34,22 +34,22 @@ namespace sh3_graphics
         std::uint8_t  unused1[4];                 /** There are a lot of unused DWORDs, I assume to align everything nicely */
         std::uint32_t batchHeaderSize;            /** Size of the first part of the whole header */
         std::uint32_t batchSize;                  /** = res * res * (bpp/8) * #tex + 128 * #tex */
-        std::uint8_t  unused2[4];
+        std::uint8_t  unused2[4];                 /** Unused **/
         std::uint32_t numBatchedTextures;         /** Number of textures in this texture file */
-        std::uint8_t  unused3[8];
+        std::uint8_t  unused3[8];                 /** Unused **/
         std::uint32_t texHeaderSegMarker;         /** Secondary texture marker. This signifies the start of the texture information header */
-        std::uint8_t  unused4[4];
+        std::uint8_t  unused4[4];                 /** Unused **/
         std::uint16_t texWidth;                   /** The width of this texture */
         std::uint16_t texHeight;                  /** The height of this texture */
         std::uint8_t  bpp;                        /** Number of bits per pixel of this texture. NOTE: 8bpp is believed to be paletted! */
         std::uint8_t  dataOffset;                 /** #bytes from texHeaderSize+16 to 128 (0 filled) */
-        std::uint8_t  unused5[4];
+        std::uint8_t  unused5[4];                 /** Unused **/
         std::uint32_t texSize;                    /** The size of this texture in bytes (w * h * [bpp/8]) */
         std::uint32_t texHeaderSize;              /** = texSize + texHeaderSize + 16 + endFilleSize */
-        std::uint8_t  unused6[4];
+        std::uint8_t  unused6[4];                 /** Unused **/
         std::uint32_t unknown1;                   /** Completely unknown, probably unimportant for now */
         std::uint32_t unknown2;                   /** Usually 1! */
-        std::uint32_t unused7[15];
+        std::uint32_t unused7[15];                /** Unused **/
     } sh3_texture_header;
 
     /**
@@ -57,7 +57,7 @@ namespace sh3_graphics
      * Describes a logical texture that can be bound to OpenGL
      *
      * Defines a few bits of data and some functions to load in a texture
-     * from a SILENT HILL 3 .arc section.
+     * from a SILENT HILL 3 .arc section.both batch and individual texture
      *
      * @note
      *
@@ -65,28 +65,28 @@ namespace sh3_graphics
     class texture
     {
     public:
-    enum class result
-    {
-        INVALID_CHUNK,
-        TEOF,
-
-    };
+        enum class load_result
+        {
+            INVALID_CHUNK,
+            TEOF,
+        };
 
         texture(){}
-        texture(std::string& filename, sh3_arc& arc){Load(filename, arc);}
+        texture(const std::string& filename, sh3_arc& arc){Load(filename, arc);}
         ~texture(){}
 
-    /**
-     * Load a texture and return a result to it
-     *
-     * @note
-     *
-     * @param filename - Virtual file path to file.
-     *
-     * @return \c result indicating whether the read failed or not
-     *
-     */
-        result Load(const std::string& filename, sh3_arc& arc);
+        /**
+         * Load a texture and return a result to it
+         *
+         * @note
+         *
+         * @param filename - Virtual file path to file.
+         * @param arc - Reference to sh3_arc (arc.arc)
+         *
+         * @return @ref load_result indicating whether the read failed or not
+         *
+         */
+        load_result Load(const std::string& filename, sh3_arc& arc);
 
     private:
         std::vector<std::uint8_t>       pixbuff;

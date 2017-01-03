@@ -507,3 +507,44 @@
 1483370859 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\arc\section.hpp
 	<cstdint>
 
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\system\config.cpp
+	"SH3/system/config.hpp"
+	"SH3/stdtype.hpp"
+	<sstream>
+	<cstring>
+	<cstdio>
+	<vector>
+	<iostream>
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\system\glcontext.cpp
+	<cstdio>
+	<cstdlib>
+	"SH3/stdtype.hpp"
+	"SH3/system/glcontext.hpp"
+	"SH3/system/window.hpp"
+	<GL/glew.h>
+	<GL/glu.h>
+	<GL/glext.h>
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\system\log.cpp
+	"SH3/system/log.hpp"
+	"SH3/stdtype.hpp"
+	<cstdio>
+	<cstdarg>
+	<SDL2/SDL_messagebox.h>
+	<SDL2/SDL_messagebox.h>
+
+1483370859 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\system\window.cpp
+	"SH3/system/glcontext.hpp"
+	"SH3/system/window.hpp"
+
+1483415718 source:e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\source\sh3\graphics\texture.cpp
+	<SH3/graphics/texture.hpp>
+	<SH3/system/log.hpp>
+
+1483417488 e:\users\jesse\documents\palm studios\sh3redux-fork\sh3redux\include\sh3\graphics\texture.hpp
+	<SH3/arc/types.hpp>
+	<cstdint>
+	<vector>
+	<GL/gl.h>
+
