@@ -52,23 +52,23 @@ void Log(LogLevel logType, const char* str, ...)
     const char* label = "";
     switch(logType)
     {
-    case LogLevel::Info:
+    case LogLevel::INFO:
         label = "[info] ";
         break;
 
-    case LogLevel::Warn:
+    case LogLevel::WARN:
         label = "[warning] ";
         break;
 
-    case LogLevel::Error:
+    case LogLevel::ERROR:
         label = "[error] ";
         break;
 
-    case LogLevel::Fatal:
+    case LogLevel::FATAL:
         label = "[fatal] ";
         break;
 
-    case LogLevel::None:
+    case LogLevel::NONE:
         break;
     }
 
@@ -91,8 +91,8 @@ void die(const char* str, ...)
 
     va_start(args, str);
     std::vsnprintf(buff, sizeof(buff), str, args);
-    Log(LogLevel::Fatal, buff);
+    Log(LogLevel::FATAL, buff);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Fatal Error", buff, nullptr);
     va_end(args);
-    exit(exit_code::Death);
+    exit(exit_code::DEATH);
 }

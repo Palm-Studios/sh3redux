@@ -40,16 +40,16 @@ private:
 public:
     enum class read_result
     {
-        Success,
-        Eof,
-        PartialRead,
-        GZError,
+        SUCCESS,
+        END_OF_FILE,
+        PARTIAL_READ,
+        GZ_ERROR,
     };
 
     class read_error final
     {
     public:
-        operator bool() const { return result != read_result::Success; }
+        operator bool() const { return result != read_result::SUCCESS; }
         read_result get_read_result() const { return result; }
 
         void set_error(sh3_arc_file::read_result result, gzFile file);

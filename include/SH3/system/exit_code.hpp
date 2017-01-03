@@ -22,10 +22,10 @@
  */
 enum class exit_code : std::uint8_t
 {
-    Success,  /**< everything went fine, apparently */
-    Death,    /**< exit from @ref die() */
+    SUCCESS,  /**< everything went fine, apparently */
+    DEATH,    /**< exit from @ref die() */
 };
-static_assert(static_cast<int>(exit_code::Success) == 0, "must remain 0 to indicate success");
+static_assert(static_cast<int>(exit_code::SUCCESS) == 0, "must remain 0 to indicate success");
 
 /**
  *  Call @c std::exit with the @ref exit_code.

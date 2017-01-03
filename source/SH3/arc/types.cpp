@@ -137,7 +137,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
             index = files.first->second;
             if(next(files.first) != files.second)
             {
-                Log(LogLevel::Warn, "Multiple files with name %s exist.", filename.c_str());
+                Log(LogLevel::WARN, "Multiple files with name %s exist.", filename.c_str());
             }
             break;
         }

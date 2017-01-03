@@ -84,7 +84,7 @@ int sh3_config::Load()
     }
     else
     {
-        Log(LogLevel::Error, "Unable to find %s! Reverting to default values...", CFGPATH);
+        Log(LogLevel::ERROR, "Unable to find %s! Reverting to default values...", CFGPATH);
         return -1;
     }
 }
