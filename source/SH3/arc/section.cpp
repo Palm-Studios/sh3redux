@@ -51,6 +51,12 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
     }
 
     arcFile.ReadString(sectionName, header.hsize - sizeof(header), readError);
+    if(sectionName.back() != '\0')
+    {
+        die("E00007: sh3_arc_section::Load( ): Garbage read when reading section name (NUL terminator missing): %s!", sectionName.c_str());
+    }
+    sectionName.pop_back();
+    sectionName.shrink_to_fit();
 
     // We have now loaded information about the section, so we can start
     // reading in all the files located in it (not in full, obviously...)
