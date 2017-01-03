@@ -34,7 +34,7 @@ void sh3_arc_file::read_error::set_error(sh3_arc_file::read_result res, gzFile f
     result = res;
     zlib_err = Z_OK;
     os_err = 0;
-    if(result == sh3_arc_file::read_result::GZError)
+    if(result == sh3_arc_file::read_result::GZ_ERROR)
     {
         assert(file);
         gzerror(file, &zlib_err);
@@ -52,13 +52,13 @@ std::string sh3_arc_file::read_error::message() const
     std::string error;
     switch(result)
     {
-    case sh3_arc_file::read_result::Success:
+    case sh3_arc_file::read_result::SUCCESS:
         error = "Success";
-    case sh3_arc_file::read_result::Eof:
+    case sh3_arc_file::read_result::END_OF_FILE:
         error = "End of file";
-    case sh3_arc_file::read_result::PartialRead:
+    case sh3_arc_file::read_result::PARTIAL_READ:
         error = "Partial read";
-    case sh3_arc_file::read_result::GZError:
+    case sh3_arc_file::read_result::GZ_ERROR:
         error = "GZip error: ";
         error += zError(zlib_err);
         if(zlib_err == Z_ERRNO)
@@ -97,21 +97,21 @@ size_t sh3_arc_file::ReadData(void* destination, std::size_t len, read_error& e)
 
     if(res == static_cast<int>(len))
     {
-        e.set_error(read_result::Success, nullptr);
+        e.set_error(read_result::SUCCESS, nullptr);
     }
     else if(res > 0)
     {
         //TODO: return res also, so that caller knows how much was read
-        e.set_error(read_result::PartialRead, nullptr);
+        e.set_error(read_result::PARTIAL_READ, nullptr);
     }
     else if(res == 0)
     {
-        e.set_error(read_result::Eof, nullptr);
+        e.set_error(read_result::END_OF_FILE, nullptr);
     }
     else
     {
         res = 0;
-        e.set_error(read_result::GZError, gzHandle.get());
+        e.set_error(read_result::GZ_ERROR, gzHandle.get());
     }
 
     return res;
