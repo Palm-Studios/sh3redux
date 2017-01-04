@@ -32,8 +32,6 @@ enum class LogLevel
  *
  *  @param logType The @ref LogLevel to log with.
  *  @param str     Formatted string to print.
- *
- *  @return Nothing
  */
 [[gnu::format(printf, 2, 3)]] void Log(LogLevel logType, const char* str, ...);
 
@@ -44,7 +42,7 @@ enum class LogLevel
  *
  *  @param str Formatted string to print.
  *
- *  @return Nothing (@c noreturn)
+ *  @note This function does not return.
  */
 [[noreturn]] [[gnu::format(printf, 1, 2)]] void die(const char* str, ...);
 
