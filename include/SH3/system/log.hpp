@@ -17,26 +17,21 @@
 
 /**
  *  A level of error to tell the user how serious a message is.
- *
- *      INFO    - Information tag, general information to give to the user.
- *      WARN    - Warning tag, tell the user something naughty may have happened.
- *      ERROR   - Error tag, tell the user something bad has probably happened.
- *      FATAL   - Fatal tag, tell the user something REALLY bad has happened, and the program probably terminated early.
- *      NONE    - No tag to append to message.
  */
 enum class LogLevel
 {
-    INFO,
-    WARN,
-    ERROR,
-    FATAL,
-    NONE,
+    INFO,   /**< General information. */
+    WARN,   /**< Something suspicious happened. */
+    ERROR,  /**< Something bad happened. */
+    FATAL,  /**< Something really bad happened and the program will probably terminate. */
+    NONE,   /**< Unspecified message. */
 };
 
 /**
  *  Write a string to the log file.
  *
- *  @param str - Formatted string to print.
+ *  @param logType The @ref LogLevel to log with.
+ *  @param str     Formatted string to print.
  *
  *  @return Nothing
  */
@@ -47,7 +42,7 @@ enum class LogLevel
  *  and inform the user of the problem (as well as writing to
  *  the error log, log.txt)
  *
- *  @param str - Formatted string to print.
+ *  @param str Formatted string to print.
  *
  *  @return Nothing (@c noreturn)
  */
