@@ -14,7 +14,7 @@
 
 #define ARCSECTION_MAGIC 0x20030507 /**< Magic number (first 4 bytes) of an .arc section */
 
-/** @defgroup arc-headers arc header types
+/** @defgroup arc-section-headers arc section header types
  *  @{
  */
 
