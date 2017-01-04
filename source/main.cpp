@@ -1,24 +1,10 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3main.cpp
-
-Abstract:
-        Program entry point.
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        13-12-2016: Initial Revision [jbuhagiar]
-
---*/
+/** @file
+ *  Program entry point.
+ *
+ *  @copyright 2006  Palm Studios
+ *
+ *  @author Jesse Buhagiar
+ */
 
 #include "SH3/math.hpp"
 #include "SH3/arc/types.hpp"
@@ -56,21 +42,17 @@ test operator+(const test& v1, const test& v2)
     return v1.as_vec() + v2.as_vec();
 }
 
-/*++
-
-Routine Description:
-        Entry point to the program.
-        Requires argc and argv to make it compatible with SDL2
-
-Arguments:
-        argc - Number of arguments
-        argv - Arguments list
-
-Return Type:
-        int
-
---*/
-int main(int argc, char** argv)
+/**
+ *  Entry point to the program.
+ *
+ *  @note Requires @c argc and @c argv to make it compatible with SDL2.
+ *
+ *  @param argc Number of arguments.
+ *  @param argv Argument vector.
+ *
+ *  @returns An @ref exit_code specifying success or failure.
+ */
+[[noreturn]] int main(int argc, char** argv)
 {
     static_cast<void>(argc);
     static_cast<void>(argv);
