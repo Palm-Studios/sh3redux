@@ -45,8 +45,6 @@ public:
 
     /**
      *  Get a list of all extensions supported by the user's graphics card.
-     *
-     *  @return Nothing
      */
     void GetExtensions();
 
