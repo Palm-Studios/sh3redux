@@ -1,23 +1,12 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_arc_file.hpp
-
-Abstract:
-        Functions to extract data from arc files.
-
-Author:
-        Alexander Hirsch
-
-Environment:
-
-Notes:
-
-Revision History:
-
---*/
+/** @file
+ *  Functions to extract data from arc files.
+ *
+ *  @copyright 2016  Palm Studios
+ *
+ *  @date 1-1-2017
+ *
+ *  @author Alexander Hirsch
+ */
 #ifndef SH3_ARC_FILE_HPP_INCLUDED
 #define SH3_ARC_FILE_HPP_INCLUDED
 
