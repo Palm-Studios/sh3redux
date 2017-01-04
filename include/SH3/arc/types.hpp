@@ -47,7 +47,7 @@
 #include <zlib.h>
 
 #define ARCARC_MAGIC        0x20030417  /**< arc.arc file magic */
-#define ARC_FILE_NOT_FOUND  -1          /**< Status @ref LoadFile returns if a file cannot be found */
+#define ARC_FILE_NOT_FOUND  -1          /**< Status @ref sh3_arc::LoadFile() returns if a file cannot be found */
 #define ARC_NUM_SECTIONS    30          /**< Number of section arcs SILENT HILL 3 contatins. */
 
 struct sh3_arc_file;
@@ -119,9 +119,9 @@ public:
     /**
      *  Load a section from @c arc.arc.
      *
-     *  @param arcFile the @ref sh3_arc_file.
+     *  @param fHandle The @ref sh3_arc_file.
      *
-     *  @returns true if loading succeeded, false otherwise.
+     *  @returns @c true if loading succeeded, @c false otherwise.
      */
     bool Load(sh3_arc_file& fHandle);
 };
@@ -135,9 +135,40 @@ public:
 
     sh3_arc(){Load();}
 
-    // FUNCTION DECLARATIONS
+    /**
+     *  Initialize the @ref sh3_arc from the @c arc.arc file.
+     *
+     *  This initializes @ref s_fileHeader, @ref s_infoHeader and @ref c_sections.
+     *
+     *  @returns @c true if loading succeeded, @c false otherwise.
+     */
+    // should this be private?
     bool Load();
+
+    /**
+     *  Load a file from a section into @c buffer.
+     *
+     *  The @c buffer will be resized if necessary.
+     *
+     *  @param filename Path to the file to load.
+     *  @param buffer   The buffer to store the file contents into.
+     *  @param start    An iterator to the insertion position in @c buffer.
+     *
+     *  @returns  The file length if loading is successful, @c ARC_FILE_NOT_FOUND if not.
+     */
     int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start);
+
+    /**
+     *  Load a file from a section into @c buffer.
+     *
+     *  The contents of the file will be appended to @c buffer.
+     *  The @c buffer will be resized if necessary.
+     *
+     *  @param filename Path to the file to load.
+     *  @param buffer   The buffer to store the file contents into.
+     *
+     *  @returns The file length if loading is successful, @ref ARC_FILE_NOT_FOUND if not.
+     */
     int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer) { auto back = end(buffer); return LoadFile(filename, buffer, back); }
 };
 

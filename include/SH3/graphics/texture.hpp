@@ -70,6 +70,9 @@ namespace sh3_graphics
     class texture
     {
     public:
+        /**
+         *  Failure codes for @ref Load.
+         */
         enum class load_result
         {
             INVALID_CHUNK,
