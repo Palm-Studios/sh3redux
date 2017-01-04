@@ -83,3 +83,16 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
 add_subdirectory(source)
+
+find_package(Doxygen)
+
+if(DOXYGEN_FOUND)
+	add_custom_target(doc
+		"${DOXYGEN_EXECUTABLE}" "${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile"
+		WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+		COMMENT "Generating documentation..."
+		VERBATIM
+	)
+else()
+	message(WARNING "Doxygen not found. Target 'doc' not available.")
+endif()
