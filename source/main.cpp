@@ -52,7 +52,10 @@ test operator+(const test& v1, const test& v2)
  *
  *  @returns An @ref exit_code specifying success or failure.
  */
-[[noreturn]] int main(int argc, char** argv)
+#if not defined(__GNUC__) || defined(__clang__)
+[[noreturn]]
+#endif
+int main(int argc, char** argv)
 {
     static_cast<void>(argc);
     static_cast<void>(argv);
