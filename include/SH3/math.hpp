@@ -17,8 +17,6 @@
 /**
  *  Check if sse3 is available on the processor
  *
- *  @param cpu - CPU name
- *
  *  @return 0 or -1, depending on whether sse3 is supported.
  */
 static inline int __check_sse3()

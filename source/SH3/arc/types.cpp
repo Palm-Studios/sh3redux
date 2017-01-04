@@ -42,20 +42,6 @@ Revision History:
 
 static const char* defaultPath = "data/arc.arc";
 
-//////////////////////////////////////////////////////////////////////////////
-
-/*++
-
-Routine Description:
-        Open a handle to arc.arc and load each section
-
-Arguments:
-        path - Path to arc.arc
-
-Return Type:
-        bool
-
---*/
 bool sh3_arc::Load()
 {
     sh3_arc_file file(defaultPath);
@@ -103,20 +89,6 @@ bool sh3_arc::Load()
     return true;
 }
 
-/*++
-
-Routine Description:
-        Load a file from a section and store it in (an already allocated) buffer
-
-Arguments:
-        filename - path to the file to load
-        buffer - vector for file contents (will be resized if necessary)
-        start - iterator into the vector where contents will be inserted
-
-Return Type:
-        int - File length or 0 if none existent
-
---*/
 int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
 {
     std::uint32_t    index;
