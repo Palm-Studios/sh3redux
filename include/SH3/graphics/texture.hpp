@@ -24,6 +24,10 @@
 
 namespace sh3_graphics
 {
+    /** @defgroup graphics-headers Graphics headers
+     *  @{
+     */
+
     /**
      * Full texture header.
      *
@@ -52,6 +56,8 @@ namespace sh3_graphics
         std::uint32_t unknown2;            /**< Usually 1! */
         std::uint32_t unused7[15];         /**< Unused **/
     } sh3_texture_header;
+
+    /**@}*/
 
     /**
      *

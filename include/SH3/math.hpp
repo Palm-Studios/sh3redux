@@ -1,44 +1,26 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3math.hpp
-
-Abstract:
-        Inline functions to speed up mathematical operations by using
-        CPU specific features (like SSE)
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-    http://neilkemp.us/src/sse_tutorial/sse_tutorial.html
-
-Revision History:
-        17-12-2016: File Created [jbuhagiar]
-
---*/
+/** @file
+ *  Inline functions to speed up mathematical operations by using CPU specific features (like SSE)
+ *
+ *  @copyright 2016  Palm Studios
+ *
+ *  @date 27-12-2016
+ *
+ *  @note See http://neilkemp.us/src/sse_tutorial/sse_tutorial.html
+ *
+ *  @author Jesse Buhagiar
+ */
 #ifndef SH3MATH_HPP_INCLUDED
 #define SH3MATH_HPP_INCLUDED
 
 #include <iostream>
 
-/*++
-
-Routine Description:
-       Check if sse3 is available on the processor
-
-Arguments:
-        None
-
-Return Type:
-        0 - Supported
-       -1 - Unsupported
---*/
-
+/**
+ *  Check if sse3 is available on the processor
+ *
+ *  @param cpu - CPU name
+ *
+ *  @return 0 or -1, depending on whether sse3 is supported.
+ */
 static inline int __check_sse3()
 {
     #ifdef __GNUC__

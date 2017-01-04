@@ -1,25 +1,14 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_glcontext.hpp
-
-Abstract:
-        Defines a logical OpenGL Context
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-    https://www.khronos.org/opengl/wiki/GLAPI/glGet
-
-Revision History:
-        22-12-2016: File Created                                    [jbuhagiar]
-
---*/
+/** @file
+ *  Defines a logical OpenGL Context
+ *
+ *  @copyright 2016  Palm Studios
+ *
+ *  @date 22-12-2016
+ *
+ *  @note https://www.khronos.org/opengl/wiki/GLAPI/glGet
+ *
+ *  @author Jesse Buhagiar
+ */
 #ifndef SH3_GLCONTEXT_HPP_INCLUDED
 #define SH3_GLCONTEXT_HPP_INCLUDED
 
@@ -35,17 +24,44 @@ class sh3_glcontext
 public:
     explicit sh3_glcontext(sh3_window& hwnd);
 
-    // cppcheck-suppress functionStatic
+    /**
+     *  Return the vendor of OpenGL Driver in use.
+     */
     const char* GetVendor() const;
-    // cppcheck-suppress functionStatic
+
+    /**
+     *  Get the version string of the OpenGL context currently in use.
+     *
+     *  @return OpenGL Version String.
+     */
     const char* GetVersion() const;
-    // cppcheck-suppress functionStatic
+
+    /**
+     *  Get the name of the renderer.
+     *
+     *  @return OpenGL Renderer name (Graphics Card name)
+     */
     const char* GetRenderer() const;
 
+    /**
+     *  Get a list of all extensions supported by the user's graphics card.
+     *
+     *  @return Nothing
+     */
     void GetExtensions();
+
+    /**
+     *  Print out information about the current GL Context.
+     */
     void PrintInfo() const;
 
 private:
+
+    /**
+     *  Get a string from the current GL Context.
+     *
+     *  @return String from @c glGetString
+     */
     static const char* GlGetString(GLenum name);
 
 private:
