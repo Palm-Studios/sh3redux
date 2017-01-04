@@ -6,7 +6,6 @@
  *  @author Jesse Buhagiar
  */
 
-#include "SH3/math.hpp"
 #include "SH3/arc/types.hpp"
 #include "SH3/system/config.hpp"
 #include "SH3/system/exit_code.hpp"
