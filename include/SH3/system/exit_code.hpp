@@ -30,9 +30,11 @@ static_assert(static_cast<int>(exit_code::SUCCESS) == 0, "must remain 0 to indic
 /**
  *  Call @c std::exit with the @ref exit_code.
  *  
- *   <c>enum class</c> has no implicit cast to @c int, so this is a convenience function.
- *   
- *   @param code The code to exit with.
+ *  <c>enum class</c> has no implicit cast to @c int, so this is a convenience function.
+ *  
+ *  @param code The code to exit with.
+ *  
+ *  @note This function does not return.
  */
 [[noreturn]] static inline int exit(exit_code code)
 {
