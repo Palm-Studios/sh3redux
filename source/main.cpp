@@ -51,9 +51,6 @@ test operator+(const test& v1, const test& v2)
  *
  *  @returns An @ref exit_code specifying success or failure.
  */
-#if not defined(__GNUC__) || defined(__clang__)
-[[noreturn]]
-#endif
 int main(int argc, char** argv)
 {
     static_cast<void>(argc);
@@ -82,5 +79,5 @@ int main(int argc, char** argv)
 //
 //    sh3_window* window = new sh3_window(640, 480, "SILENT HILL 3");
 
-    exit(exit_code::SUCCESS);
+    return static_cast<int>(exit_code::SUCCESS);
 }
