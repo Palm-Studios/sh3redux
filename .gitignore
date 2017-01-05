@@ -47,3 +47,5 @@ include/ft2build.h
 *.000
 *.afs
 
+# Documentation
+/docs
