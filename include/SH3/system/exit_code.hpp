@@ -13,7 +13,7 @@
 /**
  *  Exit codes.
  *  
- *  Return these from @ref main() or pass to @c std::exit() & co.
+ *  Pass these to @c std::exit() & co.
  *  
  *  It's a @c std::uint8_t to be compatible with systems that only use 8-bit exit statuses.
  *  
