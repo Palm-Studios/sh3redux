@@ -7,6 +7,7 @@ find_package(SDL2 REQUIRED)
 find_package(ZLIB REQUIRED)
 
 include_directories("../include")
+include_directories(SYSTEM "../third_party/debugbreak")
 
 add_executable("${CMAKE_PROJECT_NAME}"
 	"main.cpp"
@@ -15,6 +16,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"SH3/arc/section.cpp"
 	"SH3/arc/types.cpp"
 	
+	"SH3/system/assert.cpp"
 	"SH3/system/config.cpp"
 	"SH3/system/glcontext.cpp"
 	"SH3/system/log.cpp"
