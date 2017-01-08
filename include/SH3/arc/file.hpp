@@ -17,6 +17,8 @@
 #include <string>
 #include <type_traits>
 
+#include "SH3/error.hpp"
+
 struct sh3_arc_file final
 {
 private:
@@ -35,18 +37,14 @@ public:
         GZ_ERROR,
     };
 
-    class read_error final
+    class read_error final : public error<read_result>
     {
     public:
-        operator bool() const { return result != read_result::SUCCESS; }
-        read_result get_read_result() const { return result; }
-
-        void set_error(sh3_arc_file::read_result result, gzFile file);
+        void set_error(read_result result, gzFile file);
 
         std::string message() const;
 
     private:
-        read_result result = read_result::SUCCESS;
         int zlib_err = Z_OK;
         int os_err = 0;
     };
