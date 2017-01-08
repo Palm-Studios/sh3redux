@@ -22,6 +22,8 @@
 #include <vector>
 #include <GL/gl.h>
 
+#include "SH3/error.hpp"
+
 namespace sh3_graphics
 {
     /** @defgroup graphics-headers Graphics headers
@@ -75,8 +77,15 @@ namespace sh3_graphics
          */
         enum class load_result
         {
+            SUCCESS,
             INVALID_CHUNK,
-            TEOF,
+            END_OF_FILE,
+        };
+
+        struct load_error final : public error<load_result>
+        {
+        public:
+            std::string message() const;
         };
 
         texture(){}
@@ -91,7 +100,7 @@ namespace sh3_graphics
          * @return @ref load_result indicating whether the read failed or not
          *
          */
-        load_result Load(const std::string& filename, sh3_arc& arc);
+        load_error Load(const std::string& filename, sh3_arc& arc);
 
     private:
         static constexpr std::uint32_t INVALID_TEXTURE = std::numeric_limits<uint32_t>::max();
