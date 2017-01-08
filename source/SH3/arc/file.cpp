@@ -52,16 +52,16 @@ std::string sh3_arc_file::read_error::message() const
     std::string error;
     switch(result)
     {
-    case sh3_arc_file::read_result::SUCCESS:
+    case read_result::SUCCESS:
         error = "Success";
         break;
-    case sh3_arc_file::read_result::END_OF_FILE:
+    case read_result::END_OF_FILE:
         error = "End of file";
         break;
-    case sh3_arc_file::read_result::PARTIAL_READ:
+    case read_result::PARTIAL_READ:
         error = "Partial read";
         break;
-    case sh3_arc_file::read_result::GZ_ERROR:
+    case read_result::GZ_ERROR:
         error = "GZip error: ";
         error += zError(zlib_err);
         if(zlib_err == Z_ERRNO)
