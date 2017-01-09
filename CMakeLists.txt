@@ -116,6 +116,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
 add_subdirectory(source)
+add_subdirectory(tests)
 
 find_package(Doxygen)
 
