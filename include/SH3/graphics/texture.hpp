@@ -100,7 +100,7 @@ namespace sh3_graphics
          * @return @ref load_result indicating whether the read failed or not
          *
          */
-        load_error Load(const std::string& filename, sh3_arc& arc);
+        load_result Load(const std::string& filename, sh3_arc& arc);
 
     private:
         static constexpr std::uint32_t INVALID_TEXTURE = std::numeric_limits<uint32_t>::max();
