@@ -76,14 +76,14 @@ std::size_t sh3_arc_vfile::ReadData(void* destination, std::size_t len, read_err
     {
         e.set_error(load_result::END_OF_FILE);
     }
-    else if(len < fsize)
+
+    assert(fpos <= fsize); // This should never EVER happen. Terminate if it does.
+
+    if((std::size_t nbytes = std::min(len, fsize - fpos)) != len)
     {
         e.set_error(load_result::PARTIAL_READ);
     }
 
-    assert(fpos > fsize); // This should never EVER happen. Terminate if it does.
-
-    std::size_t nbytes = std::min(len, fsize - fpos);
     std::memcpy(destination, buffer.data() + fpos, nbytes);
 
     fpos += nbytes; // Increment the position we are at in this file
