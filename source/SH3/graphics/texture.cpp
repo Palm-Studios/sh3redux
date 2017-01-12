@@ -32,12 +32,16 @@ std::string texture::load_error::message() const
     return error;
 };
 
-texture::load_result sh3_graphics::texture::Load(const std::string& filename, sh3_arc& arc)
+texture::load_error sh3_graphics::texture::Load(const std::string& filename, sh3_arc& arc)
 {
+    load_error error;
+
     if(arc.LoadFile(filename, pixbuff) == ARC_FILE_NOT_FOUND)
     {
         die("sh3_graphics::texture::Load( ): Unable to find file %s!", filename.c_str());
     }
 
-    return load_result::END_OF_FILE;
+    error.set_error(load_result::END_OF_FILE);
+
+    return error;
 }
