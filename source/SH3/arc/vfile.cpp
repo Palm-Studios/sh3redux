@@ -69,12 +69,13 @@ void sh3_arc_vfile::Seek(long pos, std::ios_base::seekdir origin)
         static_assert(std::is_unsigned<decltype(fpos)>::value, "fpos might overflow, so it needs to be unsigned for the following operation.");
         fpos += static_cast<decltype(fpos)>(pos);
     }
+    //FIXME: std::ios_base::end
 
     // Log if there is an attempt at something naughty
     if(fpos > fsize)
     {
-        Log(LogLevel::WARN, "sh3_arc_vfile::Seek( ): Attempt to seek to position > fsize! Setting fpos to 0!");
-        fpos = 0;
+        Log(LogLevel::WARN, "sh3_arc_vfile::Seek( ): Attempt to seek to position > fsize! Clamping to fsize!");
+        fpos = fsize;
     }
 }
 
