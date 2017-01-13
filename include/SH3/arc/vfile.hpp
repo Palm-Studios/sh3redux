@@ -45,8 +45,8 @@ public:
     };
 
 
-    sh3_arc_vfile(sh3_arc& mft, const std::string& fname): fpos(0)
-    {Open(mft, fname);}
+    sh3_arc_vfile(sh3_arc& mft, const std::string& filename): fpos(0)
+    {Open(mft, filename);}
 
     /**
      *  Read @c len bytes of data into a destination buffer.
@@ -62,7 +62,7 @@ public:
     /**
      *  Rewind this file to the beginning (set fpos to 0).
      */
-    void Rewind(){fpos = 0;};
+    void Rewind(){fpos = 0;}
 
     /**
      *  Seek to a certain position in the file.
@@ -74,7 +74,7 @@ public:
 
 
 private:
-    std::uint32_t   fpos;           /**< Current file position */
+    std::size_t     fpos;           /**< Current file position */
     std::size_t     fsize;          /**< Size of this file inside the arc section in bytes */
     std::string     fname;          /**< The name of this file (taken from arc.arc) */
     bool            open = false;   /**< Is this file handle currently open? */
@@ -85,14 +85,13 @@ private:
      *  Open a handle to a virtual file.
      *
      *  @param mft      The @ref sh3_arc Master File Table, arc.arc.
-     *  @param fname    The name of the file we want to open.
+     *  @param filename The name of the file we want to open.
      *
      *  @note If the file is already open, this function returns false.
      *
      *  @returns @c true if the file was found, @c false if not.
      */
-    bool Open(sh3_arc& mft, const std::string& fname);
+    bool Open(sh3_arc& mft, const std::string& filename);
 };
-
 
 #endif // VFILE_HPP_INCLUDED
