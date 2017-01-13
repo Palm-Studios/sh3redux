@@ -79,7 +79,8 @@ std::size_t sh3_arc_vfile::ReadData(void* destination, std::size_t len, read_err
 
     assert(fpos <= fsize); // This should never EVER happen. Terminate if it does.
 
-    if((std::size_t nbytes = std::min(len, fsize - fpos)) != len)
+    std::size_t nbytes = std::min(len, fsize - fpos);
+    if(nbytes != len)
     {
         e.set_error(load_result::PARTIAL_READ);
     }
