@@ -14,7 +14,7 @@
 #include <cstring>
 #include <cassert>
 
-bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& fname)
+bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& filename)
 {
     if(open) return false;
 
@@ -23,13 +23,18 @@ bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& fname)
         it (so we know how large it is without probing) though most headers contain the size of the
         full file
     */
-    if((fsize = mft.LoadFile(fname, buffer)) == ARC_FILE_NOT_FOUND)
+    int size = mft.LoadFile(filename, buffer);
+    if(size == ARC_FILE_NOT_FOUND)
     {
         open = false;
-        return open;
     }
+    else
+    {
+        assert(size >= 0);
+        fsize = static_cast<unsigned>(size);
 
-    open = true;
+        open = true;
+    }
     return open;
 }
 
@@ -55,15 +60,18 @@ void sh3_arc_vfile::Seek(long pos, std::ios_base::seekdir origin)
 {
     if(origin == std::ios_base::beg)
     {
-        fpos = pos;
+        fpos = static_cast<decltype(fpos)>(pos);
     }
-    else if(std::ios_base::cur)
+    else if(origin == std::ios_base::cur)
     {
-        fpos += pos;
+        // This works even for negative numbers.
+        // fpos will overflow in that case, but that's fine because unsigned overflow is well defined and does the right thing here.
+        static_assert(std::is_unsigned<decltype(fpos)>::value, "fpos might overflow, so it needs to be unsigned for the following operation.");
+        fpos += static_cast<decltype(fpos)>(pos);
     }
 
     // Log if there is an attempt at something naughty
-    if(pos > fsize)
+    if(fpos > fsize)
     {
         Log(LogLevel::WARN, "sh3_arc_vfile::Seek( ): Attempt to seek to position > fsize! Setting fpos to 0!");
         fpos = 0;
