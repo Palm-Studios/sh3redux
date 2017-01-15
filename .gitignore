@@ -30,6 +30,7 @@
 #IDE Stuff
 *.layout
 *.res
+*.depend
 
 #Logging
 log.txt
