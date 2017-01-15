@@ -16,7 +16,6 @@
 					<Add option="-std=c++11" />
 					<Add option="-m32" />
 					<Add option="-g" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<ResourceCompiler>
@@ -38,7 +37,6 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m32" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<ResourceCompiler>
@@ -60,7 +58,6 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -79,7 +76,6 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
