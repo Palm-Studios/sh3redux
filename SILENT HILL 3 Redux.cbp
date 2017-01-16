@@ -16,9 +16,11 @@
 					<Add option="-std=c++11" />
 					<Add option="-m32" />
 					<Add option="-g" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
+				<ResourceCompiler>
+					<Add option="-F pe-i386" />
+				</ResourceCompiler>
 				<Linker>
 					<Add option="-m32" />
 					<Add option="-m32 -lmingw32 -lz -lfreetype -lftgl -lSDL2main -lSDL2 -lopengl32 -lglew32" />
@@ -35,9 +37,11 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m32" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
+				<ResourceCompiler>
+					<Add option="-F pe-i386" />
+				</ResourceCompiler>
 				<Linker>
 					<Add option="-s" />
 					<Add option="-m32" />
@@ -54,7 +58,6 @@
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
 					<Add option="-g" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -73,7 +76,6 @@
 					<Add option="-O2" />
 					<Add option="-std=c++11" />
 					<Add option="-m64" />
-					<Add option="-masm=intel" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -85,9 +87,14 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wnon-virtual-dtor" />
+			<Add option="-Winit-self" />
 			<Add option="-Wundef" />
+			<Add option="-Wfloat-equal" />
 			<Add option="-Wunreachable-code" />
 			<Add option="-Wswitch-default" />
+			<Add option="-Weffc++" />
+			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
@@ -95,21 +102,32 @@
 		<Unit filename="include/SH3/arc/file.hpp" />
 		<Unit filename="include/SH3/arc/section.hpp" />
 		<Unit filename="include/SH3/arc/types.hpp" />
-		<Unit filename="include/SH3/arch.hpp" />
+		<Unit filename="include/SH3/arc/vfile.hpp" />
+		<Unit filename="include/SH3/error.hpp" />
 		<Unit filename="include/SH3/graphics/model.hpp" />
 		<Unit filename="include/SH3/graphics/texture.hpp" />
-		<Unit filename="include/SH3/math.hpp" />
 		<Unit filename="include/SH3/system/config.hpp" />
 		<Unit filename="include/SH3/system/exit_code.hpp" />
 		<Unit filename="include/SH3/system/glcontext.hpp" />
 		<Unit filename="include/SH3/system/log.hpp" />
+		<Unit filename="include/SH3/system/msg/msg.hpp" />
 		<Unit filename="include/SH3/system/sdl_destroyer.hpp" />
 		<Unit filename="include/SH3/system/window.hpp" />
 		<Unit filename="include/SH3/types/vertex.hpp" />
-		<Unit filename="include/SH3/util.hpp" />
+		<Unit filename="resource32.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Debug i686" />
+			<Option target="Release i686" />
+		</Unit>
+		<Unit filename="resource64.rc">
+			<Option compilerVar="WINDRES" />
+			<Option target="Debug x86_64" />
+			<Option target="Release x86_64" />
+		</Unit>
 		<Unit filename="source/SH3/arc/file.cpp" />
 		<Unit filename="source/SH3/arc/section.cpp" />
 		<Unit filename="source/SH3/arc/types.cpp" />
+		<Unit filename="source/SH3/arc/vfile.cpp" />
 		<Unit filename="source/SH3/graphics/texture.cpp" />
 		<Unit filename="source/SH3/system/config.cpp" />
 		<Unit filename="source/SH3/system/glcontext.cpp" />
