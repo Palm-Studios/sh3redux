@@ -55,7 +55,12 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
     {
         die("E00007: sh3_arc_section::Load( ): Garbage read when reading section name (NUL terminator missing): %s!", sectionName.c_str());
     }
-    sectionName.pop_back();
+    // remove trailing NUL
+    // Some filenames seem to have multiple NULs.
+    while(sectionName.back() == '\0')
+    {
+        sectionName.pop_back();
+    }
     sectionName.shrink_to_fit();
 
     // We have now loaded information about the section, so we can start
@@ -67,6 +72,17 @@ bool sh3_arc_section::Load(sh3_arc_file& arcFile)
         arcFile.ReadObject(file.header, readError);
 
         arcFile.ReadString(file.fname, file.header.fileSize - sizeof(file.header), readError);
+        if(file.fname.back() != '\0')
+        {
+            die("E00008: sh3_arc_section::Load( ): Garbage read when reading file name (NUL terminator missing): %s!", file.fname.c_str());
+        }
+        // remove trailing NUL
+        // Some filenames seem to have multiple NULs.
+        while(file.fname.back() == '\0')
+        {
+            file.fname.pop_back();
+        }
+        file.fname.shrink_to_fit();
         //Log(LogLevel::INFO, "Read file: %s", file->fname.c_str());
 
         fileList[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
