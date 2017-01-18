@@ -98,7 +98,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     for(sh3_arc_section& candidate : c_sections)
     {
         auto files = candidate.fileList.equal_range(filename);
-        if(files.first == end(candidate.fileList))
+        if(files.first == files.second)
         {
             continue; // No filename found in this section, continue over
         }
