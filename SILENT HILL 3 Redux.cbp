@@ -132,6 +132,7 @@
 		<Unit filename="source/SH3/system/config.cpp" />
 		<Unit filename="source/SH3/system/glcontext.cpp" />
 		<Unit filename="source/SH3/system/log.cpp" />
+		<Unit filename="source/SH3/system/msg/msg.cpp" />
 		<Unit filename="source/SH3/system/window.cpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>

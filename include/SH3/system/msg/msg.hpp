@@ -17,7 +17,7 @@
  *
  *  @note Most, if not all strings in SILENT HILL 3 are centered.
  *
- *  @copyright 2016-2017  Palm Studios
+ *  @copyright 2016-2017  Palm Studios and Mike M (<a href="https://twitter.com/perdedork">\@perdedork</a>)
  *
  *  @date 12-1-2017
  *
@@ -26,20 +26,10 @@
 #ifndef MSG_HPP_INCLUDED
 #define MSG_HPP_INCLUDED
 
+#include "SH3/arc/vfile.hpp"
+
 #include <cstdint>
 
-#define SH3_2_ASCII(x) ((x) - 32) /**< Turns a SILENT HILL 3 msg character into an ASCII character */
-
-#define SH3_MSG_BARS        0xFA /**< Tells the font manager to draw 3 lines of black bars across the screen (???) */
-#define SH3_MSG_BREATHE     0xFB /**< Tells the font manager to breathe the text in and out from white to red and back again */
-#define SH3_MSG_NEWLINE     0xFD /**< Tells the font manager to draw a newline for the next part of this message */
-#define SH3_ATTR_START      0xFF /**< Signals that the next byte will be a text attribute */
-
-#define SH3_MSG_WHITECLR    0x00 /**< Tells the font manager to draw this message in white or transparent (?) */
-#define SH3_MSG_GREEN       0x01 /**< Tells the font manager to draw this message in cyan */
-#define SH3_MSG_RED         0x02 /**< Tells the font manager to draw this message in red */
-#define SH3_MSG_GREEN       0x03 /**< Tells the font manager to draw this message in green */
-#define SH3_MSG_GREEN       0x04 /**< Tells the font manager to draw this message in blue */
 
 namespace sh3_system
 {
@@ -51,6 +41,33 @@ namespace sh3_system
     struct sh3_msg final
     {
     public:
+
+        /**
+         *  Message control characters.
+         *
+         *  These characters are reserved for telling the messaging system when to perform a special action.
+         */
+        enum msg_ctrl
+        {
+            SH3_MSG_BARS        = 0xFA, /**< Tells the font manager to draw 3 lines of black bars across the screen (???) */
+            SH3_MSG_BREATHE     = 0xFB, /**< Tells the font manager to breathe the text in and out from white to red and back again */
+            SH3_MSG_NEWLINE     = 0xFD, /**< Tells the font manager to draw a newline for the next part of this message */
+            SH3_MSG_ATTR_START  = 0xFF  /**< Signals that the next byte will be a text attribute */
+        };
+
+        /**
+         *  Message attributes
+         *
+         *  These characters tell the messaging system how to draw the message (if the appropriate control character is detected beforehand)
+         */
+         enum msg_attribs
+         {
+            SH3_MSG_WHITECLR    = 0x00, /**< Tells the font manager to draw this message in white or transparent (?) */
+            SH3_MSG_CYAN        = 0x01, /**< Tells the font manager to draw this message in cyan */
+            SH3_MSG_RED         = 0x02, /**< Tells the font manager to draw this message in red */
+            SH3_MSG_GREEN       = 0x03, /**< Tells the font manager to draw this message in green */
+            SH3_MSG_BLUE        = 0x04  /**< Tells the font manager to draw this message in blue */
+         };
 
         /**
          *  Load message and copy to our local string.

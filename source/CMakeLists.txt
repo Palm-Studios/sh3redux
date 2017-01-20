@@ -23,6 +23,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"SH3/system/glcontext.cpp"
 	"SH3/system/log.cpp"
 	"SH3/system/window.cpp"
+	"SH3/system/msg/msg.cpp"
 	
 	"../${BINARY_RESOURCE_FILE}"
 )

@@ -8,33 +8,46 @@
  *
  *  @author Jesse Buhagiar
  */
-#include "SH3/SH3/system/msg/msg.hpp"
+#include "SH3/system/msg/msg.hpp"
+
+/**
+ *  Converts a SILENT HILL 3 message character into an ASCII character.
+ *
+ *  @param c The character we want to convert.
+ */
+static unsigned char SH3_2_ASCII(unsigned char c)
+{
+    return ((c) + 32);
+}
+
+typedef struct
+{
+    std::uint8_t c1;
+    std::uint8_t c2;
+} msg_attr_pair;
 
 using namespace sh3_system;
 
 void sh3_msg::Load(sh3_arc_vfile& file)
 {
+    //TODO: can we reserve() some space?
 
-    std::uint8_t c;
-    std::uint8_t c2;
+    msg_attr_pair c;
     sh3_arc_vfile::read_error e;
 
-    // While we are reading a character
-    while(file.ReadData(&c, 1, e))
+    while(file.ReadData(&c, sizeof(msg_attr_pair), e))
     {
-        file.ReadData(&c2, 1, e); // Read in a second character (attribute/terminator check)
-
-        if(c == SH3_ATTR_START && c2 == SH3_ATTR_START) // If BOTH characters == 0xFF, this message has been fully copied.
-            break;
-
-        if(c == SH3_ATTR_START)
+        if(c.c1 == msg_ctrl::SH3_MSG_ATTR_START)
         {
-            currentAttr = (std::uint8_t)c2; // Convert this character to it's actual attribute
-            continue; // Don't add c or c2 to the string, it's an attribute
+            if(c.c2 == msg_ctrl::SH3_MSG_ATTR_START)
+                break;
+
+            currentAttr = (std::uint8_t)c.c2;
+            continue;
         }
 
-        msgString += c;
-        msgString += c2
+        msgString += SH3_2_ASCII(c.c1);
+        msgString += SH3_2_ASCII(c.c2);
     }
 }
 
