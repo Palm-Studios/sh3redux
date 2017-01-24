@@ -13,6 +13,7 @@
 #include <SH3/system/log.hpp>
 #include <cstring>
 #include <cassert>
+#include <fstream>
 
 bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& filename)
 {
@@ -99,4 +100,22 @@ std::size_t sh3_arc_vfile::ReadData(void* destination, std::size_t len, read_err
     fpos += nbytes; // Increment the position we are at in this file
 
     return nbytes;
+}
+
+void sh3_arc_vfile::Dump2Disk()
+{
+    if(!open || buffer.empty())
+    {
+        Log(LogLevel::WARN, "sh3_arc_vfile::Dump2Disk( ): Warning! Attempting to flush unopen or empty buffer to disk!");
+        return;
+    }
+
+    // Firstly, we need to convert the file path to just the filename.
+    std::size_t pos = fname.rfind('/');
+
+    std::ofstream out_file(fname.substr(pos + 1, fname.size()));
+    if(!out_file)
+        return;
+
+    out_file.write((const char*)&buffer[0], buffer.size());
 }

@@ -45,7 +45,7 @@ public:
     };
 
 
-    sh3_arc_vfile(sh3_arc& mft, const std::string& filename): fpos(0)
+    sh3_arc_vfile(sh3_arc& mft, const std::string& filename): fpos(0), fname(filename)
     {Open(mft, filename);}
 
     /**
@@ -71,6 +71,11 @@ public:
      *  @param origin   The origin we want to seek from.
      */
      void Seek(long pos, std::ios_base::seekdir origin);
+
+     /**
+      *  Dump the contents of the vector @ref buffer to a file on disk.
+      */
+      void Dump2Disk();
 
 
 private:
