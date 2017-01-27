@@ -109,6 +109,7 @@
 		<Unit filename="include/SH3/system/config.hpp" />
 		<Unit filename="include/SH3/system/exit_code.hpp" />
 		<Unit filename="include/SH3/system/glcontext.hpp" />
+		<Unit filename="include/SH3/system/glprogram.hpp" />
 		<Unit filename="include/SH3/system/log.hpp" />
 		<Unit filename="include/SH3/system/sdl_destroyer.hpp" />
 		<Unit filename="include/SH3/system/window.hpp" />
@@ -130,6 +131,7 @@
 		<Unit filename="source/SH3/graphics/texture.cpp" />
 		<Unit filename="source/SH3/system/config.cpp" />
 		<Unit filename="source/SH3/system/glcontext.cpp" />
+		<Unit filename="source/SH3/system/glprogram.cpp" />
 		<Unit filename="source/SH3/system/log.cpp" />
 		<Unit filename="source/SH3/system/window.cpp" />
 		<Unit filename="source/main.cpp" />
