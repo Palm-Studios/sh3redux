@@ -77,6 +77,11 @@ public:
       */
       void Dump2Disk();
 
+     /**
+      * Get the size of this file (in bytes)
+      */
+      size_t GetFilesize() const {return fsize;}
+
 
 private:
     std::size_t     fpos;           /**< Current file position */
