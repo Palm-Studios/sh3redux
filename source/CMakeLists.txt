@@ -22,6 +22,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"SH3/system/assert.cpp"
 	"SH3/system/config.cpp"
 	"SH3/system/glcontext.cpp"
+	"SH3/system/glprogram.cpp"
 	"SH3/system/log.cpp"
 	"SH3/system/window.cpp"
 	
