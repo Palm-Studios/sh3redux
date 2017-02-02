@@ -87,8 +87,12 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-Wsign-compare" />
+			<Add option="-Wold-style-cast" />
+			<Add option="-Wdeprecated" />
+			<Add option="-Wsign-conversion" />
+			<Add option="-Wconversion" />
 			<Add option="-Wnon-virtual-dtor" />
-			<Add option="-Winit-self" />
 			<Add option="-Wundef" />
 			<Add option="-Wfloat-equal" />
 			<Add option="-Wunreachable-code" />
