@@ -49,7 +49,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-	set(CXX_FLAGS "-Wall -Wextra -pedantic" CACHE INTERNAL "Additional compiler flags to use.")
+	list(APPEND CXX_FLAGS
+		"-pedantic"
+		"-Wall"
+		"-Wextra"
+		"-Wsign-compare"
+		"-Wold-style-cast"
+		"-Wdeprecated"
+		"-Wsign-conversion"
+		"-Wconversion"
+		"-Wnon-virtual-dtor"
+		"-Wundef"
+		"-Wfloat-equal"
+		"-Wunreachable-code"
+		"-Wswitch-default"
+		"-Weffc++"
+	)
+	string(REPLACE ";" " " CXX_FLAGS "${CXX_FLAGS}")
+	set(CXX_FLAGS "${CXX_FLAGS}" CACHE INTERNAL "Additional compiler flags to use.")
 	
 	option(CXX_FORCE_COLOR "Force compiler to use colored output (if available)." ON)
 	if(CXX_FORCE_COLOR)
