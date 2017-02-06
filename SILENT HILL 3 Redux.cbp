@@ -109,6 +109,7 @@
 		<Unit filename="include/SH3/arc/vfile.hpp" />
 		<Unit filename="include/SH3/error.hpp" />
 		<Unit filename="include/SH3/graphics/model.hpp" />
+		<Unit filename="include/SH3/graphics/msbmp.hpp" />
 		<Unit filename="include/SH3/graphics/texture.hpp" />
 		<Unit filename="include/SH3/system/config.hpp" />
 		<Unit filename="include/SH3/system/exit_code.hpp" />
@@ -132,6 +133,7 @@
 		<Unit filename="source/SH3/arc/section.cpp" />
 		<Unit filename="source/SH3/arc/types.cpp" />
 		<Unit filename="source/SH3/arc/vfile.cpp" />
+		<Unit filename="source/SH3/graphics/msbmp.cpp" />
 		<Unit filename="source/SH3/graphics/texture.cpp" />
 		<Unit filename="source/SH3/system/config.cpp" />
 		<Unit filename="source/SH3/system/glcontext.cpp" />
