@@ -18,6 +18,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"SH3/arc/vfile.cpp"
 	
 	"SH3/graphics/texture.cpp"
+	"SH3/graphics/msbmp.cpp"
 	
 	"SH3/system/assert.cpp"
 	"SH3/system/config.cpp"

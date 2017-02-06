@@ -12,6 +12,7 @@
 #include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
 #include "SH3/system/glprogram.hpp"
+#include "SH3/graphics/msbmp.hpp"
 #include <cstdio>
 
 
@@ -35,6 +36,8 @@ int main(int argc, char** argv)
 
     sh3_window window(640, 480, "sh3redux");
     sh3_graphics::sh3_glprogram program("test");
+
+    sh3_graphics::msbmp("data/pic/error.bmp");
 
 
     return static_cast<int>(exit_code::SUCCESS);
