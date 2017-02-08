@@ -97,8 +97,6 @@ namespace sh3_graphics
 
     private:
         GLuint tex;                         /**< ID representing this texture */
-
-        std::vector<std::uint8_t> data;     /**< Pixel data of this texture (with the header stripped) */
     };
 }
 

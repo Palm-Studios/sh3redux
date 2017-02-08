@@ -20,9 +20,10 @@ using namespace sh3_graphics;
 //TODO: Scale the texture and then
 void sh3_texture::Load(sh3_arc& mft, const std::string& filename)
 {
-    sh3_texture_header header;
-    sh3_arc_vfile file(mft, filename);
-    sh3_arc_vfile::read_error e;
+    sh3_texture_header          header;
+    sh3_arc_vfile               file(mft, filename);
+    sh3_arc_vfile::read_error   e;
+    std::vector<std::uint8_t>   data;     // Pixel data of this texture (with the header stripped)
 
     std::size_t ret = file.ReadData(&header, sizeof(header), e); // Read in the header
 
@@ -38,14 +39,13 @@ void sh3_texture::Load(sh3_arc& mft, const std::string& filename)
 
     data.resize(header.texSize);
 
-    if(header.texSize == header.texWidth * header.texHeight * header.bpp)
-        ret = file.ReadData(&data[0], header.texSize, e);
-    else
+    if(header.texSize != header.texWidth * header.texHeight * header.bpp)
     {
         Log(LogLevel::ERROR, "sh3_texture::Load( ): texWidth * texHeight * bpp != header.texSize!");
         return;
     }
 
+    ret = file.ReadData(&data[0], header.texSize, e);
     if(ret != header.texSize)
         Log(LogLevel::WARN, "sh3_texture::Load( ): Only read %d out of %d bytes!", ret, header.texSize);
 
