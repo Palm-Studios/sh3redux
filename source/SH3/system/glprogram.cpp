@@ -18,9 +18,39 @@ static const GLuint BAD_SHADER = 0;
 
 using namespace sh3_graphics;
 
-GLint sh3_glprogram::Load(const std::string& name)
+void sh3_glprogram::load_error::set_error(load_result res)
 {
-    GLint status = 0;
+    result = res;
+}
+
+std::string sh3_glprogram::load_error::message() const
+{
+    std::string error;
+    switch(result)
+    {
+    case load_result::SUCCESS:
+        error = "SUCCESS";
+        break;
+    case load_result::COMPILATION_FAILED:
+        error = "COMPILATION_FAILED";
+        break;
+    case load_result::LINK_FAILED:
+        error = "LINK_FAILED";
+        break;
+    case load_result::INVALID_VALUE:
+        error = "GL_INVALID_VALUE";
+        break;
+    case load_result::INVALID_OPERATION:
+        error = "GL_INVALID_OPERATION";
+        break;
+    }
+
+    return error;
+}
+
+void sh3_glprogram::Load(const std::string& shader, load_error& err, const std::vector<std::string>& attribs)
+{
+    GLenum status = 0;
 
     programID = glCreateProgram();
 
@@ -30,6 +60,25 @@ GLint sh3_glprogram::Load(const std::string& name)
 
     glAttachShader(programID, vertShader);
     glAttachShader(programID, fragShader);
+
+    // Bind any attributes before we link the program
+    for(int i = 0; i < attribs.size(); i++)
+    {
+        glBindAttribLocation(programID, i, reinterpret_cast<const GLchar*>(attribs[i].c_str()));
+
+        status = glGetError();
+        if(status == GL_INVALID_VALUE)
+        {
+            err.set_error(load_result::INVALID_VALUE);
+            Log(LogLevel::ERROR, "glprogram::Load( ): Error binding attribute %s (index > GL_MAX_VERTEX_ATTRIBS or programID invalid!)", attribs[i].c_str());
+        }
+        else if(status == GL_INVALID_OPERATION)
+        {
+            err.set_error(load_result::INVALID_OPERATION);
+            Log(LogLevel::ERROR, "glprogram::Load( ): Error binding attribute %s (perhaps attrib name is spelt wrong or starts with gl_!?!)", attribs[i].c_str());
+        }
+    }
+
     glLinkProgram(programID);
 
     // Make sure our program was linked without any errors
@@ -47,12 +96,14 @@ GLint sh3_glprogram::Load(const std::string& name)
         glDeleteShader(fragShader);
 
         Log(LogLevel::ERROR, "%s\n%s", "glprogram::Load( ): Linking failed! Reason:", &errorLog[0]);
-
+        err.set_error(load_result::LINK_FAILED);
         // TODO: Default shader fallback.
     }
 
     glDeleteShader(vertShader); // Blast these shaders into Oblivion!! They are no use to us anymore!
     glDeleteShader(fragShader);
+
+    err.set_error(load_result::SUCCESS);
 }
 
 void sh3_glprogram::Bind()
