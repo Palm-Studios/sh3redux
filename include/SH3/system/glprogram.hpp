@@ -13,10 +13,15 @@
 #ifndef GLPROGRAM_HPP_INCLUDED
 #define GLPROGRAM_HPP_INCLUDED
 
+#include "SH3/error.hpp"
+
 #include <GL/glew.h>
 #include <GL/gl.h>
 
 #include <string>
+#include <vector>
+
+
 
 namespace sh3_graphics
 {
@@ -24,18 +29,38 @@ namespace sh3_graphics
     struct sh3_glprogram final
     {
     public:
+        enum class load_result
+        {
+            SUCCESS,
+            COMPILATION_FAILED,
+            LINK_FAILED,
+            INVALID_VALUE,
+            INVALID_OPERATION,
+        };
 
-        sh3_glprogram(const std::string& name) : programName(name){Load(name);};
+        class load_error final : public error<load_result>
+        {
+        public:
+            void set_error(load_result result);
+
+            std::string message() const;
+
+        private:
+        };
+
+        sh3_glprogram(const std::string& name, load_error& err, const std::vector<std::string>& attribs = {}) : programName(name){Load(name, err, attribs);};
         ~sh3_glprogram(){Unbind(); glDeleteProgram(programID);}
 
         /**
-         *  Load a shader from a file on disk, compile and then link it.
+         *  Load a shader from a file on disk, compile and then link it, binding any attributes in the process.
          *
          *  @param shader Name of the shader we want to load (path is hard-coded to /data/shaders). Assumes *.vert and *.frag have the same name.
+         *  @param attribs Vector of attributes we bind before we link the program.
+         *  @param err Error set by this operation.
          *
-         *  @return GLint true or false depending on whether this shader was loaded correctly.
+         *  @return @ref load_error The error set by this operation (specified in the @ref load_result enum)
          */
-        GLint Load(const std::string& shader);
+        void Load(const std::string& shader, load_error& err, const std::vector<std::string>  &attribs = {});
 
         /**
          *  Bind this shader program for use.
