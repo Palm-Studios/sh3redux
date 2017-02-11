@@ -12,32 +12,37 @@
 
 #include <GL/gl.h>
 
+#pragma pack(push, 1)
+
+/** @defgroup graphics-types Graphics Types
+ *  @{
+*/
+
+/** UV Texture Co-Ordinate  structure*/
+struct texcoord
+{
+    GLfloat u, v;
+};
+
 /** Basic vertex type */
-typedef struct
+struct vertex3f
 {
     GLfloat x, y, z;      /**< Position */
-} vertex3f_t;
+};
 
-/** Textured Vertex with normals */
-typedef struct
+/** Model Vertex (for static models) */
+struct sh3_model_vertex
 {
-    Glfloat x, y, z;
-    Glfloat u, v;         /**< Texture UV co-ords */
-    GLfloat nx, ny, nz;   /**< Vertex normals (do we need 3??) */
-} vertex3f_tex_t;
+    vertex3f vertex;    /**< Vertex */
+    vertex3f normal;    /**< Vertex Normal */
+    texcoord uvcoord;   /**< Texture UV Co-Ordinate for this vertex */
+};
 
-/** Basic vertex type */
-typedef struct
-{
-    GLfloat x, y, z, w;      /**< Position */
-} vertex4f_t;
 
-/** Textured Vertex with normals */
-typedef struct
-{
-    float x, y, z, w;
-    float u, v;         /**< Texture UV co-ords */
-    float nx, ny, nz;   /**< Vertex normals (do we need 3??) */
-} vertex4f_tex_t;
+
+
+#pragma pack(pop)
+
+/**@}*/
 
 #endif // VERTEX_HPP_INCLUDED
