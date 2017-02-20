@@ -2,13 +2,14 @@
  *
  *  Functions and structures to load a texture from an arc section
  *
- *  @copyright 2016  Palm Studios and Mike M
+ *  @copyright 2016  Palm Studios, Mike Meinhardt and de_lof
  *
  *  @note   I'd like to thank Mike for all this, he put a lot of time into reverse engineering
-            all of the file types, including all of the textures, meshes and even the motion capture
-            skeletal animation that Konami captured. Thanks mate!
+ *          all of the file types, including all of the textures, meshes and even the motion capture
+ *          skeletal animation that Konami captured. Thanks mate!
  *
- *  @note 8-bit textures are currently unsupported, as they are palletted. See <a href=https://www.reddit.com/r/REGames/comments/5kp62x/help_reverse_engineering_silent_hill_3_texture/?st=iyn04asn&sh=92f998d9>here</a>
+ *  @note It would seem the 8-bit texture palette comes at the END of the texture, not at beginning like one would expect.
+ *  @note bpp == 32, RGBA; bpp == 24, BGR; bpp == 16, RGBA16; bpp=8, Paletted.
  *
  *  @date 2-1-2017
  *
@@ -29,6 +30,28 @@ namespace sh3_graphics
     /** @defgroup graphics-headers Graphics headers
      *  @{
      */
+
+    #pragma pack(push, 1)
+
+    /**
+     *  Header that comes after the batch header. Contains information about the texture.
+     */
+    struct sh3_texture_info_header
+    {
+        std::uint32_t texHeaderMarker;      /**< Magic Number. This is ALWAYS 0xFFFFFFFF */
+        std::uint32_t unused1;               /**< Unused 32-bit value. Apparently for format identification. */
+        std::uint16_t width;                /**< The hidth of this texture */
+        std::uint16_t height;               /**< The height of this texture */
+        std::uint8_t  bpp;                  /**< Number of bits per pixel of this texture. NOTE: 8bpp is paletted! */
+        std::uint8_t  dataOffset;           /**< #bytes from texHeaderSize+16 to 128 (0 filled) */
+        std::uint16_t padding;              /**< Possibly padding, as it's usually 0 */
+        std::uint32_t texSize;              /**< The size of this texture in bytes (w * h * [bpp/8]) */
+        std::uint32_t texFileSize;          /**< = texSize + texHeaderSize + 16 + endFilleSize */
+        std::uint32_t unknown;              /**< This is unknown/unused */
+        std::uint8_t  widthattrib;          /**< 256 - 8; 32 - 5; 1024 - A; 512 - 9 (I have no clue what this is...) */
+        std::uint8_t  heightattrib;         /**< Same deal */
+        std::uint16_t magic;                /**< Always 0x9999 */
+    };
 
     /**
      * Full texture header.
@@ -59,6 +82,23 @@ namespace sh3_graphics
         std::uint32_t unused7[15];          /**< Unused **/
     };
 
+    /**
+     *  Color palette structure. Contains information about the colour palette.
+     */
+    struct palette_info
+    {
+        std::uint32_t paletteSize;      /**< Number of colors (??) in our color palette */
+        std::uint32_t unused1[2];       /**< Unused as far as I can tell */
+        std::uint8_t  bytes_per_pixel;  /**< Number of bytes per pixel */
+        std::uint8_t  unused2;          /**< Blank Byte */
+        std::uint8_t  entrySize;        /**< Size of one color block in this palette */
+        std::uint8_t  unknown[17];      /**< Unknown or unused bytes */
+        std::uint8_t  distortion;       /**< I have no clue what this is, but it could be important */
+        std::uint8_t  pad[15];          /**< These are all zero. Here so we can align to the palette after a read */
+    };
+
+    #pragma pack(pop)
+
     /**@}*/
 
     /**
@@ -72,6 +112,15 @@ namespace sh3_graphics
     struct sh3_texture final
     {
     public:
+
+        enum PixelFormat
+        {
+            RGBA    = 32,
+            BGR     = 24,
+            RGBA16  = 16,
+            PALETTE = 8,
+        };
+
         sh3_texture(sh3_arc& mft, const std::string& filename){Load(mft, filename);}
         ~sh3_texture(){}
 
