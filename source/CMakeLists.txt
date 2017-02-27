@@ -8,6 +8,11 @@ find_package(ZLIB REQUIRED)
 
 include_directories("../include")
 include_directories(SYSTEM "../third_party/debugbreak")
+include_directories(SYSTEM "${GLEW_INCLUDE_DIRS}")
+include_directories(SYSTEM "${GLM_INCLUDE_DIRS}")
+include_directories(SYSTEM "${OPENGL_INCLUDE_DIR}")
+include_directories(SYSTEM "${SDL2_INCLUDE_DIRS}")
+include_directories(SYSTEM "${ZLIB_INCLUDE_DIRS}")
 
 add_executable("${CMAKE_PROJECT_NAME}"
 	"main.cpp"
@@ -31,11 +36,11 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"../${BINARY_RESOURCE_FILE}"
 )
 target_link_libraries("${CMAKE_PROJECT_NAME}"
-#	PRIVATE "${FREETYPE_LIBRARIES}"
-#	PRIVATE "${FTGL_LIBRARIES}"
-	PRIVATE "${GLEW_LIBRARIES}"
-	PRIVATE "${GLM_LIBRARIES}"
-	PRIVATE "${OPENGL_gl_LIBRARY}"
-	PRIVATE "${SDL2_LIBRARIES}"
-	PRIVATE "${ZLIB_LIBRARIES}"
+#	PRIVATE FREETYPE
+#	PRIVATE FTGL
+	PRIVATE GLEW
+	PRIVATE glm
+	PRIVATE OpenGL
+	PRIVATE SDL2
+	PRIVATE ZLIB
 )
