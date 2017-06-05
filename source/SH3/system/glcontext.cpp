@@ -39,8 +39,7 @@ sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
 
     if(glewInit() != GLEW_OK) // Initialise GLEW!
     {
-        Log(LogLevel::FATAL, "sh3_glcontext::sh3_glcontext( ): GLEW Init failed!");
-        std::exit(-1);
+        die("sh3_glcontext::sh3_glcontext( ): GLEW Init failed! (Does your Graphics Driver support OpenGL 3.3?)");
     }
 
     // Set the colour size for OpenGL!
