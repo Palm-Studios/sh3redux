@@ -84,7 +84,7 @@ void sh3_glprogram::Load(const std::string& shader, load_error& err, const std::
     // Make sure our program was linked without any errors
     glGetProgramiv(programID, GL_LINK_STATUS, (int*)&status);
 
-    if(status == GL_FALSE)
+    if(!status)
     {
         GLint logLength = 0;
         std::vector<GLchar> errorLog;   // Error log
@@ -169,7 +169,7 @@ GLuint sh3_glprogram::Compile(GLenum type)
     glCompileShader(id);
 
     glGetShaderiv(id, GL_COMPILE_STATUS, &status);
-    if(status == GL_FALSE) // Ooops, our shader compilation failed! D:
+    if(!status)
     {
         GLint logLength = 0;
         std::string errmsg = "sh3_glprogram::Compile( ) error in " + fname;
