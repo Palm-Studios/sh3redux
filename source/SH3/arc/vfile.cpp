@@ -113,7 +113,7 @@ void sh3_arc_vfile::Dump2Disk()
     // Firstly, we need to convert the file path to just the filename.
     std::size_t pos = fname.rfind('/');
 
-    std::ofstream out_file(fname.substr(pos + 1, fname.size()));
+    std::ofstream out_file(fname.substr(pos + 1, fname.size()), std::ios::binary);
     if(!out_file)
         return;
 
