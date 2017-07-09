@@ -10,6 +10,7 @@
  */
 #include <SH3/system/glprogram.hpp>
 #include <SH3/system/log.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <fstream>
 #include <vector>
@@ -120,6 +121,86 @@ void program::Bind()
 void program::Unbind()
 {
     glUseProgram(0); // The 'correct' way to unbind a shader, but apparently undefined?!?!
+}
+
+GLint program::GetUniformLoc(const std::string& name)
+{
+    GLint loc;
+
+    loc = glGetUniformLocation(programID, reinterpret_cast<const GLchar*>(name.c_str()));
+    if(loc == -1)
+        Log(LogLevel::WARN, "program::GetUniformLoc( ): loc == -1! Perhaps the uniform does not exist (check your GLSL source!!!!)");
+
+    return loc;
+}
+
+void program::SetUniformMat(const std::string& name, const glm::mat2& mat)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniformMatrix2fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void program::SetUniformMat(const std::string& name, const glm::mat3& mat)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniformMatrix3fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void program::SetUniformMat(const std::string& name, const glm::mat4& mat)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniformMatrix4fv(uniformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+}
+
+void program::SetUniformVec(const std::string& name, const glm::vec2& vec)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniform2fv(uniformLoc, 1, glm::value_ptr(vec));
+}
+
+void program::SetUniformVec(const std::string& name, const glm::vec3& vec)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniform3fv(uniformLoc, 1, glm::value_ptr(vec));
+}
+
+void program::SetUniformVec(const std::string& name, const glm::vec4& vec)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniform4fv(uniformLoc, 1, glm::value_ptr(vec));
+}
+
+void program::SetUniformInt(const std::string& name, const int val)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniform1i(uniformLoc, reinterpret_cast<GLint>(val));
+}
+
+void program::SetUniformFloat(const std::string& name, const float val)
+{
+    GLint uniformLoc;
+
+    uniformLoc = GetUniformLoc(name);
+    glUniform1f(uniformLoc, val);
+}
+
+GLuint program::GetProgramID() const
+{
+    return programID;
 }
 
 // TODO: Unfuck this function! It looks like a pile of shit (and acts like one too)..

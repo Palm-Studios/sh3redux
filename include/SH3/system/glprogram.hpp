@@ -17,15 +17,13 @@
 
 #include <GL/glew.h>
 #include <GL/gl.h>
+#include <glm/glm.hpp>
 
 #include <string>
 #include <vector>
 
-
-
 namespace sh3_gl
 {
-
     struct program final
     {
     public:
@@ -72,6 +70,87 @@ namespace sh3_gl
          *  Unbind this program and stop using it.
          */
         void Unbind();
+
+        /**
+         *  Get the location of a uniform in our compiled GL Program.
+         *
+         *  @param name - The name of the uniform we want the location of.
+         *
+         *  @return GLint - Location of this uniform, where -1
+         */
+         GLint GetUniformLoc(const std::string& name);
+
+        /**
+         *  Set the value of a 2 value matrix in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param mat - The matrix we want to send to the program.
+         */
+         void SetUniformMat(const std::string& name, const glm::mat2& mat);
+
+        /**
+         *  Set the value of a 3 value matrix in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param mat - The matrix we want to send to the program.
+         */
+         void SetUniformMat(const std::string& name, const glm::mat3& mat);
+
+        /**
+         *  Set the value of a 4 value matrix in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param mat - The matrix we want to send to the program.
+         */
+         void SetUniformMat(const std::string& name, const glm::mat4& mat);
+
+        /**
+         *  Set the value of a 2D vector in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param vec - The vector we want to send to the program.
+         */
+         void SetUniformVec(const std::string& name, const glm::vec2& vec);
+
+        /**
+         *  Set the value of a 3D vector in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param vec - The vector we want to send to the program.
+         */
+         void SetUniformVec(const std::string& name, const glm::vec3& vec);
+
+        /**
+         *  Set the value of a 3D vector in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param vec - The vector we want to send to the program.
+         */
+         void SetUniformVec(const std::string& name, const glm::vec4& vec);
+
+        /**
+         *  Set the value of an integer in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param val - The value of the integer.
+         */
+         void SetUniformInt(const std::string& name, const int val);
+
+        /**
+         *  Set the value of a float in this program
+         *
+         *  @param name - Name of the uniform we want to load the data into.
+         *  @param val - The value of the float.
+         */
+         void SetUniformFloat(const std::string& name, const float val);
+
+        /**
+         *  Get the ID of our compiled GL Program. This is used mainly for glUniformXYZ( ) functions
+         *  for interfacing between sh3redux C++ and GLSL.
+         *
+         *  @return GLuint - ID of this program
+         */
+         GLuint GetProgramID() const;
 
     private:
         GLuint programID;           /**< The ID of this program. */
