@@ -1,23 +1,14 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_glcontext.cpp
-
-Abstract:
-        Implementation of sh3_glcontext.hpp
-
-Author:
-        Jesse Buhagiar
-
-Environment:
-
-Notes:
-
-Revision History:
-        22-12-2016: File Created                                        [jbuhagiar]
---*/
+/** @file
+ *
+ *  Implementation of glcontext.hpp
+ *
+ *  @copyright 2016-2017 Palm Studios
+ *
+ *  @date 22-12-2016
+ *
+ *
+ *  @author Jesse Buhagiar
+ */
 #include <cassert>
 #include <cstdio>
 #include <cstdlib>
@@ -29,8 +20,11 @@ Revision History:
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
+#include <glm/gtc/matrix_transform.hpp>
 
-sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
+using namespace sh3_gl;
+
+context::context(sh3_window& hwnd)
 {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
@@ -53,70 +47,22 @@ sh3_glcontext::sh3_glcontext(sh3_window& hwnd)
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 }
 
-/*++
-
-Routine Description:
-        Gets the GLVENDOR String (i.e Graphics Card Manufacturer)
-
-Arguments:
-        None
-
-Return Type:
-        const char* - GLVENDOR String
-
---*/
-const char* sh3_glcontext::GetVendor() const
+const char* context::GetVendor() const
 {
     return GlGetString(GL_VENDOR);
 }
 
-/*++
-
-Routine Description:
-        Gets the GLVERSION String (minor.major version)
-
-Arguments:
-        None
-
-Return Type:
-        const char*
-
---*/
-const char* sh3_glcontext::GetVersion() const
+const char* context::GetVersion() const
 {
     return GlGetString(GL_VERSION);
 }
 
-/*++
-
-Routine Description:
-        Gets the name of the renderer (Graphics Card that created this context)
-
-Arguments:
-        None
-
-Return Type:
-        const char*
-
---*/
-const char* sh3_glcontext::GetRenderer() const
+const char* context::GetRenderer() const
 {
     return GlGetString(GL_RENDERER);
 }
 
-/*++
-
-Routine Description:
-        Get a list of all the extensions supported by this Context (Supported by the actual GPU[???]).
-
-Arguments:
-        None
-
-Return Type:
-        None
-
---*/
-void sh3_glcontext::GetExtensions()
+void context::GetExtensions()
 {
     GLint numExts;
     GLint i;
@@ -133,19 +79,7 @@ void sh3_glcontext::GetExtensions()
     }
 }
 
-/*++
-
-Routine Description:
-        Prints out information about the OpenGL Context we've created
-
-Arguments:
-        None
-
-Return Type:
-        None
-
---*/
-void sh3_glcontext::PrintInfo() const
+void context::PrintInfo() const
 {
     Log(LogLevel::INFO, "GL_VENDOR:\t %s", GetVendor());
     Log(LogLevel::INFO, "GL_VERSION:\t %s", GetVersion());
@@ -156,19 +90,12 @@ void sh3_glcontext::PrintInfo() const
     std::printf("GL_RENDERER:\t %s\n", GetRenderer());
 }
 
-/*++
-
-Routine Description:
-        Retrieve a C-String via glGetString
-
-Arguments:
-        name - the attribute to retrieve
-
-Return Type:
-        const char*
-
---*/
-const char* sh3_glcontext::GlGetString(GLenum name)
+const char* context::GlGetString(GLenum name)
 {
     return reinterpret_cast<const char*>(glGetString(name));
+}
+
+glm::mat4 context::GetProjectionMatrix(float fov, int width, int height, float near, float far)
+{
+    return glm::perspective(fov, static_cast<float>(width) / static_cast<float>(height), near, far);
 }
