@@ -6,9 +6,19 @@
 #ifndef SH3_SYSTEM_ASSHERT_HPP_INCLUDED
 #define SH3_SYSTEM_ASSHERT_HPP_INCLUDED
 
+#if __GNUC__
+#define UNREACHABLE() __builtin_unreachable();
+#elif defined(_MSC_VER)
+#define UNREACHABLE() __assume(0);
+#else
+//error here?
+//trigger UB as a way to signal that optimization is OK?
+#define UNREACHABLE() do {} while(false)
+#endif
+
 #ifndef DOXYGEN
 #ifdef ASSERT_OFF
-#define ASSERT_MSG_IMPL(cond, msg, ignore) static_cast<void>(0)
+#define ASSERT_MSG_IMPL(cond, msg, ignore) do { if(!(cond)) UNREACHABLE(); } while(false)
 #else
 #ifdef __GNUC__
 #define ASSERT_FUNC __PRETTY_FUNCTION__
