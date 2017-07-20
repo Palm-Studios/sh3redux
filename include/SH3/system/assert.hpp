@@ -6,13 +6,12 @@
 #ifndef SH3_SYSTEM_ASSHERT_HPP_INCLUDED
 #define SH3_SYSTEM_ASSHERT_HPP_INCLUDED
 
-#if __GNUC__
+#ifdef __GNUC__
 #define UNREACHABLE() __builtin_unreachable();
 #elif defined(_MSC_VER)
 #define UNREACHABLE() __assume(0);
 #else
-//error here?
-//trigger UB as a way to signal that optimization is OK?
+#warning "Don't know how to define UNREACHABLE() for your compiler."
 #define UNREACHABLE() do {} while(false)
 #endif
 
