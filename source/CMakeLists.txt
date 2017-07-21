@@ -1,3 +1,4 @@
+find_package(Boost REQUIRED)
 #find_package(Freetype REQUIRED)
 #find_package(FTGL REQUIRED)
 find_package(GLEW REQUIRED)
@@ -19,6 +20,7 @@ endif()
 
 include_directories("../include")
 include_directories(SYSTEM "../third_party/debugbreak")
+include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories(SYSTEM "${GLEW_INCLUDE_DIRS}")
 include_directories(SYSTEM "${GLM_INCLUDE_DIRS}")
 include_directories(SYSTEM "${OPENGL_INCLUDE_DIR}")
