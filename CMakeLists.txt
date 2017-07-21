@@ -27,6 +27,9 @@ if(NOT CMAKE_BUILD_TYPE)
 	endif()
 	set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS ${CMAKE_CONFIGURATION_TYPES})
 endif()
+
+set(BUILD_TESTS ON CACHE BOOL "Build the test programs.")
+
 set(ASSERTION_BEHAVIOR_DEFAULT "Log and ask")
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Release" OR "${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
 	set(ASSERTION_BEHAVIOR_DEFAULT "Disable")
@@ -116,7 +119,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 
 add_subdirectory(source)
-add_subdirectory(tests)
+if(BUILD_TESTS)
+	add_subdirectory(tests)
+endif()
 
 find_package(Doxygen)
 
