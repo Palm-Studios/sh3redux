@@ -23,10 +23,10 @@
 
 
 
-namespace sh3_graphics
+namespace sh3_gl
 {
 
-    struct sh3_glprogram final
+    struct program final
     {
     public:
         enum class load_result
@@ -48,9 +48,10 @@ namespace sh3_graphics
         private:
         };
 
-        sh3_glprogram(const std::string& name, load_error& err, const std::vector<std::string>& attribs = {}) : programName(name){Load(name, err, attribs);};
-        ~sh3_glprogram(){Unbind(); glDeleteProgram(programID);}
+        program(const std::string& name, load_error& err, const std::vector<std::string>& attribs = {}) : programName(name){Load(name, err, attribs);};
+        ~program(){Unbind(); glDeleteProgram(programID);}
 
+        void Load(const std::string& name);
         /**
          *  Load a shader from a file on disk, compile and then link it, binding any attributes in the process.
          *

@@ -39,28 +39,15 @@ enum MyAttributes
     MAX
 };
 
-/**
- *  Entry point to the program.
- *
- *  @note Requires @c argc and @c argv to make it compatible with SDL2.
- *
- *  @param argc Number of arguments.
- *  @param argv Argument vector.
- *
- *  @returns An @ref exit_code specifying success or failure.
- */
 int main(int argc, char** argv)
 {
     static_cast<void>(argc);
     static_cast<void>(argv);
 
-//    sh3_arc mft;
-//    mft.Load();
-
     Log(LogLevel::INFO, "===SILENT HILL 3 REDUX===");
     Log(LogLevel::INFO, "Copyright 2016-2017 Palm Studios\n");
 
-    sh3_window window(640, 480, "sh3redux");
+    sh3_window window(640, 480, "sh3redux"); // Window initialization
 
     bool quit = false;
     SDL_Event e;
@@ -69,11 +56,14 @@ int main(int argc, char** argv)
     sh3_gl::program test("test", err);
     sh3_gl::vao<MyAttributes> myVao;
 
-    myVao.Bind();
+    myVao.Bind(); // Bind our VAO
+	
+	// Create the vertex buffer object
     sh3_gl::buffer_object& verts = myVao[MyAttributes::VERTEX_SLOT];
     verts.BufferData(g_vertex_buffer_data, sizeof(g_vertex_buffer_data), GL_STATIC_DRAW);
     myVao.SetDataLocation(MyAttributes::VERTEX_SLOT, sh3_gl::vao<MyAttributes>::DataType::FLOAT, 3, 0, 0);
 
+	// Create the color buffer object
     sh3_gl::buffer_object& col = myVao[MyAttributes::COLOR_SLOT];
     col.BufferData(glCol, sizeof(glCol), GL_STATIC_DRAW);
     myVao.SetDataLocation(MyAttributes::COLOR_SLOT, sh3_gl::vao<MyAttributes>::DataType::FLOAT, 3, 0, 0);
@@ -91,6 +81,7 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         test.Bind();
+        myVao.Bind();
         myVao.Draw();
         SDL_GL_SwapWindow(window.hwnd.get());
     }

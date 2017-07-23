@@ -16,14 +16,14 @@
 
 static const GLuint BAD_SHADER = 0;
 
-using namespace sh3_graphics;
+using namespace sh3_gl;
 
-void sh3_glprogram::load_error::set_error(load_result res)
+void program::load_error::set_error(load_result res)
 {
     result = res;
 }
 
-std::string sh3_glprogram::load_error::message() const
+std::string program::load_error::message() const
 {
     std::string error;
     switch(result)
@@ -48,7 +48,7 @@ std::string sh3_glprogram::load_error::message() const
     return error;
 }
 
-void sh3_glprogram::Load(const std::string& shader, load_error& err, const std::vector<std::string>& attribs)
+void program::Load(const std::string& shader, load_error& err, const std::vector<std::string>& attribs)
 {
     GLenum status = 0;
 
@@ -106,24 +106,24 @@ void sh3_glprogram::Load(const std::string& shader, load_error& err, const std::
     err.set_error(load_result::SUCCESS);
 }
 
-void sh3_glprogram::Bind()
+void program::Bind()
 {
     if(programID == 0)
     {
-        Log(LogLevel::WARN, "sh3_glprogram::Bind( ): It seems this glprogram has not been compiled! It is impossible for it to be bound!");
+        Log(LogLevel::WARN, "program::Bind( ): It seems this glprogram has not been compiled! It is impossible for it to be bound!");
         return;
     }
 
     glUseProgram(programID);
 }
 
-void sh3_glprogram::Unbind()
+void program::Unbind()
 {
     glUseProgram(0); // The 'correct' way to unbind a shader, but apparently undefined?!?!
 }
 
 // TODO: Unfuck this function! It looks like a pile of shit (and acts like one too)..
-GLuint sh3_glprogram::Compile(GLenum type)
+GLuint program::Compile(GLenum type)
 {
     GLint   status; // Used to check compilation status
     GLuint  id;     // ID of this shader
@@ -154,7 +154,7 @@ GLuint sh3_glprogram::Compile(GLenum type)
     if(!source.is_open())
     {
         //TODO: default shader fallback.
-        Log(LogLevel::ERROR, "sh3_glprogram::Compile( ): Unable to open a handle to %s!", fname.c_str());
+        Log(LogLevel::ERROR, "program::Compile( ): Unable to open a handle to %s!", fname.c_str());
         return BAD_SHADER; // 0 is the 'bad shader' or rather one that is unbound.
     }
 
@@ -172,7 +172,7 @@ GLuint sh3_glprogram::Compile(GLenum type)
     if(!status)
     {
         GLint logLength = 0;
-        std::string errmsg = "sh3_glprogram::Compile( ) error in " + fname;
+        std::string errmsg = "program::Compile( ) error in " + fname;
 
         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
 
