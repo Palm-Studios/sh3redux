@@ -14,8 +14,9 @@
 #ifndef GLVERTARRAY_HPP_INCLUDED
 #define GLVERTARRAY_HPP_INCLUDED
 
-#include <vector>
 #include <array>
+#include <utility>
+#include <vector>
 
 #include "GL/glew.h"
 #include "GL/gl.h"
@@ -116,16 +117,22 @@ namespace sh3_gl{
     struct mutablevao : public finalvao
     {
     protected:
+        using Targets = std::array<buffer_object::Target, numbuffers>;
 
         /**
          *  Our VAO that inherits from @ref finalvao. Contains a list of all our @ref buffer_object structures.
          *
+         *  @param targets  An array of @ref buffer_object::Target%s for the VBOs.
          *  @param vertices Reference to our vertices @ref buffer_object.
          *
          *  @note This should not be directly instantiated.
          */
-        mutablevao(const buffer_object& vertices): finalvao(vertices) {}
+        mutablevao(const Targets& targets, const buffer_object& vertices): mutablevao(targets, vertices, std::make_index_sequence<numbuffers>()) {}
         using finalvao::finalvao;
+
+    private:
+        template<std::size_t... seq>
+        mutablevao(const Targets& targets, const buffer_object& vertices, std::index_sequence<seq...>): finalvao(vertices), buffers({targets[seq]...}) {}
 
     public:
         /**
@@ -145,18 +152,18 @@ namespace sh3_gl{
         /**
          *  Set vertex shader location of data in VBO for specified attribute.
          *
-         *  @param attrib   Attribute we want to map data input in our shader (using location = x).
+         *  @param slot     Slot of attribute we want to map data input in our shader (using location = x).
          *  @param type     Data Type of data passed in.
          *  @param size     The size of each component per attribute.
          *  @param stride   Byte offset between vertex attributes.
          *  @param offset   Offset to attribute in buffer. Each attrib is then located at offset + stride.
          */
-        void SetDataLocation(GLuint attrib, DataType type, GLint size, GLsizei stride, GLint offset);
+        void SetDataLocation(GLuint slot, DataType type, GLint size, GLsizei stride, GLint offset);
 
         /**
          *  Overload the [] operator to get a buffer stored in @ref buffers more easily.
          *
-         *  @param slot Index slot where the buffer is stored. Usually in a @ref Attribute.
+         *  @param slot Index slot where the buffer is stored. The value usually comes from a @c Attributes::Slot.
          *
          *  @return buffer_object& reference to the buffer object stored in @ref buffers.
          */
@@ -179,24 +186,14 @@ namespace sh3_gl{
         static constexpr void* buffer_offset(GLint offset){return static_cast<char *>(nullptr) + offset;}
     };
 
-    /**
-     *  Set vertex shader location of data in VBO for specified attribute.
-     *
-     *  @tparam numbuffers  Number of buffers.
-     *  @param attrib       Attribute we want to map data input in our shader (using location = x).
-     *  @param type         Data Type of data passed in.
-     *  @param size         The size of each component per attribute.
-     *  @param stride       Byte offset between vertex attributes.
-     *  @param offset       Offset to attribute in buffer. Each attrib is then located at offset + stride.
-     */
     template<std::size_t numbuffers>
-    void mutablevao<numbuffers>::SetDataLocation(GLuint attrib, DataType type, GLint size, GLsizei stride, GLint offset)
+    void mutablevao<numbuffers>::SetDataLocation(GLuint slot, DataType type, GLint size, GLsizei stride, GLint offset)
     {
         Bind();
-        glEnableVertexAttribArray(attrib);
-        ASSERT_MSG(attrib < numbuffers, "VBO index (attribute) out of range");
-        buffers[attrib].Bind();
-        glVertexAttribPointer(attrib, size, static_cast<GLenum>(type), GL_FALSE, stride, buffer_offset(offset));
+        glEnableVertexAttribArray(slot);
+        ASSERT_MSG(slot < numbuffers, "VBO index (slot) out of range");
+        buffers[slot].Bind();
+        glVertexAttribPointer(slot, size, static_cast<GLenum>(type), GL_FALSE, stride, buffer_offset(offset));
     }
 
     /**
@@ -214,11 +211,12 @@ namespace sh3_gl{
         /**
          *  Constructor.
          *
+         *  @param targets  An array of @ref buffer_object::Target%s for the VBOs.
          *  @param vertices Reference to our vertices @ref buffer_object.
          *
          *  @note This should not be directly instantiated.
          */
-        indexedmutablevao(const buffer_object& vertices): mutablevao<numbuffers>(mutablevao<numbuffers>::buffers[index_slot], numbuffers, vertices) {}
+        indexedmutablevao(const typename mutablevao<numbuffers>::Targets& targets, const buffer_object& vertices): mutablevao<numbuffers>(mutablevao<numbuffers>::buffers[index_slot], numbuffers, vertices), mutablevao<numbuffers>::buffers(targets) {}
     };
 
     /**
@@ -226,63 +224,86 @@ namespace sh3_gl{
      *
      *  Either @ref indexedmutablevao or @ref mutablevao (unindexed).
      *
-     *  @tparam Attribute An attribute enum.
+     *  @tparam Slot A VAO-slot enum.
      *
-     *  @p  Attribute should have a value @c MAX to indicate the number of attributes (slots).
-     *      If @p Attribute has a value @c INDEX_SLOT, then the @ref type is an @ref indexedmutablevao.
+     *  @p Slot must have a value named @c MAX to indicate how many attribute slots there are.
+     *  If @p Slot has a value @c INDEX, then the @ref type is an @ref indexedmutablevao, otherwise it's @ref mutablevao.
      *
      *  @note This class cannot be instantiated!
      */
-    template<typename Attribute>
+    template<typename Slot>
     struct vaoparent final
     {
     private:
         template<typename T>
-        static constexpr indexedmutablevao<T::MAX, T::INDEX_SLOT> test(decltype(T::INDEX_SLOT)*);
+        static constexpr indexedmutablevao<static_cast<std::size_t>(T::MAX), static_cast<std::size_t>(T::INDEX)> test(decltype(T::INDEX_SLOT)*);
 
         template<typename T>
-        static constexpr mutablevao<T::MAX> test(...);
+        static constexpr mutablevao<static_cast<std::size_t>(T::MAX)> test(...);
 
     public:
-        using type = decltype(test<Attribute>(0)); /**< Type of vao this is (either @ref mutablevao or @ref indexedmutablevao) */
+        using type = decltype(test<Slot>(std::declval<Slot>())); /**< Type of vao this is (either @ref mutablevao or @ref indexedmutablevao) */
 
     private:
         vaoparent() = delete;
     };
 
     /**
-     *  Our VAO object. This handles all @ref buffer_objects needed to draw data that has been.
+     *  Type of an @c Attributes::Targets array.
+     *  
+     *  @see @ref sh3_gl::vao
+     *  
+     *  @tparam Slot The @c Attributes::Slot enum.
+     *  
+     *  @p Slot must have a value named @c MAX to indicate how many attribute slots there are.
+     */
+    template<typename Slot>
+    using vao_target_array = std::array<buffer_object::Target, static_cast<std::size_t>(Slot::MAX)>;
+
+    /**
+     *  Our VAO object. This handles all @ref buffer_object%s needed to draw data that has been.
      *  sent to the graphics card.
      *
-     *  @tparam Attribute VAO Attribute enum.
+     *  @tparam Attributes VAO Attributes struct.
      *
-     *  @p  Attribute should contain @c MAX to indicate how many attribute slots are required.
-     *      If @p Attribute contains @c INDEX_SLOT, then @ref vaoparent::type is @ref indexedmutablevao.
+     *  @p Attributes should contain two members, @c Slot and @c Targets.
+     *  @c Slot should be an enum with consecutive symbolic constants for the attribute slots. There must be a VBO for the vertices, the slot of which must be named @c VERTEX. @c Slot must also have a value named @c MAX to indicate how many attribute slots there are in total.
+     *  If @c Slot contains a value named @c INDEX, then this @ref vao uses the VBO with that slot as index for the @c VERTEX VBO.
      */
-    template<typename Attribute>
-    struct vao final : public vaoparent<Attribute>::type
+    template<typename Attributes>
+    struct vao final : public vaoparent<enum Attributes::Slot>::type
     {
+    private:
+        using vaoparent = typename vaoparent<enum Attributes::Slot>::type;
+
     public:
-        using DataType = typename vaoparent<Attribute>::type::DataType;
+        using DataType = typename vaoparent::DataType;
+        using Slot = enum Attributes::Slot;
 
         /**
          *  Constructor.
          */
-        vao(): vaoparent<Attribute>::type(vaoparent<Attribute>::type::buffers[Attribute::VERTEX_SLOT]){}
+        vao(): vaoparent(Attributes::Targets, vaoparent::buffers[static_cast<std::size_t>(Slot::VERTEX)]){}
 
         /**
          *  Set vertex shader location of data in VBO for specified attribute.
          *
-         *  @param attrib   Attribute we want to map data input in our shader (using location = x).
+         *  @param slot     Slot of attribute we want to map data input in our shader (using location = x).
          *  @param type     Data Type of data passed in.
          *  @param size     The size of each component per attribute.
          *  @param stride   Byte offset between vertex attributes.
          *  @param offset   Offset to attribute in buffer. Each attrib is then located at offset + stride.
          */
-        void SetDataLocation(Attribute attrib, DataType type, GLint size, GLsizei stride, GLint offset)
+        void SetDataLocation(Slot slot, DataType type, GLint size, GLsizei stride, GLint offset)
         {
-            ASSERT_MSG(attrib < Attribute::MAX, "VBO index (attribute) out of range");
-            vaoparent<Attribute>::type::SetDataLocation(static_cast<GLuint>(attrib), type, size, stride, offset);
+            ASSERT_MSG(slot < Slot::MAX, "VBO index (slot) out of range");
+            vaoparent::SetDataLocation(static_cast<GLuint>(slot), type, size, stride, offset);
+        }
+
+        buffer_object& operator[](Slot slot)
+        {
+            ASSERT_MSG(slot < Slot::MAX, "VBO index (slot) out of range");
+            return vaoparent::operator[](static_cast<GLuint>(slot));
         }
     };
 }
