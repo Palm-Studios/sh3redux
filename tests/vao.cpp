@@ -32,12 +32,28 @@ static GLfloat glCol[] = {
     0.0f, 0.0f, 1.0f,
 };
 
-enum MyAttributes
+struct TriangleAttributes final
 {
-    VERTEX_SLOT,
-    COLOR_SLOT,
-    MAX
+private:
+    using Target = sh3_gl::buffer_object::Target;
+
+    TriangleAttributes() = delete;
+
+public:
+    enum class Slot
+    {
+        VERTEX,
+        COLOR,
+        MAX
+    };
+
+    static constexpr sh3_gl::vao_target_array<Slot> Targets =
+    {
+        Target::ARRAY_BUFFER,
+        Target::ARRAY_BUFFER
+    };
 };
+constexpr sh3_gl::vao_target_array<TriangleAttributes::Slot> TriangleAttributes::Targets;
 
 int main(int argc, char** argv)
 {
@@ -54,21 +70,24 @@ int main(int argc, char** argv)
 
     sh3_gl::program::load_error err;
     sh3_gl::program test("test", err);
-    sh3_gl::vao<MyAttributes> myVao;
 
-    myVao.Bind(); // Bind our VAO
-	
-	// Create the vertex buffer object
-    sh3_gl::buffer_object& verts = myVao[MyAttributes::VERTEX_SLOT];
+    using Triangle = sh3_gl::vao<TriangleAttributes>;
+
+    Triangle triVao;
+
+    triVao.Bind();
+
+    // Fill the vertex buffer object
+    sh3_gl::buffer_object& verts = triVao[Triangle::Slot::VERTEX];
     verts.BufferData(g_vertex_buffer_data, sizeof(g_vertex_buffer_data), GL_STATIC_DRAW);
-    myVao.SetDataLocation(MyAttributes::VERTEX_SLOT, sh3_gl::vao<MyAttributes>::DataType::FLOAT, 3, 0, 0);
+    triVao.SetDataLocation(Triangle::Slot::VERTEX, Triangle::DataType::FLOAT, 3, 0, 0);
 
-	// Create the color buffer object
-    sh3_gl::buffer_object& col = myVao[MyAttributes::COLOR_SLOT];
+    // Create the color buffer object
+    sh3_gl::buffer_object& col = triVao[Triangle::Slot::COLOR];
     col.BufferData(glCol, sizeof(glCol), GL_STATIC_DRAW);
-    myVao.SetDataLocation(MyAttributes::COLOR_SLOT, sh3_gl::vao<MyAttributes>::DataType::FLOAT, 3, 0, 0);
+    triVao.SetDataLocation(Triangle::Slot::COLOR, Triangle::DataType::FLOAT, 3, 0, 0);
 
-    myVao.Unbind();
+    triVao.Unbind();
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     while(!quit)
@@ -81,8 +100,7 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         test.Bind();
-        myVao.Bind();
-        myVao.Draw();
+        triVao.Draw();
         SDL_GL_SwapWindow(window.hwnd.get());
     }
 
