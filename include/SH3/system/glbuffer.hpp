@@ -42,7 +42,7 @@ namespace sh3_gl
          *  as we never actually pass anything to this constructor (as well as never passing a buffer_object to
          *  @ref mutablevao).
          */
-        buffer_object(Target type = Target::ARRAY_BUFFER, const std::string& buffName = ""): buffType(type), name(buffName){Create();};
+        buffer_object(Target type, const std::string& buffName = ""): buffType(type), name(buffName){Create();};
 
         /**
          *  Destructor.
