@@ -36,12 +36,10 @@
 log.txt
 
 #Folders (so library headers don't get pushed for C::B users!)
-include/freetype
-include/FTGL
 include/GL
 include/glm
 include/SDL2
-include/ft2build.h
+include/boost
 
 #SILENT HILL 3 stuff
 *.arc
