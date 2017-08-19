@@ -50,7 +50,9 @@
 #define ARC_FILE_NOT_FOUND  -1          /**< Status @ref sh3_arc::LoadFile() returns if a file cannot be found */
 #define ARC_NUM_SECTIONS    30          /**< Number of section arcs SILENT HILL 3 contatins. */
 
-struct sh3_arc_file;
+namespace sh3 { namespace arc {
+    struct mft;
+} }
 
 /** @defgroup arc-headers arc header types
  *  @{
@@ -119,11 +121,11 @@ public:
     /**
      *  Load a section from @c arc.arc.
      *
-     *  @param fHandle The @ref sh3_arc_file.
+     *  @param fHandle The @ref sh3::arc::mft.
      *
      *  @returns @c true if loading succeeded, @c false otherwise.
      */
-    bool Load(sh3_arc_file& fHandle);
+    bool Load(sh3::arc::mft& fHandle);
 };
 
 class sh3_arc

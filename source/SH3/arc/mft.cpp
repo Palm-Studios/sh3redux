@@ -1,24 +1,9 @@
-/*++
-
-Copyright (c) 2016  Palm Studios
-
-Module Name:
-        sh3_arc_file.cpp
-
-Abstract:
-        Implementation of functions found in the class sh3_arc_file
-
-Author:
-        Alexander Hirsch
-
-Environment:
-
-Notes:
-
-Revision History:
-
---*/
-#include "SH3/arc/file.hpp"
+/** @file
+ *  Functions to extract data from @c arc.arc.
+ *  
+ *  @copyright 2016-2017  Palm Studios
+ */
+#include "SH3/arc/mft.hpp"
 
 #include <cassert>
 #include <cerrno>
@@ -29,12 +14,14 @@ Revision History:
 #include <string>
 #include <vector>
 
-void sh3_arc_file::read_error::set_error(sh3_arc_file::read_result res, gzFile file)
+using namespace sh3::arc;
+
+void mft::read_error::set_error(mft::read_result res, gzFile file)
 {
     result = res;
     zlib_err = Z_OK;
     os_err = 0;
-    if(result == sh3_arc_file::read_result::GZ_ERROR)
+    if(result == mft::read_result::GZ_ERROR)
     {
         assert(file);
         gzerror(file, &zlib_err);
@@ -47,7 +34,7 @@ void sh3_arc_file::read_error::set_error(sh3_arc_file::read_result res, gzFile f
     }
 }
 
-std::string sh3_arc_file::read_error::message() const
+std::string mft::read_error::message() const
 {
     std::string error;
     switch(result)
@@ -74,25 +61,12 @@ std::string sh3_arc_file::read_error::message() const
     return error;
 }
 
-sh3_arc_file::sh3_arc_file(const std::string& path)
+mft::mft(const std::string& path)
     :gzHandle(gzopen(path.c_str(), "rb"))
 {
 }
 
-/*++
-
-Routine Description:
-        Read binary data from an arc file to a buffer.
-
-Arguments:
-        destination - destination buffer
-        len - amount of bytes to read
-
-Return Type:
-        sh3_arc_file::read_result
-
---*/
-std::size_t sh3_arc_file::ReadData(void* destination, std::size_t len, read_error& e)
+std::size_t mft::ReadData(void* destination, std::size_t len, read_error& e)
 {
     assert(std::numeric_limits<int>::max() >= len); // overflow check
     int ilen = static_cast<int>(len);
@@ -124,20 +98,7 @@ std::size_t sh3_arc_file::ReadData(void* destination, std::size_t len, read_erro
     return static_cast<std::size_t>(res);
 }
 
-/*++
-
-Routine Description:
-        Read a string from an arc file.
-
-Arguments:
-        destination - destination string
-        len - amount of bytes to read
-
-Return Type:
-        sh3_arc_file::read_result
-
---*/
-std::size_t sh3_arc_file::ReadString(std::string& destination, std::size_t len, read_error& e)
+std::size_t mft::ReadString(std::string& destination, std::size_t len, read_error& e)
 {
     assert(static_cast<int>(len) > 0); // overflow check
 
