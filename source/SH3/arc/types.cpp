@@ -28,7 +28,7 @@ Revision History:
 --*/
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/section.hpp"
-#include "SH3/arc/file.hpp"
+#include "SH3/arc/mft.hpp"
 #include "SH3/system/log.hpp"
 
 #include <algorithm>
@@ -42,9 +42,11 @@ Revision History:
 
 static const char* defaultPath = "data/arc.arc";
 
+using namespace sh3::arc;
+
 bool sh3_arc::Load()
 {
-    sh3_arc_file file(defaultPath);
+    mft file(defaultPath);
 
     if(!file.is_open())
     {
@@ -52,7 +54,7 @@ bool sh3_arc::Load()
     }
 
     // Now, we read in the first 16 bytes (the header) and make sure this really is arc.arc!
-    sh3_arc_file::read_error readError;
+    mft::read_error readError;
     file.ReadObject(s_fileHeader, readError);
     if(readError)
     {
@@ -160,6 +162,6 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     sectionFile.read(reinterpret_cast<char*>(&*start), fileEntry.length);
     advance(start, fileEntry.length);
 
-    //FIXME: use error_code pattern like sh3_arc_file.ReadFile
+    //FIXME: use error_code pattern like mft::ReadFile
     return static_cast<int>(fileEntry.length);
 }
