@@ -20,8 +20,10 @@ Revision History:
 
 --*/
 #include "SH3/arc/types.hpp"
-#include "SH3/arc/file.hpp"
+#include "SH3/arc/mft.hpp"
 #include "SH3/system/log.hpp"
+
+using namespace sh3::arc;
 
 /*++
 
@@ -36,14 +38,14 @@ Return Type:
 
 --*/
 
-bool sh3_arc_section::Load(sh3_arc_file& arcFile)
+bool sh3_arc_section::Load(mft& arcFile)
 {
     if(!arcFile.is_open())
     {
         die("E00005: sh3_arc_section::Load( ): Unable to acquire file handle!");
     }
 
-    sh3_arc_file::read_error readError;
+    mft::read_error readError;
     arcFile.ReadObject(header, readError);
     if(readError)
     {
