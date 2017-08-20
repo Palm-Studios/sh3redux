@@ -134,7 +134,6 @@
 			<Option target="Release x86_64" />
 		</Unit>
 		<Unit filename="source/SH3/arc/file.cpp" />
-		<Unit filename="source/SH3/arc/section.cpp" />
 		<Unit filename="source/SH3/arc/types.cpp" />
 		<Unit filename="source/SH3/arc/vfile.cpp" />
 		<Unit filename="source/SH3/graphics/msbmp.cpp" />

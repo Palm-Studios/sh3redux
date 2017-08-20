@@ -46,9 +46,7 @@
 #include <vector>
 #include <zlib.h>
 
-#define ARCARC_MAGIC        0x20030417  /**< arc.arc file magic */
 #define ARC_FILE_NOT_FOUND  -1          /**< Status @ref sh3_arc::LoadFile() returns if a file cannot be found */
-#define ARC_NUM_SECTIONS    30          /**< Number of section arcs SILENT HILL 3 contatins. */
 
 namespace sh3 { namespace arc {
     struct mft;
@@ -57,25 +55,6 @@ namespace sh3 { namespace arc {
 /** @defgroup arc-headers arc header types
  *  @{
  */
-
-/** Type check header
- *
- *  (an unfortunate waste of space)
- */
-typedef struct
-{
-    uint32_t file_marker;  /**< File marker for arc.arc. This is ALWAYS @c 0x20030417 */
-    uint32_t unused[3];    /**< 3 filler DWORDs */
-} sh3_arc_mft_header_t;
-
-/** Info about the MFT */
-typedef struct
-{
-    uint16_t type;          /**< This is 1 (for arc.arc info) */
-    uint16_t header_size;   /**< Size of this header */
-    uint32_t sectionCount;  /**< How many sections there are in the mft. (i.e how many .arc files in @c /data/) */
-    uint32_t fileCount;     /**< Number of files in this section */
-} sh3_arc_data_header_t;
 
 /** Info about a section */
 typedef struct
@@ -117,22 +96,11 @@ public:
     // Should this be private?!?!
     /** Maps a file (and its associated virtual path) to it's section index */
     std::map<std::string, std::uint32_t> fileList;
-
-    /**
-     *  Load a section from @c arc.arc.
-     *
-     *  @param fHandle The @ref sh3::arc::mft.
-     *
-     *  @returns @c true if loading succeeded, @c false otherwise.
-     */
-    bool Load(sh3::arc::mft& fHandle);
 };
 
 class sh3_arc
 {
 public:
-    sh3_arc_mft_header_t         s_fileHeader;  /**< First 16 bytes of the file. Contains the file signature */
-    sh3_arc_data_header_t        s_infoHeader;  /**< Information about the MFT */
     std::vector<sh3_arc_section> c_sections;    /**< List of all the sections in @c arc.arc */
 
     sh3_arc(){Load();}

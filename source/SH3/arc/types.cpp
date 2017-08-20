@@ -40,52 +40,18 @@ Revision History:
 #include <type_traits>
 #include <utility>
 
-static const char* defaultPath = "data/arc.arc";
-
 using namespace sh3::arc;
 
 bool sh3_arc::Load()
 {
-    mft file(defaultPath);
+    mft file;
 
-    if(!file.is_open())
-    {
-        die("E00001: sh3_arc::Load( ): Unable to find /data/arc.arc!");
-    }
-
-    // Now, we read in the first 16 bytes (the header) and make sure this really is arc.arc!
-    mft::read_error readError;
-    file.ReadObject(s_fileHeader, readError);
-    if(readError)
-    {
-        die("E00002: sh3_arc::Load( ): Error reading arc.arc header: %s! Was the handle opened correctly?!", readError.message().c_str());
-    }
-
-    // Check the first 4-bytes of the header to make sure we're not about to read a whole lot of garbage!
-    if(s_fileHeader.file_marker != ARCARC_MAGIC)
-    {
-        die("E00003: sh3_arc::Load( ): arc.arc, Invalid File Marker!!!");
-    }
-
-    /* Okay, so we now know that
-         A. We have a valid file handle to arc.arc
-         B. We have loaded and validated the header
-
-       We can now begin loading gather info about arc.arc and begin loading
-       each section (or as I like to call them, sub arcs).
-    */
-
-    file.ReadObject(s_infoHeader, readError);
-    if(readError)
-    {
-        die("E00004: sh3_arc::Load( ): Invalid read of arc.arc information: %s!", readError.message().c_str());
-    }
-
-    c_sections.resize(s_infoHeader.sectionCount);
+    // Load each sub-arc
+    c_sections.resize(file.GetSectionCount());
 
     for(sh3_arc_section& section : c_sections)
     {
-        section.Load(file);
+        file.ReadNextSection(section);
     }
 
     return true;
