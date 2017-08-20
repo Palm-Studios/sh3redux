@@ -1,7 +1,9 @@
 /** @file
  *  Functions to extract data from @c arc.arc.
  *  
- *  @copyright 2016-2017  Palm Studios
+ *  @see @ref arc-files
+ *  
+ *  @copyright 2016-2017 Palm Studios
  */
 #ifndef SH3_ARC_MFT_HPP_INCLUDED
 #define SH3_ARC_MFT_HPP_INCLUDED
