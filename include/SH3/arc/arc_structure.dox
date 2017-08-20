@@ -1,0 +1,41 @@
+/** @page arc-files The .arc files
+ *  A description of the @c .arc files and how they are related.
+ *
+ *  The structure of the @c .arc system is as follows:
+ *
+ *                     arc.arc (MFT)
+ *                        |
+ *                        | (File name translation to section name)
+ *          +--------+----+----+-------+
+ *          |        |         |       |
+ *       pic.arc chrbg.arc  msg.arc tex.arc
+ *          |        |         |       |    (Translation to section offset)
+ *          |        |         |       |
+ *         File     File      File    File
+ *
+ *  @c arc.arc is compressed using the gzip compression format, while the files branching from it (sub-arcs) are not.
+ *  @c arc.arc acts as a Master File Table. The file is modeled with @ref sh3::arc::mft.
+ *
+ *  At launch, the MFT is parsed and a mapping from filename to its location is created (@ref sh3_arc_section::fileList)
+ *  so that we can quickly look up and load a file in a section without having to transverse the MFT everytime,
+ *  though it could be made quicker by skipping sections (which is most likely how Konami implemented it).
+ *
+ *  After we have a handle to @c arc.arc, we can load each sub-arc. These are the files found in @c /data/
+ *  of a regular install of SILENT HILL 3 on the PC. The sub-arcs contain information about the contained files,
+ *  such as a Virtual File Path (e.g @c /data/pic/it/it_xxxx.tex, then translated to an offset), the offset
+ *  within the sub-arc, as well as the index of the sub-arc (for reasons yet unknown).
+ *  The sub-arcs are modeled with @ref sh3_arc_section.
+ *
+ *  It is currently not known how the programmers at Konami specified which files should be loaded when, but
+ *  considering the very quick load times, the assumption is that each part of the game is in its own individual
+ *  sub-arc, as Mike seems to have not found.
+ *
+ *  @copyright 2016-2017 Palm Studios
+ *
+ *  @par Special thanks
+ *       Mike M (<a href="https://twitter.com/perdedork">\@perdedork</a>)
+ *
+ *  @date 14-12-2016
+ *
+ *  @author Jesse Buhagiar
+ */
