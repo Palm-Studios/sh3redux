@@ -8,12 +8,14 @@
 
 #include <zlib.h>
 
-#include <cstddef>
+#include <cstdint>
 #include <memory>
 #include <string>
 #include <type_traits>
 
 #include "SH3/error.hpp"
+
+struct sh3_arc_section;
 
 namespace sh3 { namespace arc {
 
@@ -31,6 +33,28 @@ namespace sh3 { namespace arc {
         public:
             void operator()(gzFile file) const { gzclose(file); }
         };
+
+        /** @defgroup arc-headers arc header types
+         *  @{
+         */
+
+        /** Type check header */
+        struct header
+        {
+            uint32_t magic;     /**< Magic for @c arc.arc. This is ALWAYS @ref magic. */
+            uint8_t unused[12]; /**< 12 filler bytes. */
+        };
+
+        /** Info about the MFT */
+        struct data
+        {
+            uint16_t type;         /**< This is @c 1 (for @c arc.arc info). */
+            uint16_t header_size;  /**< Size of this header, should be @c sizeof(Info). */
+            uint32_t sectionCount; /**< How many sections there are in the mft. (i.e how many @c .arc files in @c /data/). */
+            uint32_t fileCount;    /**< Number of files in this section. */
+        };
+
+        /** @} */
 
     public:
         /**
@@ -75,18 +99,27 @@ namespace sh3 { namespace arc {
 
         /**
          *  Open the @c arc.arc.
-         *  
-         *  @param[in] path The path to the @c arc.arc.
          */
-        explicit mft(const std::string& path);
+        mft();
 
         /**
          *  Check whether the file was successfully opened.
          *  
          *  @returns @c true if the file was successfully opened, @c false otherwise.
          */
-        bool is_open() const {return static_cast<bool>(gzHandle);}
+        bool IsOpen() const {return static_cast<bool>(gzHandle);}
 
+        /**
+         *  Read a @ref sh3_arc_section.
+         *  
+         *  @param[out] section The @ref sh3_arc_section to read into.
+         */
+        //TODO: struct section_read_error
+        void ReadNextSection(sh3_arc_section& section);
+
+        std::size_t GetSectionCount() const { return data.sectionCount; }
+
+    private:
         /**
          *  Read binary data from an arc file to a buffer.
          *  
@@ -160,8 +193,9 @@ namespace sh3 { namespace arc {
          */
         std::size_t ReadString(std::string& destination, std::size_t len, read_error& e);
 
-    private:
         std::unique_ptr<gzFile_s, gz_file_closer> gzHandle;
+        Header header;
+        Data data;
     };
 
 } }
