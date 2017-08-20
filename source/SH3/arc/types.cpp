@@ -142,7 +142,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     }
 
     // Seek to the file entry and read it
-    sectionFile.seekg(index * sizeof(fileEntry), std::ios_base::cur);
+    sectionFile.seekg(index * sizeof(fileEntry));
     static_assert(std::is_trivially_copyable<decltype(fileEntry)>::value, "must be deserializable through char*");
     sectionFile.read(reinterpret_cast<char*>(&fileEntry), sizeof(fileEntry));
 
