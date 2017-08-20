@@ -7,12 +7,15 @@
 
 #include <cassert>
 #include <cerrno>
-#include <cstddef>
+#include <cstdint>
 #include <cstring>
 #include <iterator>
 #include <limits>
 #include <string>
 #include <vector>
+
+#include "SH3/arc/types.hpp"
+#include "SH3/system/log.hpp"
 
 using namespace sh3::arc;
 
@@ -61,9 +64,36 @@ std::string mft::read_error::message() const
     return error;
 }
 
-mft::mft(const std::string& path)
-    :gzHandle(gzopen(path.c_str(), "rb"))
+static constexpr const char* mftPath = "data/arc.arc";
+
+mft::mft()
+    :gzHandle(gzopen(mftPath, "rb"))
 {
+    if(!IsOpen())
+    {
+        die("E00001: mft::mft( ): Unable to find /data/arc.arc!");
+    }
+
+
+    // Read and check the header
+    read_error readError;
+    ReadObject(header, readError);
+    if(readError)
+    {
+        die("E00002: mft::mft( ): Error reading arc.arc header: %s! Was the handle opened correctly?!", readError.message().c_str());
+    }
+
+    static constexpr decltype(header.magic) magic = 0x20030417; /**< @c arc.arc file magic */
+    if(header.magic != magic)
+    {
+        die("E00003: mft::mft( ): arc.arc, Invalid File Marker!!!");
+    }
+
+    ReadObject(data, readError);
+    if(readError)
+    {
+        die("E00004: mft::mft( ): Invalid read of arc.arc information: %s!", readError.message().c_str());
+    }
 }
 
 std::size_t mft::ReadData(void* destination, std::size_t len, read_error& e)
@@ -80,7 +110,6 @@ std::size_t mft::ReadData(void* destination, std::size_t len, read_error& e)
     }
     else if(res > 0)
     {
-        //TODO: return res also, so that caller knows how much was read
         e.set_error(read_result::PARTIAL_READ, nullptr);
     }
     else if(res == 0)
@@ -100,7 +129,7 @@ std::size_t mft::ReadData(void* destination, std::size_t len, read_error& e)
 
 std::size_t mft::ReadString(std::string& destination, std::size_t len, read_error& e)
 {
-    assert(static_cast<int>(len) > 0); // overflow check
+    assert(len <= std::numeric_limits<int>::max()); // overflow check
 
     std::vector<char> buf(len);
     std::size_t res = ReadData(buf.data(), buf.size(), e);
@@ -113,4 +142,53 @@ std::size_t mft::ReadString(std::string& destination, std::size_t len, read_erro
     assert(destination.size() == res);
 
     return res;
+}
+
+void mft::ReadNextSection(sh3_arc_section& section)
+{
+    assert(IsOpen());
+
+    read_error readError;
+
+    ReadObject(section.header, readError);
+    if(readError)
+    {
+        die("E00006: mft::ReadNextSection( ): Invalid read of arc.arc section: %s!", readError.message().c_str());
+    }
+
+    ReadString(section.sectionName, section.header.hsize - sizeof(section.header), readError);
+    if(section.sectionName.back() != '\0')
+    {
+        die("E00007: mft::ReadNextSection( ): Garbage read when reading section name (NUL terminator missing): %s!", section.sectionName.c_str());
+    }
+    // remove trailing NUL
+    // Some filenames seem to have multiple NULs.
+    section.sectionName.resize(section.sectionName.find_last_not_of('\0') + 1);
+    section.sectionName.shrink_to_fit();
+
+    // We have now loaded information about the section, so we can start
+    // reading in all the files located in it (not in full, obviously...)
+    section.fileEntries.resize(section.header.numFiles);
+
+    for(sh3_arc_file_entry_t& file : section.fileEntries)
+    {
+        ReadObject(file.header, readError);
+
+        ReadString(file.fname, file.header.fileSize - sizeof(file.header), readError);
+        if(file.fname.back() != '\0')
+        {
+            die("E00008: mft::ReadNextSection( ): Garbage read when reading file name (NUL terminator missing): %s!", file.fname.c_str());
+        }
+        // remove trailing NUL
+        // Some filenames seem to have multiple NULs.
+        while(file.fname.back() == '\0')
+        {
+            file.fname.pop_back();
+        }
+        file.fname.shrink_to_fit();
+        //Log(LogLevel::INFO, "Read file: %s", file->fname.c_str());
+
+        section.fileList[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
+        //Log(LogLevel::INFO, "Added file to file list!");
+    }
 }
