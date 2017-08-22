@@ -7,17 +7,6 @@ find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(ZLIB REQUIRED)
 
-#support for older CMake versions
-if(NOT TARGET GLEW::GLEW)
-	set(GLEW::GLEW GLEW)
-endif()
-if(NOT TARGET OpenGL::GL)
-	set(OpenGL::GL OpenGL)
-endif()
-if(NOT TARGET ZLIB::ZLIB)
-	set(ZLIB::ZLIB ZLIB)
-endif()
-
 include_directories("../include")
 include_directories(SYSTEM "../third_party/debugbreak")
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
@@ -40,13 +29,9 @@ add_executable("input"
 )
 
 target_link_libraries("input"
-#	PRIVATE FREETYPE
-#	PRIVATE FTGL
-	PRIVATE GLEW::GLEW
-	PRIVATE glm
-	PRIVATE OpenGL::GL
-	PRIVATE SDL2
-	PRIVATE ZLIB::ZLIB
+	PRIVATE "${GLEW_LIBRARIES}"
+	PRIVATE "${OPENGL_LIBRARIES}"
+	PRIVATE "${SDL2_LIBRARIES}"
 )
 
 add_executable("vao"
@@ -63,13 +48,9 @@ add_executable("vao"
 )
 
 target_link_libraries("vao"
-#	PRIVATE FREETYPE
-#	PRIVATE FTGL
-	PRIVATE GLEW::GLEW
-	PRIVATE glm
-	PRIVATE OpenGL::GL
-	PRIVATE SDL2
-	PRIVATE ZLIB::ZLIB
+	PRIVATE "${GLEW_LIBRARIES}"
+	PRIVATE "${OPENGL_LIBRARIES}"
+	PRIVATE "${SDL2_LIBRARIES}"
 )
 
 add_executable("tex"
@@ -93,11 +74,8 @@ add_executable("tex"
 )
 
 target_link_libraries("tex"
-#	PRIVATE FREETYPE
-#	PRIVATE FTGL
-	PRIVATE GLEW::GLEW
-	PRIVATE glm
-	PRIVATE OpenGL::GL
-	PRIVATE SDL2
-	PRIVATE ZLIB::ZLIB
+	PRIVATE "${GLEW_LIBRARIES}"
+	PRIVATE "${OPENGL_LIBRARIES}"
+	PRIVATE "${SDL2_LIBRARIES}"
+	PRIVATE "${ZLIB_LIBRARIES}"
 )
