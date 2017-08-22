@@ -1,0 +1,63 @@
+//========================================================================
+// GLFW - An OpenGL framework
+// File:        glfw.h
+// API version: 2.5
+// Author:      Marcus Geelnard (marcus.geelnard at home.se)
+// WWW:         http://glfw.sourceforge.net
+//------------------------------------------------------------------------
+// Copyright (c) 2002-2005 Marcus Geelnard
+//
+// This software is provided 'as-is', without any express or implied
+// warranty. In no event will the authors be held liable for any damages
+// arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would
+//    be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such, and must not
+//    be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source
+//    distribution.
+//
+// Marcus Geelnard
+// marcus.geelnard at home.se
+//------------------------------------------------------------------------
+// $Id: glfw.h,v 1.16 2005/03/14 20:52:51 marcus256 Exp $
+//========================================================================
+
+// In order for extension support to be portable, we need to define an
+// OpenGL function call method. We use the keyword APIENTRY, which is
+// defined for Win32. (Note: Windows also needs this for <GL/gl.h>)
+#ifndef APIENTRY
+ #define APIENTRY __stdcall
+ #define GL_APIENTRY_DEFINED
+#endif // APIENTRY
+
+
+// The following three defines are here solely to make some Windows-based
+// <GL/gl.h> files happy. Theoretically we could include <windows.h>, but
+// it has the major drawback of severely polluting our namespace.
+
+// Under Windows, we need WINGDIAPI defined
+#if !defined(WINGDIAPI)
+ #if defined(_MSC_VER) || defined(__BORLANDC__) || defined(__POCC__)
+  // Microsoft Visual C++, Borland C++ Builder and Pelles C
+  #define WINGDIAPI __declspec(dllimport)
+ #elif defined(__LCC__)
+  // LCC-Win32
+  #define WINGDIAPI __stdcall
+ #else
+  // Others (e.g. MinGW, Cygwin)
+  #define WINGDIAPI extern
+ #endif
+ #define GL_WINGDIAPI_DEFINED
+#endif // WINGDIAPI
+
+#include <@SUPPORT_OPENGL_INCLUDE_DIR@\gl.h>
