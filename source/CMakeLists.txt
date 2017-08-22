@@ -7,17 +7,6 @@ find_package(OpenGL REQUIRED)
 find_package(SDL2 REQUIRED)
 find_package(ZLIB REQUIRED)
 
-#support for older CMake versions
-if(NOT TARGET GLEW::GLEW)
-	set(GLEW::GLEW GLEW)
-endif()
-if(NOT TARGET OpenGL::GL)
-	set(OpenGL::GL OpenGL)
-endif()
-if(NOT TARGET ZLIB::ZLIB)
-	set(ZLIB::ZLIB ZLIB)
-endif()
-
 include_directories("../include")
 include_directories(SYSTEM "../third_party/debugbreak")
 include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
@@ -56,9 +45,9 @@ add_executable("${CMAKE_PROJECT_NAME}"
 target_link_libraries("${CMAKE_PROJECT_NAME}"
 #	PRIVATE FREETYPE
 #	PRIVATE FTGL
-	PRIVATE GLEW::GLEW
-	PRIVATE glm
-	PRIVATE OpenGL::GL
-	PRIVATE SDL2
-	PRIVATE ZLIB::ZLIB
+	PRIVATE "${GLEW_LIBRARIES}"
+#	PRIVATE glm
+	PRIVATE "${OPENGL_LIBRARIES}"
+	PRIVATE "${SDL2_LIBRARIES}"
+	PRIVATE "${ZLIB_LIBRARIES}"
 )
