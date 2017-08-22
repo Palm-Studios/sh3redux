@@ -1,0 +1,57 @@
+//========================================================================
+// GLFW - An OpenGL framework
+// File:        glfw.h
+// API version: 2.5
+// Author:      Marcus Geelnard (marcus.geelnard at home.se)
+// WWW:         http://glfw.sourceforge.net
+//------------------------------------------------------------------------
+// Copyright (c) 2002-2005 Marcus Geelnard
+//
+// This software is provided 'as-is', without any express or implied
+// warranty. In no event will the authors be held liable for any damages
+// arising from the use of this software.
+//
+// Permission is granted to anyone to use this software for any purpose,
+// including commercial applications, and to alter it and redistribute it
+// freely, subject to the following restrictions:
+//
+// 1. The origin of this software must not be misrepresented; you must not
+//    claim that you wrote the original software. If you use this software
+//    in a product, an acknowledgment in the product documentation would
+//    be appreciated but is not required.
+//
+// 2. Altered source versions must be plainly marked as such, and must not
+//    be misrepresented as being the original software.
+//
+// 3. This notice may not be removed or altered from any source
+//    distribution.
+//
+// Marcus Geelnard
+// marcus.geelnard at home.se
+//------------------------------------------------------------------------
+// $Id: glfw.h,v 1.16 2005/03/14 20:52:51 marcus256 Exp $
+//========================================================================
+
+// Some <GL/glu.h> files also need CALLBACK defined
+#if !defined(CALLBACK)
+ #if defined(_MSC_VER)
+  // Microsoft Visual C++
+  #if (defined(_M_MRX000) || defined(_M_IX86) || defined(_M_ALPHA) || defined(_M_PPC)) && !defined(MIDL_PASS)
+   #define CALLBACK __stdcall
+  #else
+   #define CALLBACK
+  #endif
+ #else
+  // Other Windows compilers
+  #define CALLBACK __stdcall
+ #endif
+ #define GLU_CALLBACK_DEFINED
+#endif // CALLBACK
+
+// Microsoft Visual C++, Borland C++ and Pelles C <GL/glu.h> needs wchar_t
+#if (defined(_MSC_VER) || defined(__BORLANDC__) || defined(__POCC__)) && !defined(_WCHAR_T_DEFINED)
+ typedef unsigned short wchar_t;
+ #define _WCHAR_T_DEFINED
+#endif // _WCHAR_T_DEFINED
+
+#include <@SUPPORT_OPENGL_INCLUDE_DIR@\glu.h>

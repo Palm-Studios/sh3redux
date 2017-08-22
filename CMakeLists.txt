@@ -114,6 +114,17 @@ elseif(MSVC)
 	set(CXX_FLAGS "/W4")
 endif()
 
+if(CYGWIN) # WIN32?
+	find_package(OpenGL REQUIRED)
+	# This variable is used to configure the files below
+	get_filename_component(SUPPORT_OPENGL_INCLUDE_DIR "${OPENGL_INCLUDE_DIR}" ABSOLUTE)
+	configure_file("include/support/windows/GL/gl.h.in" "${CMAKE_BINARY_DIR}/support/GL/gl.h")
+	configure_file("include/support/windows/GL/glu.h.in" "${CMAKE_BINARY_DIR}/support/GL/glu.h")
+	include_directories(SYSTEM "${CMAKE_BINARY_DIR}/support")
+elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
+	include_directories(SYSTEM "include/support/osx")
+endif()
+
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
 
 set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
