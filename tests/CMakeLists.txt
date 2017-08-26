@@ -57,7 +57,7 @@ add_executable("tex"
 	"tex.cpp"
 	
 	"../source/SH3/arc/mft.cpp"
-	"../source/SH3/arc/types.cpp"
+	"../source/SH3/arc/subarc.cpp"
 	"../source/SH3/arc/vfile.cpp"
 	
 	"../source/SH3/graphics/texture.cpp"

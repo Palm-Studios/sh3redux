@@ -8,14 +8,19 @@
  *
  *  @author Jesse Buhagiar
  */
-#include <SH3/arc/vfile.hpp>
-#include <SH3/arc/types.hpp>
-#include <SH3/system/log.hpp>
+#include "SH3/arc/vfile.hpp"
+
 #include <cstring>
 #include <cassert>
 #include <fstream>
 
-bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& filename)
+#include "SH3/arc/subarc.hpp"
+#include "SH3/arc/mft.hpp"
+#include "SH3/system/log.hpp"
+
+using namespace sh3::arc;
+
+bool sh3_arc_vfile::Open(mft& mft, const std::string& filename)
 {
     if(open) return false;
 
@@ -25,7 +30,7 @@ bool sh3_arc_vfile::Open(sh3_arc& mft, const std::string& filename)
         full file
     */
     int size = mft.LoadFile(filename, buffer);
-    if(size == ARC_FILE_NOT_FOUND)
+    if(size == arcFileNotFound)
     {
         open = false;
     }

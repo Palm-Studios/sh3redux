@@ -20,7 +20,7 @@ add_executable("${CMAKE_PROJECT_NAME}"
 	"main.cpp"
 	
 	"SH3/arc/mft.cpp"
-	"SH3/arc/types.cpp"
+	"SH3/arc/subarc.cpp"
 	"SH3/arc/vfile.cpp"
 	
 	"SH3/graphics/texture.cpp"
