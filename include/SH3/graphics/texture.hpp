@@ -18,12 +18,14 @@
 #ifndef SH3_TEXTURE_HPP_INCLUDED
 #define SH3_TEXTURE_HPP_INCLUDED
 
-#include "SH3/arc/types.hpp"
 #include "SH3/arc/vfile.hpp"
 
 #include <GL/glew.h>
 #include <GL/gl.h>
 
+namespace sh3 { namespace arc {
+    struct mft;
+} }
 
 namespace sh3_graphics
 {
@@ -121,7 +123,7 @@ namespace sh3_graphics
             PALETTE = 8,
         };
 
-        sh3_texture(sh3_arc& mft, const std::string& filename){Load(mft, filename);}
+        sh3_texture(sh3::arc::mft& mft, const std::string& filename){Load(mft, filename);}
         ~sh3_texture(){}
 
         /**
@@ -130,7 +132,7 @@ namespace sh3_graphics
          *
          *  @note Should we scale this ala SILENT HILL 3's "Interal Render Resolution"???
          */
-        void Load(sh3_arc& mft, const std::string& filename);
+        void Load(sh3::arc::mft& mft, const std::string& filename);
 
         /**
          *  Bind this texture for use with any draw calls

@@ -11,6 +11,7 @@
 #include <SH3/graphics/texture.hpp>
 #include <SH3/system/assert.hpp>
 #include <SH3/system/log.hpp>
+#include <SH3/arc/mft.hpp>
 #include <SH3/arc/vfile.hpp>
 
 #include <algorithm>
@@ -115,7 +116,7 @@ void DumpRGB2Bitmap(std::uint32_t width, std::uint32_t height, std::vector<std::
 
 
 //TODO: Scale the texture and then
-void sh3_texture::Load(sh3_arc& mft, const std::string& filename)
+void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
 {
     sh3_texture_header          header;
     sh3_arc_vfile               file(mft, filename);
