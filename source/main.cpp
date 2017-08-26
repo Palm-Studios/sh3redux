@@ -6,7 +6,7 @@
  *  @author Jesse Buhagiar
  */
 
-#include "SH3/arc/types.hpp"
+#include "SH3/arc/mft.hpp"
 #include "SH3/system/config.hpp"
 #include "SH3/system/exit_code.hpp"
 #include "SH3/system/log.hpp"
@@ -73,8 +73,7 @@ int main(int argc, char** argv)
     static_cast<void>(argc);
     static_cast<void>(argv);
 
-//    sh3_arc mft;
-//    mft.Load();
+//    sh3::arc:: mft;
 
     Log(LogLevel::INFO, "===SILENT HILL 3 REDUX===");
     Log(LogLevel::INFO, "Copyright 2016-2017 Palm Studios\n");

@@ -11,9 +11,13 @@
 #ifndef VFILE_HPP_INCLUDED
 #define VFILE_HPP_INCLUDED
 
-#include "SH3/arc/types.hpp"
 #include "SH3/error.hpp"
 #include <ios>
+#include <vector>
+
+namespace sh3 { namespace arc {
+    struct mft;
+} }
 
 /**
  *  Opens a handle to a Virtual File contained within arc.arc
@@ -45,7 +49,7 @@ public:
     };
 
 
-    sh3_arc_vfile(sh3_arc& mft, const std::string& filename): fpos(0), fname(filename)
+    sh3_arc_vfile(sh3::arc::mft& mft, const std::string& filename): fpos(0), fname(filename)
     {Open(mft, filename);}
 
     /**
@@ -94,14 +98,14 @@ private:
     /**
      *  Open a handle to a virtual file.
      *
-     *  @param mft      The @ref sh3_arc Master File Table, arc.arc.
+     *  @param mft      The @ref sh3::arc::mft Master File Table, arc.arc.
      *  @param filename The name of the file we want to open.
      *
      *  @note If the file is already open, this function returns false.
      *
      *  @returns @c true if the file was found, @c false if not.
      */
-    bool Open(sh3_arc& mft, const std::string& filename);
+    bool Open(sh3::arc::mft& mft, const std::string& filename);
 };
 
 #endif // VFILE_HPP_INCLUDED

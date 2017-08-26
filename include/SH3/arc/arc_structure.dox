@@ -16,7 +16,7 @@
  *  @c arc.arc is compressed using the gzip compression format, while the files branching from it (sub-arcs) are not.
  *  @c arc.arc acts as a Master File Table. The file is modeled with @ref sh3::arc::mft.
  *
- *  At launch, the MFT is parsed and a mapping from filename to its location is created (@ref sh3_arc_section::fileList)
+ *  At launch, the MFT is parsed and a mapping from filename to its location is created (@ref sh3::arc::subarc::files)
  *  so that we can quickly look up and load a file in a section without having to transverse the MFT everytime,
  *  though it could be made quicker by skipping sections (which is most likely how Konami implemented it).
  *
@@ -24,7 +24,7 @@
  *  of a regular install of SILENT HILL 3 on the PC. The sub-arcs contain information about the contained files,
  *  such as a Virtual File Path (e.g @c /data/pic/it/it_xxxx.tex, then translated to an offset), the offset
  *  within the sub-arc, as well as the index of the sub-arc (for reasons yet unknown).
- *  The sub-arcs are modeled with @ref sh3_arc_section.
+ *  The sub-arcs are modeled with @ref sh3::arc::subarc.
  *
  *  It is currently not known how the programmers at Konami specified which files should be loaded when, but
  *  considering the very quick load times, the assumption is that each part of the game is in its own individual

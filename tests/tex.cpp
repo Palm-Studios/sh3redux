@@ -5,7 +5,7 @@
  *
  *  @author Jesse Buhagiar
  */
-#include "SH3/arc/types.hpp"
+#include "SH3/arc/mft.hpp"
 #include "SH3/system/config.hpp"
 #include "SH3/system/exit_code.hpp"
 #include "SH3/system/log.hpp"
@@ -76,9 +76,7 @@ int main(int argc, char** argv)
     SDL_Event ev;
     sh3_gl::program::load_error err;
     sh3_gl::program prog("image", err);
-    sh3_arc mft;
-
-    mft.Load(); // Load the Master File Table
+    sh3::arc::mft mft;
 
     using Quad = sh3_gl::vao<QuadAttributes>;
     Quad quadVao;
