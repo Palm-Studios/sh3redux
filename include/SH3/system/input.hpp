@@ -15,9 +15,9 @@
 #include <boost/range/adaptor/map.hpp>
 #include <boost/range/adaptor/transformed.hpp>
 
-#include <SDL2/SDL_keyboard.h>
-#include <SDL2/SDL_mouse.h>
-#include <SDL2/SDL_timer.h>
+#include <SDL_keyboard.h>
+#include <SDL_mouse.h>
+#include <SDL_timer.h>
 
 #include "input_config.hpp"
 

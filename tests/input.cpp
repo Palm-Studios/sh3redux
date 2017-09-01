@@ -4,7 +4,7 @@
 #include <boost/container/flat_map.hpp>
 #include <boost/range/adaptor/map.hpp>
 
-#include <SDL2/SDL.h>
+#include <SDL.h>
 
 #include "SH3/system/input.hpp"
 #include "SH3/system/window.hpp"

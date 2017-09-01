@@ -24,7 +24,7 @@
 #include <debugbreak.h>
 
 // we use SDL's datastructure regardless
-#include <SDL2/SDL_messagebox.h>
+#include <SDL_messagebox.h>
 
 /**
  *  Possible actions a user can take when assertions fail.

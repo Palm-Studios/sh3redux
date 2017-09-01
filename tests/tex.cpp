@@ -16,7 +16,7 @@
 #include "SH3/system/glbuffer.hpp"
 #include "SH3/system/glvertarray.hpp"
 #include "SH3/types/vertex.hpp"
-#include "SDL2/SDL.h"
+#include <SDL.h>
 #include <cstdio>
 
 // Quad Co-Ordinates
