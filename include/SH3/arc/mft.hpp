@@ -17,9 +17,8 @@
 
 #include "SH3/error.hpp"
 
-struct sh3_arc_section;
-
 namespace sh3 { namespace arc {
+    struct subarc;
 
     /**
      *  A struct to read data from the @c arc.arc.
@@ -117,7 +116,7 @@ namespace sh3 { namespace arc {
          *  @param[out] section The @ref sh3_arc_section to read into.
          */
         //TODO: struct section_read_error
-        void ReadNextSection(sh3_arc_section& section);
+        void ReadNextSection(subarc& section);
 
         std::size_t GetSectionCount() const { return data.sectionCount; }
 
