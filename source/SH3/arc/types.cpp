@@ -28,6 +28,7 @@ Revision History:
 --*/
 #include "SH3/arc/types.hpp"
 #include "SH3/arc/section.hpp"
+#include "SH3/arc/subarc.hpp"
 #include "SH3/arc/mft.hpp"
 #include "SH3/system/log.hpp"
 
@@ -49,7 +50,7 @@ bool sh3_arc::Load()
     // Load each sub-arc
     c_sections.resize(file.GetSectionCount());
 
-    for(sh3_arc_section& section : c_sections)
+    for(subarc& section : c_sections)
     {
         file.ReadNextSection(section);
     }
@@ -60,12 +61,12 @@ bool sh3_arc::Load()
 int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
 {
     std::uint32_t    index;
-    sh3_arc_section* section = nullptr;
+    subarc* section = nullptr;
 
     // Find what section the file is in
-    for(sh3_arc_section& candidate : c_sections)
+    for(subarc& candidate : c_sections)
     {
-        auto files = candidate.fileList.equal_range(filename);
+        auto files = candidate.files.equal_range(filename);
         if(files.first == files.second)
         {
             continue; // No filename found in this section, continue over
@@ -91,11 +92,11 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
 
     static_cast<void>(index); // avoid clang warning - index *is* initialized now
 
-    std::string sectionPath = "data/" + section->sectionName + ".arc";
+    std::string sectionPath = "data/" + section->name + ".arc";
     std::ifstream sectionFile(sectionPath, std::ios::binary);
     if(!sectionFile)
     {
-        die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->sectionName.c_str());
+        die("E00005: sh3_arc::LoadFile( ): Unable to open a handle to section, %s!", section->name.c_str());
     }
 
     // Read the actual file from the appropriate sub arc
@@ -106,7 +107,7 @@ int sh3_arc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& bu
     sectionFile.read(reinterpret_cast<char*>(&header), sizeof(header));
     if(header.magic != ARCSECTION_MAGIC)
     {
-        die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", section->sectionName.c_str());
+        die("sh3_arc::LoadFile( ): Subarc [%s] magic is incorrect! (Perhaps the file is corrupt!?)", section->name.c_str());
     }
 
     // Seek to the file entry and read it
