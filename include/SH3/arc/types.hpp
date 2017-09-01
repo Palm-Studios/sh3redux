@@ -13,10 +13,11 @@
 #define SH3_ARC_TYPES_HPP_INCLUDED
 
 #include <cstdint>
-#include <map>
 #include <string>
 #include <vector>
 #include <zlib.h>
+
+#include "SH3/arc/subarc.hpp"
 
 #define ARC_FILE_NOT_FOUND  -1 /**< Status @ref sh3_arc::LoadFile() returns if a file cannot be found */
 
@@ -54,26 +55,10 @@ typedef struct
 
 /** @} */
 
-/**
- *  An arc section.
- */
-class sh3_arc_section
-{
-public:
-    sh3_arc_section_header_t          header;
-    std::vector<sh3_arc_file_entry_t> fileEntries;
-
-    std::string sectionName; /**< Name of this section */
-
-    // Should this be private?!?!
-    /** Maps a file (and its associated virtual path) to it's section index */
-    std::map<std::string, std::uint32_t> fileList;
-};
-
 class sh3_arc
 {
 public:
-    std::vector<sh3_arc_section> c_sections;    /**< List of all the sections in @c arc.arc */
+    std::vector<sh3::arc::subarc> c_sections;    /**< List of all the sections in @c arc.arc */
 
     sh3_arc(){Load();}
 

@@ -14,6 +14,7 @@
 #include <string>
 #include <vector>
 
+#include "SH3/arc/subarc.hpp"
 #include "SH3/arc/types.hpp"
 #include "SH3/system/log.hpp"
 
@@ -144,34 +145,34 @@ std::size_t mft::ReadString(std::string& destination, std::size_t len, read_erro
     return res;
 }
 
-void mft::ReadNextSection(sh3_arc_section& section)
+void mft::ReadNextSection(sh3::arc::subarc& section)
 {
     assert(IsOpen());
 
     read_error readError;
 
-    ReadObject(section.header, readError);
+    sh3_arc_section_header_t header;
+    ReadObject(header, readError);
     if(readError)
     {
         die("E00006: mft::ReadNextSection( ): Invalid read of arc.arc section: %s!", readError.message().c_str());
     }
 
-    ReadString(section.sectionName, section.header.hsize - sizeof(section.header), readError);
-    if(section.sectionName.back() != '\0')
+    ReadString(section.name, header.hsize - sizeof(header), readError);
+    if(section.name.back() != '\0')
     {
-        die("E00007: mft::ReadNextSection( ): Garbage read when reading section name (NUL terminator missing): %s!", section.sectionName.c_str());
+        die("E00007: mft::ReadNextSection( ): Garbage read when reading section name (NUL terminator missing): %s!", section.name.c_str());
     }
     // remove trailing NUL
     // Some filenames seem to have multiple NULs.
-    section.sectionName.resize(section.sectionName.find_last_not_of('\0') + 1);
-    section.sectionName.shrink_to_fit();
+    section.name.resize(section.name.find_last_not_of('\0') + 1);
+    section.name.shrink_to_fit();
 
     // We have now loaded information about the section, so we can start
     // reading in all the files located in it (not in full, obviously...)
-    section.fileEntries.resize(section.header.numFiles);
-
-    for(sh3_arc_file_entry_t& file : section.fileEntries)
+    for(std::size_t i = 0; i < header.numFiles; ++i)
     {
+        sh3_arc_file_entry_t file;
         ReadObject(file.header, readError);
 
         ReadString(file.fname, file.header.fileSize - sizeof(file.header), readError);
@@ -188,7 +189,7 @@ void mft::ReadNextSection(sh3_arc_section& section)
         file.fname.shrink_to_fit();
         //Log(LogLevel::INFO, "Read file: %s", file->fname.c_str());
 
-        section.fileList[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
+        section.files[file.fname] = file.header.arcIndex; // Map the file name to its subarc index
         //Log(LogLevel::INFO, "Added file to file list!");
     }
 }
