@@ -12,7 +12,7 @@
 
 #include <memory>
 #include <string>
-#include <SDL2/SDL_video.h>
+#include <SDL_video.h>
 #include "SH3/system/glcontext.hpp"
 
 /**

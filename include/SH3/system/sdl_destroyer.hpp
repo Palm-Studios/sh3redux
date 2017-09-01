@@ -10,7 +10,7 @@
 #ifndef SH3_SDL_DESTROYER_HPP_INCLUDED
 #define SH3_SDL_DESTROYER_HPP_INCLUDED
 
-#include <SDL2/SDL_video.h>
+#include <SDL_video.h>
 
 using flat_sdl_glcontext = std::remove_pointer<SDL_GLContext>::type;
 

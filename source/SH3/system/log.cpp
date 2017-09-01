@@ -28,9 +28,9 @@ Revision History:
 
 #include <cstdio>
 #include <cstdarg>
-#include <SDL2/SDL_messagebox.h>
+#include <SDL_messagebox.h>
 
-#include <SDL2/SDL_messagebox.h>
+#include <SDL_messagebox.h>
 
 void Log(LogLevel logType, const char* str, ...)
 {

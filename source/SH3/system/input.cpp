@@ -6,7 +6,7 @@
 #include <boost/algorithm/string/predicate.hpp>
 #include <boost/type_traits/extent.hpp>
 
-#include <SDL2/SDL_keyboard.h>
+#include <SDL_keyboard.h>
 
 #include <SH3/system/assert.hpp>
 #include <SH3/system/log.hpp>
