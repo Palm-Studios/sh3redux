@@ -107,7 +107,7 @@ std::size_t vfile::ReadData(void* destination, std::size_t len, read_error& e)
     return nbytes;
 }
 
-void vfile::Dump2Disk()
+void vfile::Dump2Disk() const
 {
     if(!open || buffer.empty())
     {
