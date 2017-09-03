@@ -20,7 +20,7 @@
 
 using namespace sh3::arc;
 
-bool sh3_arc_vfile::Open(mft& mft, const std::string& filename)
+bool vfile::Open(mft& mft, const std::string& filename)
 {
     if(open) return false;
 
@@ -44,7 +44,7 @@ bool sh3_arc_vfile::Open(mft& mft, const std::string& filename)
     return open;
 }
 
-std::string sh3_arc_vfile::read_error::message() const
+std::string vfile::read_error::message() const
 {
     std::string error;
     switch(result)
@@ -62,7 +62,7 @@ std::string sh3_arc_vfile::read_error::message() const
     return error;
 };
 
-void sh3_arc_vfile::Seek(long pos, std::ios_base::seekdir origin)
+void vfile::Seek(long pos, std::ios_base::seekdir origin)
 {
     if(origin == std::ios_base::beg)
     {
@@ -85,7 +85,7 @@ void sh3_arc_vfile::Seek(long pos, std::ios_base::seekdir origin)
     }
 }
 
-std::size_t sh3_arc_vfile::ReadData(void* destination, std::size_t len, read_error& e)
+std::size_t vfile::ReadData(void* destination, std::size_t len, read_error& e)
 {
     if(len >= buffer.size())
     {
@@ -107,7 +107,7 @@ std::size_t sh3_arc_vfile::ReadData(void* destination, std::size_t len, read_err
     return nbytes;
 }
 
-void sh3_arc_vfile::Dump2Disk()
+void vfile::Dump2Disk()
 {
     if(!open || buffer.empty())
     {
