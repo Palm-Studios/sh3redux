@@ -119,8 +119,8 @@ void DumpRGB2Bitmap(std::uint32_t width, std::uint32_t height, std::vector<std::
 void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
 {
     sh3_texture_header          header;
-    sh3_arc_vfile               file(mft, filename);
-    sh3_arc_vfile::read_error   e;
+    sh3::arc::vfile             file(mft, filename);
+    sh3::arc::vfile::read_error e;
     std::vector<std::uint8_t>   data;       // Pixel data of this texture (with the header stripped)
 
     std::streamsize             offset = 0;
