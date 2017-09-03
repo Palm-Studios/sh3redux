@@ -78,3 +78,27 @@ target_link_libraries("tex"
 	PRIVATE "${SDL2_LIBRARIES}"
 	PRIVATE "${ZLIB_LIBRARIES}"
 )
+
+add_executable("cam"
+	"camera.cpp"
+	
+	"../source/SH3/angle.cpp"
+	"../source/SH3/camera/camera.cpp"
+	
+	"../source/SH3/system/assert.cpp"
+	"../source/SH3/system/config.cpp"
+	"../source/SH3/system/glcontext.cpp"
+	"../source/SH3/system/glprogram.cpp"
+	"../source/SH3/system/glbuffer.cpp"
+	"../source/SH3/system/glvertarray.cpp"
+	"../source/SH3/system/log.cpp"
+	"../source/SH3/system/window.cpp"
+)
+
+target_link_libraries("cam"
+	PRIVATE "${GLEW_LIBRARIES}"
+	PRIVATE "${OPENGL_LIBRARIES}"
+	PRIVATE "${SDL2_LIBRARIES}"
+	PRIVATE "${ZLIB_LIBRARIES}"
+)
+
