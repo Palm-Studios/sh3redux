@@ -80,7 +80,7 @@ namespace sh3 { namespace arc {
          /**
           *  Dump the contents of the vector @ref buffer to a file on disk.
           */
-          void Dump2Disk();
+          void Dump2Disk() const;
 
          /**
           * Get the size of this file (in bytes)
