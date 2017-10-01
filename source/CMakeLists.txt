@@ -19,6 +19,8 @@ include_directories(SYSTEM "${ZLIB_INCLUDE_DIRS}")
 add_executable("${CMAKE_PROJECT_NAME}"
 	"main.cpp"
 	
+	"SH3/angle.cpp"
+	
 	"SH3/arc/mft.cpp"
 	"SH3/arc/subarc.cpp"
 	"SH3/arc/vfile.cpp"

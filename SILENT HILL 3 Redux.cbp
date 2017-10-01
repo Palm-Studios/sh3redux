@@ -148,6 +148,7 @@
 		<Unit filename="source/SH3/system/input.cpp" />
 		<Unit filename="source/SH3/system/log.cpp" />
 		<Unit filename="source/SH3/system/window.cpp" />
+		<Unit filename="source/SH3/angle.cpp" />
 		<Unit filename="source/main.cpp" />
 		<Extensions>
 			<code_completion />
