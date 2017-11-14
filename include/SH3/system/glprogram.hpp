@@ -73,6 +73,15 @@ namespace sh3_gl
          */
         void Unbind();
 
+        /**
+         *  Gets the program ID for this shader.
+         *  
+	 	 *	Allows us to access the instance of this shader outside of the class so that we can send/receive data on the GPU.  
+         *
+         *  return @ref programID The ID of this shader program.
+         */
+        GLuint GetProgramID() const {return programID;}
+
     private:
         GLuint programID;           /**< The ID of this program. */
         GLuint vertShader;          /**< The ID of the vertex shader. */
