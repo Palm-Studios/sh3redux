@@ -15,6 +15,14 @@
 #define UNREACHABLE() do {} while(false)
 #endif
 
+#ifdef __clang__
+#define IGNORE_WARN_ON _Pragma("clang diagnostic push") _Pragma("clang diagnostic ignored \"-Wtautological-constant-out-of-range-compare\"") _Pragma("clang diagnostic ignored \"-Wtautological-compare\"")
+#define IGNORE_WARN_OFF _Pragma("clang diagnostic pop")
+#else
+#define IGNORE_WARN_ON
+#define IGNORE_WARN_OFF
+#endif
+
 #ifndef DOXYGEN
 #ifdef ASSERT_OFF
 #define ASSERT_MSG_IMPL(cond, msg, ignore) do { if(!(cond)) UNREACHABLE(); } while(false)
@@ -27,7 +35,7 @@
 #define ASSERT_FUNC __func__
 #endif
 
-#define ASSERT_MSG_IMPL(cond, msg, ignore) do {static bool assertIgnore = false; if(!assertIgnore && !(cond)) { if(ignore) assertIgnore = true; sh3_assert(assertIgnore, msg, __FILE__, __LINE__, ASSERT_FUNC); } } while(false)
+#define ASSERT_MSG_IMPL(cond, msg, ignore) do { static bool assertIgnore = false; if(!assertIgnore && !(IGNORE_WARN_ON cond IGNORE_WARN_OFF)) { if(ignore) assertIgnore = true; sh3_assert(assertIgnore, msg, __FILE__, __LINE__, ASSERT_FUNC); } } while(false)
 #endif
 #endif
 
