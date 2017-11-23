@@ -368,15 +368,15 @@ namespace {
 
         read_error readError;
 
-        subarc_header header;
-        ReadObject(header, readError);
+        subarc_header sub_header;
+        ReadObject(sub_header, readError);
         if(readError)
         {
             die("E00006: mft_reader::ReadNextSubarc( ): Invalid read of arc.arc subarc: %s!", readError.message().c_str());
         }
 
         std::string subarcName;
-        ReadString(subarcName, header.hsize - sizeof(header), readError);
+        ReadString(subarcName, sub_header.hsize - sizeof(sub_header), readError);
         if(subarcName.back() != '\0')
         {
             die("E00007: mft_reader::ReadNextSubarc( ): Garbage read when reading subarc name (NUL terminator missing): %s!", subarcName.c_str());
@@ -389,7 +389,7 @@ namespace {
         // We have now loaded information about the subarc, so we can start
         // reading in all the files located in it (not in full, obviously...)
         subarc::files_map fileList;
-        for(std::size_t i = 0; i < header.numFiles; ++i)
+        for(std::size_t i = 0; i < sub_header.numFiles; ++i)
         {
             subarc_file_entry file;
             ReadObject(file.header, readError);

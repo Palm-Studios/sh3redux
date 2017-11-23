@@ -42,7 +42,7 @@ void finalvao::Draw()
 {
     Bind();
     if(ibo)
-        glDrawElements(GL_TRIANGLES, ibo->GetNumberElements(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, ibo->GetNumberElements(), GL_UNSIGNED_INT, nullptr);
     else
         glDrawArrays(GL_TRIANGLES, 0, vertices.GetNumberElements());
 }

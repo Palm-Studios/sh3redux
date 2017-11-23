@@ -117,10 +117,10 @@ bool input_system::raw::operator==(const raw &other) const
         return keyboardKey == other.keyboardKey;
     case type::MOUSE_BUTTON:
         return mouseButton == other.mouseButton;
-    default:
-        ASSERT(false);
-        return false;
     }
+
+    ASSERT(false);
+    return false;
 }
 
 bool input_system::raw::operator<(const raw &other) const
@@ -136,8 +136,8 @@ bool input_system::raw::operator<(const raw &other) const
         return keyboardKey < other.keyboardKey;
     case type::MOUSE_BUTTON:
         return mouseButton < other.mouseButton;
-    default:
-        ASSERT(false);
-        return false;
     }
+
+    ASSERT(false);
+    return false;
 }

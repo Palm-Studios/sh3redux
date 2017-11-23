@@ -13,6 +13,7 @@
 #include <cstring>
 #include <cassert>
 #include <fstream>
+#include <limits>
 
 #include "SH3/arc/subarc.hpp"
 #include "SH3/arc/mft.hpp"
@@ -60,7 +61,7 @@ std::string vfile::read_error::message() const
         break;
     }
     return error;
-};
+}
 
 void vfile::Seek(long pos, std::ios_base::seekdir origin)
 {
@@ -122,5 +123,6 @@ void vfile::Dump2Disk() const
     if(!out_file)
         return;
 
-    out_file.write((const char*)&buffer[0], buffer.size());
+    assert(buffer.size() <= std::numeric_limits<std::streamsize>::max());
+    out_file.write(reinterpret_cast<const char*>(buffer.data()), static_cast<std::streamsize>(buffer.size()));
 }

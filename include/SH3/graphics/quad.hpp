@@ -30,7 +30,7 @@ namespace sh3_graphics
          *  Class constructor. Takes
          */
         quad(const std::array<vertex3f, 6>& verts);
-        ~quad(){};
+        ~quad(){}
 
         /**
          *  Draw this quad to the screen

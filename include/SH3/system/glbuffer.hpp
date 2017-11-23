@@ -42,12 +42,12 @@ namespace sh3_gl
          *  as we never actually pass anything to this constructor (as well as never passing a buffer_object to
          *  @ref mutablevao).
          */
-        buffer_object(Target type, const std::string& buffName = ""): buffType(type), name(buffName){Create();};
+        buffer_object(Target type, const std::string& buffName = ""): buffType(type), name(buffName){Create();}
 
         /**
          *  Destructor.
          */
-        ~buffer_object(){/**Release(); FIXME: This causes a segmentation violation (why is this called in the game loop!?!?!)*/};
+        ~buffer_object(){/**Release(); FIXME: This causes a segmentation violation (why is this called in the game loop!?!?!)*/}
 
         /**
          *  Create our buffer and register it with OpenGL.
@@ -63,19 +63,19 @@ namespace sh3_gl
         /**
          *  Give some data to our buffer
          *
-         *  @param data     void pointer to our data.
-         *  @param num      Size (in bytes) of the data we are flushing.
+         *  @param data     Pointer to our data.
+         *  @param dataSize Size (in bytes) of the data we are flushing.
          *  @param usage    The way in which want this data stored (i.e, can we rewrite sections of it?).
          */
-        void BufferData(void* data, std::size_t num, GLenum usage);
+        void BufferData(void* data, GLsizei dataSize, GLenum usage);
 
         /**
          *  Redefines/updates a subset of data stored in this GLBuffer.
          *
-         *  @param data void pointer to our data.
-         *  @param num  Size (in bytes) of the data we are flushing.
+         *  @param data     Pointer to our data.
+         *  @param dataSize Size (in bytes) of the data we are flushing.
          */
-        void BufferSubData(void* data, std::size_t size);
+        void BufferSubData(void* data, GLsizei dataSize);
 
         /**
          *  Bind our buffer for use.
@@ -106,7 +106,7 @@ namespace sh3_gl
          *
          *  @return Number of elements in this GL Buffer.
          */
-        std::uint32_t GetNumberElements() const;
+        GLsizei GetNumberElements() const;
 
         /**
          *  Return the size of this buffer.
@@ -116,10 +116,10 @@ namespace sh3_gl
         std::size_t GetBufferSize() const;
 
     private:
-        GLuint          id;         /**< The ID of our buffer given to us by OpenGL */
-        Target          buffType;   /**< What type of buffer this is */
-        std::size_t     size;       /**< The size of this buffer in bytes */
-        std::string     name;       /**< The name of this buffer */
+        GLuint      id;       /**< The ID of our buffer given to us by OpenGL */
+        Target      buffType; /**< What type of buffer this is */
+        GLsizei     size;     /**< The size of this buffer in bytes */
+        std::string name;     /**< The name of this buffer */
     };
 }
 
