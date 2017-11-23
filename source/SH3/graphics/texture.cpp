@@ -16,6 +16,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <cstddef>
 #include <fstream>
 #include <functional>
 #include <limits>
@@ -106,11 +107,11 @@ void DumpRGB2Bitmap(std::uint32_t width, std::uint32_t height, std::vector<std::
     default:
         Log(LogLevel::WARN, "DumpRGB2Bitmap( ): Warning: Invalid bpp passed to function. Not writing image data.");
         return;
-        break; // Do nothing as we have a default value of 32 (RGB).
     }
 
-    file.write(reinterpret_cast<char*>(&header), sizeof(header));
-    file.write(reinterpret_cast<char*>(&data[0]), data.size());
+    file.write(reinterpret_cast<const char*>(&header), sizeof(header));
+    assert(data.size() <= std::numeric_limits<std::streamsize>::max());
+    file.write(reinterpret_cast<const char*>(data.data()), static_cast<std::streamsize>(data.size()));
 }
 }
 
@@ -142,13 +143,13 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
             die("sh3_texture::Load( ): ReadData( ) != sizeof(header)!");
     }
 
-    if(header.texSize == header.texWidth * header.texHeight* 4)
+    if(header.texSize == static_cast<decltype(header.texSize)>(header.texWidth * header.texHeight) * 4u)
     {
         header.bpp = 32; // Thanks KONAMI!
     }
 
     // Now that we're done that, we can check perform some sanity checks on our texture!
-    if(header.texSize != header.texWidth * header.texHeight * header.bpp / 8)
+    if(header.texSize != static_cast<decltype(header.texSize)>(header.texWidth * header.texHeight * header.bpp) / 8u)
     {
         Log(LogLevel::WARN, "sh3_texture::Load( ): Warning, texSize != width * height * (bpp / 8)!");
         return; // TODO: Bind a color shader here
@@ -182,7 +183,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
 
             if(read != pal_header.entrySize)
             {
-                Log(LogLevel::WARN, "sh3_texture::Load( ): Warning: Number of bytes read in palette block != pal_header.entrySize! (Expected %d, got %d)", read, pal_header.entrySize);
+                Log(LogLevel::WARN, "sh3_texture::Load( ): Warning: Number of bytes read in palette block != pal_header.entrySize! (Expected %lu, got %d)", read, pal_header.entrySize);
                 break;
             }
 
@@ -197,11 +198,11 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
 
         if(palette.size() > 8)
         {
-            for(auto iter = next(begin(palette), 8); distance(iter, end(palette)) > swapDistance; advance(iter, swapDistance))
+            for(auto iter = next(begin(palette), 8); static_cast<std::size_t>(distance(iter, end(palette))) > swapDistance; advance(iter, swapDistance))
             {
                 // swap 8 colors
                 const auto swapBlock = next(iter, swapSize);
-                if(distance(swapBlock, end(palette)) < swapSize)
+                if(static_cast<std::size_t>(distance(swapBlock, end(palette))) < swapSize)
                 {
                     Log(LogLevel::WARN, "Palette doesn't have enough colors left for swapping.");
                     break;
@@ -217,23 +218,23 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
         //===---THIS IS A CLUSTER FUCK FOR NOW UNTIL WE UNDERSTAND HOW IN THE NAME OF CHRIST THIS WORKS---===//
         std::vector<std::uint8_t> iBuffer;  // Our index buffer that we put transformed indecies into
 
-        data.resize(header.texWidth * header.texHeight * 3); // We strip the Alpha channel from the BGRA pixel beacuse it is hard locked to 0x80 (not 0xFF!!)
+        data.resize(static_cast<std::size_t>(header.texWidth * header.texHeight) * 3u); // We strip the Alpha channel from the BGRA pixel beacuse it is hard locked to 0x80 (not 0xFF!!)
         iBuffer.resize(header.texSize);
 
         file.Seek(offset + (header.texFileSize - header.texSize), std::ios_base::beg); // Seek to the beginning of data
 
         if(header.texWidth > 96) // Apparently this is the distortion flag?!?!
         {
-            if(header.texWidth % 16 != 0)
+            if(header.texWidth % 16u != 0)
             {
                 Log(LogLevel::WARN, "sh3_texture::Load( ): Warning: texWidth not divisible by 16!");
-                header.texWidth -= header.texWidth % 16;
+                header.texWidth = static_cast<decltype(header.texWidth)>(header.texWidth - header.texWidth % 16u);
             }
 
-            if(header.texHeight % 4 != 0)
+            if(header.texHeight % 4u != 0)
             {
                 Log(LogLevel::WARN, "sh3_texture::Load ( ): Warning: texHeight not divisible by 4!");
-                header.texHeight -= header.texHeight % 4;
+                header.texHeight = static_cast<decltype(header.texHeight)>(header.texHeight - header.texHeight % 4u);
             }
 
             std::uint32_t x = 0;
@@ -249,20 +250,20 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
                     std::uint8_t index;
                     file.ReadData(&index, sizeof(index), e);
 
-                    std::uint8_t xoffset = ((i << 2) & 0xf) + ((i >> 2) & 0xf);
-                    if(i > 16 && i % 2) // aka (i & 17) == 17
+                    auto xoffset = static_cast<std::uint8_t>(((i << 2) & 0xfu) + ((i >> 2) & 0xfu));
+                    if(i > 16 && i % 2u) // aka (i & 17) == 17
                     {
-                        xoffset ^= 8;
-                        xoffset &= 0xf;
+                        xoffset ^= 8u;
+                        xoffset &= 0xfu;
                     }
                     if(offsetFlipper)
                     {
-                        xoffset ^= 4;
+                        xoffset ^= 4u;
                     }
 
                     const auto tempx = x + xoffset; // - 16;
                     // every other pixel is for (y + 2)
-                    const auto tempy = y + ((i % 2) ? 2 : 0);
+                    const auto tempy = y + ((i % 2u) ? 2u : 0u);
 
                     iBuffer[(header.texWidth * tempy) + tempx % header.texWidth] = index;
                 }
@@ -310,7 +311,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
         }
         else // If the distortion flag isn't set, just read the pixel data in from the palette.
         {
-            for(std::size_t i = 0; i < header.texWidth * header.texHeight * 3; i += 3)
+            for(std::size_t i = 0; i < static_cast<std::size_t>(header.texWidth * header.texHeight) * 3u; i += 3)
             {
                 std::uint8_t index;
                 file.ReadData(&index, sizeof(index), e);
@@ -378,10 +379,9 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
             break;
         default:
             die("sh3_texture::Load( ): Invalid pixel format: %d", header.bpp);
-            break;
     }
 
-    glTexImage2D(GL_TEXTURE_2D, 0, srcFormat, header.texWidth, header.texHeight, 0, dstFormat, type, &data[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, dstFormat, header.texWidth, header.texHeight, 0, srcFormat, type, data.data());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

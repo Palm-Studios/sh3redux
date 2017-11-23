@@ -40,21 +40,21 @@ namespace sh3_gl{
          *
          *  @param verts Reference to our @ref buffer_object filled with vertex data.
          */
-        finalvao(const buffer_object& verts):ibo(nullptr), vertices(verts)
+        finalvao(const buffer_object& verts):vertices(verts), ibo(nullptr)
         {
             Create();
-        };
+        }
 
         /**
          *  Indexed constructor.
          *
-         *  @param ibo      Reference to our @ref buffer_object filled with vertex <i>indices</i> instead of vertex data.
-         *  @param verts    Reference to our @ref buffer_object filled with vertex data.
+         *  @param indices Reference to our @ref buffer_object filled with vertex <i>indices</i> instead of vertex data.
+         *  @param verts   Reference to our @ref buffer_object filled with vertex data.
          */
-        finalvao(const buffer_object &ibo, const buffer_object& verts):ibo(&ibo), vertices(verts)
+        finalvao(const buffer_object &indices, const buffer_object& verts):vertices(verts), ibo(&indices)
         {
             Create();
-        };
+        }
 
         //No virtual dtor, because finalvao should not be stored directly, i.e. this should only ever be used as a reference.
 
@@ -132,7 +132,7 @@ namespace sh3_gl{
 
     private:
         template<std::size_t... seq>
-        mutablevao(const Targets& targets, const buffer_object& vertices, std::index_sequence<seq...>): finalvao(vertices), buffers({targets[seq]...}) {}
+        mutablevao(const Targets& targets, const buffer_object& vertices, std::index_sequence<seq...>): finalvao(vertices), buffers{{{targets[seq]}...}} {}
 
     public:
         /**
@@ -278,7 +278,7 @@ namespace sh3_gl{
 
     public:
         using DataType = typename vaoparent::DataType;
-        using Slot = enum Attributes::Slot;
+        using Slot = typename Attributes::Slot;
 
         /**
          *  Constructor.

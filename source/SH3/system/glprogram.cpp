@@ -9,9 +9,13 @@
  *  @author Jesse Buhagiar
  */
 #include <SH3/system/glprogram.hpp>
+
+#include <SH3/system/assert.hpp>
 #include <SH3/system/log.hpp>
 
+#include <cstddef>
 #include <fstream>
+#include <limits>
 #include <vector>
 
 static const GLuint BAD_SHADER = 0;
@@ -52,17 +56,19 @@ void program::Load(const std::string& shader, load_error& err, const std::vector
 {
     GLenum status = 0;
 
+    programName = shader;
     programID = glCreateProgram();
 
     // Generate our vertex and fragment shader
-    vertShader = (GLuint)Compile(GL_VERTEX_SHADER);
-    fragShader = (GLuint)Compile(GL_FRAGMENT_SHADER);
+    vertShader = Compile(GL_VERTEX_SHADER);
+    fragShader = Compile(GL_FRAGMENT_SHADER);
 
     glAttachShader(programID, vertShader);
     glAttachShader(programID, fragShader);
 
     // Bind any attributes before we link the program
-    for(int i = 0; i < attribs.size(); i++)
+    ASSERT(attribs.size() <= std::numeric_limits<GLuint>::max());
+    for(GLuint i = 0; i < attribs.size(); i++)
     {
         glBindAttribLocation(programID, i, reinterpret_cast<const GLchar*>(attribs[i].c_str()));
 
@@ -82,7 +88,7 @@ void program::Load(const std::string& shader, load_error& err, const std::vector
     glLinkProgram(programID);
 
     // Make sure our program was linked without any errors
-    glGetProgramiv(programID, GL_LINK_STATUS, (int*)&status);
+    glGetProgramiv(programID, GL_LINK_STATUS, reinterpret_cast<int*>(&status));
 
     if(!status)
     {
@@ -90,7 +96,8 @@ void program::Load(const std::string& shader, load_error& err, const std::vector
         std::vector<GLchar> errorLog;   // Error log
         glGetShaderiv(programID, GL_INFO_LOG_LENGTH, &logLength);
 
-        errorLog.resize(logLength);
+        ASSERT(logLength >= 0);
+        errorLog.resize(static_cast<std::size_t>(logLength));
         glGetProgramInfoLog(programID, logLength, &logLength, &errorLog[0]);
         glDeleteShader(vertShader);
         glDeleteShader(fragShader);
@@ -165,7 +172,7 @@ GLuint program::Compile(GLenum type)
     }
 
     const GLchar* csource = ssource.c_str();
-    glShaderSource(id, 1, &csource, 0);
+    glShaderSource(id, 1, &csource, nullptr);
     glCompileShader(id);
 
     glGetShaderiv(id, GL_COMPILE_STATUS, &status);
@@ -174,9 +181,10 @@ GLuint program::Compile(GLenum type)
         GLint logLength = 0;
         std::string errmsg = "program::Compile( ) error in " + fname;
 
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &logLength);
+        glGetShaderiv(id, GL_INFO_LOG_LENGTH, reinterpret_cast<int*>(&logLength));
 
-        errorLog.resize(logLength);
+        ASSERT(logLength >= 0);
+        errorLog.resize(static_cast<std::size_t>(logLength));
         glGetShaderInfoLog(id, logLength, &logLength, &errorLog[0]);
         glDeleteShader(id); // Probably pointless, considering we can't continue!
 

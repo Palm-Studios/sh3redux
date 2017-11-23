@@ -11,7 +11,7 @@
 #include "SH3/system/glbuffer.hpp"
 #include "SH3/system/log.hpp"
 
-constexpr int GL_VBO_UNBIND  = 0;
+constexpr GLuint GL_VBO_UNBOUND = 0;
 
 using namespace sh3_gl;
 
@@ -32,23 +32,24 @@ void buffer_object::Bind() const
 
 void buffer_object::Unbind()
 {
-    glBindBuffer(static_cast<GLenum>(buffType), 0);
+    glBindBuffer(static_cast<GLenum>(buffType), GL_VBO_UNBOUND);
 }
 
-void buffer_object::BufferData(void* data, std::size_t num, GLenum usage)
+void buffer_object::BufferData(void* data, GLsizei dataSize, GLenum usage)
 {
     Bind();
-    glBufferData(static_cast<GLenum>(buffType), num, data, usage);
-    size = num;
+    glBufferData(static_cast<GLenum>(buffType), dataSize, data, usage);
+    size = dataSize;
 }
 
-void buffer_object::BufferSubData(void* data, std::size_t size)
+void buffer_object::BufferSubData(void* data, GLsizei dataSize)
 {
+    //ASSERT(dataSize <= size);
     Bind();
-    glBufferSubData(static_cast<GLenum>(buffType), 0, size, data);
+    glBufferSubData(static_cast<GLenum>(buffType), 0, dataSize, data);
 }
 
-std::uint32_t buffer_object::GetNumberElements() const
+GLsizei buffer_object::GetNumberElements() const
 {
-    return size / sizeof(GLfloat); // FIXME: What if we're _not_ using GLfloat!?!?!
+    return size / static_cast<GLsizei>(sizeof(GLfloat)); // FIXME: What if we're _not_ using GLfloat!?!?!
 }

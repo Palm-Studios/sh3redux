@@ -47,10 +47,10 @@ public:
     };
 
     static constexpr sh3_gl::vao_target_array<Slot> Targets =
-    {
+    { {
         Target::ARRAY_BUFFER,
         Target::ARRAY_BUFFER
-    };
+    } };
 };
 constexpr sh3_gl::vao_target_array<TriangleAttributes::Slot> TriangleAttributes::Targets;
 

@@ -65,15 +65,15 @@ const char* context::GetRenderer() const
 void context::GetExtensions()
 {
     GLint numExts;
-    GLint i;
 
     glGetIntegerv(GL_NUM_EXTENSIONS, &numExts); // Get the number of extensions the system supports
-    static_assert(std::numeric_limits<std::size_t>::max() >= std::numeric_limits<GLint>::max(), "std::size_t must be able to represent all positive GLint");
     assert(numExts >= 0);
-    extensions.reserve(static_cast<std::size_t>(numExts));
+    static_assert(std::numeric_limits<GLuint>::max() >= std::numeric_limits<decltype(numExts)>::max(), "GLuint must be able to represent all positive values of numExts");
+    GLuint uNumExts = static_cast<GLuint>(numExts);
+    extensions.reserve(uNumExts);
 
     // Iterate over each extension the graphics card supports and store it
-    for(i = 0; i < numExts; i++)
+    for(GLuint i = 0; i < uNumExts; i++)
     {
         extensions.push_back(reinterpret_cast<const char*>(glGetStringi(GL_EXTENSIONS, i)));
     }

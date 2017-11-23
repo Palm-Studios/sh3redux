@@ -21,8 +21,6 @@
 #include <string>
 #include <vector>
 
-
-
 namespace sh3_gl
 {
 
@@ -48,20 +46,18 @@ namespace sh3_gl
         private:
         };
 
-        program(const std::string& name, load_error& err, const std::vector<std::string>& attribs = {}) : programName(name){Load(name, err, attribs);};
+        program(const std::string& name, load_error& err, const std::vector<std::string>& attribs = {}) : programName(name){Load(name, err, attribs);}
         ~program(){Unbind(); glDeleteProgram(programID);}
 
         void Load(const std::string& name);
         /**
          *  Load a shader from a file on disk, compile and then link it, binding any attributes in the process.
          *
-         *  @param shader Name of the shader we want to load (path is hard-coded to /data/shaders). Assumes *.vert and *.frag have the same name.
+         *  @param shader  Name of the shader we want to load (path is hard-coded to /data/shaders). Assumes *.vert and *.frag have the same name.
          *  @param attribs Vector of attributes we bind before we link the program.
-         *  @param err Error set by this operation.
-         *
-         *  @return @ref load_error The error set by this operation (specified in the @ref load_result enum)
+         *  @param err     Error set by this operation.
          */
-        void Load(const std::string& shader, load_error& err, const std::vector<std::string>  &attribs = {});
+        void Load(const std::string& shader, load_error& err, const std::vector<std::string> &attribs = {});
 
         /**
          *  Bind this shader program for use.
