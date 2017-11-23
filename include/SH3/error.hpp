@@ -46,6 +46,7 @@ struct error
 {
 protected:
     error() = default;
+    error(const error&) = default;
     ~error() = default;
 
 public:
