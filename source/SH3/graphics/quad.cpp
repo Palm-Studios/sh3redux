@@ -24,7 +24,7 @@ quad::quad(const std::array<vertex3f, 6>& verts)
 
     // Copy the vertices into our buffer
     glBufferData(GL_ARRAY_BUFFER, verts.size() * sizeof(vertex3f), verts.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0); // 3-floats per vertex, in VAO slot 0 (position/vertex)
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr); // 3-floats per vertex, in VAO slot 0 (position/vertex)
     glBindVertexArray(0);
 }
 

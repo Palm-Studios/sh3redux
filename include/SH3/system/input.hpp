@@ -497,7 +497,7 @@ namespace sh3 { namespace system {
      */
     inline input_system::action_state::state::simple operator!(const input_system::action_state::state::simple state)
     {
-        return static_cast<input_system::action_state::state::simple>(!state);
+        return static_cast<input_system::action_state::state::simple>(!static_cast<bool>(state));
     }
 
     inline void input_system::action_state::state::Set(const simple state)

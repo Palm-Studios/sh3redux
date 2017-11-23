@@ -8,10 +8,12 @@
  */
 
 #include "SH3/graphics/msbmp.hpp"
+#include "SH3/system/assert.hpp"
 #include "SH3/system/log.hpp"
 
-#include <fstream>
 #include <algorithm>
+#include <fstream>
+#include <limits>
 
 
 struct pixel
@@ -55,18 +57,20 @@ msbmp::load_result msbmp::Load(const std::string& path)
     }
 
     file.read(reinterpret_cast<char*>(&iheader), sizeof(iheader)); // Read in the information header
-    width = iheader.width;
-    height = iheader.height;
+    ASSERT(iheader.width >= 0);
+    width = static_cast<GLsizei>(iheader.width);
+    ASSERT(iheader.height >= 0);
+    height = static_cast<GLsizei>(iheader.height);
     bpp = iheader.bpp;
 
-    data.resize(width * height * 3); // Some programs misformat this, so calculate it ourselves. This is usually 24-bit even for 8-bit paletted images!
+    data.resize(static_cast<std::size_t>(width * height) * 3u); // Some programs misformat this, so calculate it ourselves. This is usually 24-bit even for 8-bit paletted images!
 
     // We can now differentiate if our bitmap is 8bpp or 24bpp
     if(bpp == 8) // Paletted images are for fuckwits, I'm looking at you, Konami....
     {
         palette.resize(iheader.palette_size);
         file.seekg(sizeof(fheader) + sizeof(iheader), std::ios_base::beg); // Seek to the palette
-        file.read((char*)&palette[0], iheader.palette_size);
+        file.read(reinterpret_cast<char*>(palette.data()), iheader.palette_size);
         file.seekg(fheader.pix_offset, std::ios_base::beg); // Ensure we are actually in the data section
 
         // Slightly expensive, but we now copy each pixel into the data buffer by getting it's index in the palette.
@@ -89,7 +93,8 @@ msbmp::load_result msbmp::Load(const std::string& path)
     else if(bpp == 24)
     {
         file.seekg(fheader.pix_offset, std::ios_base::beg); // Seek to the image data
-        file.read((char*)&data[0], data.size()); // Read in the image data
+        ASSERT(data.size() <= std::numeric_limits<std::streamsize>::max());
+        file.read(reinterpret_cast<char*>(data.data()), static_cast<std::streamsize>(data.size())); // Read in the image data
     }
     else
     {
@@ -101,7 +106,7 @@ msbmp::load_result msbmp::Load(const std::string& path)
 
     glGenTextures(1, &tex); // Bind texture for use
     glBindTexture(GL_TEXTURE_2D, tex);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, &data[0]);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data.data());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);

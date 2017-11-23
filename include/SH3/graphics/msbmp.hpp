@@ -106,16 +106,16 @@ namespace sh3_graphics
         /**
          *  Get the width of this texture
          */
-        std::int32_t GetWidth() const {return width;}
+        GLsizei GetWidth() const {return width;}
 
         /**
          *  Get the height of this texture
          */
-        std::int32_t GetHeight() const {return height;}
+        GLsizei GetHeight() const {return height;}
 
     private:
-        std::int32_t width;     /**< Width of this texture in pixels */
-        std::int32_t height;    /**< Height of this texture in pixels */
+        GLsizei width;  /**< Width of this texture in pixels */
+        GLsizei height; /**< Height of this texture in pixels */
 
         /*============OPENGL STUFF============*/
         GLuint tex; /**< Texture ID for this bmp */
