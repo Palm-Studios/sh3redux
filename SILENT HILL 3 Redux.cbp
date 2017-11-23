@@ -88,7 +88,7 @@
 			<Add option="-Wundef" />
 			<Add option="-Wfloat-equal" />
 			<Add option="-Wunreachable-code" />
-			<Add option="-Wswitch-default" />
+			<Add option="-Wswitch-enum" />
 			<Add option="-Weffc++" />
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />

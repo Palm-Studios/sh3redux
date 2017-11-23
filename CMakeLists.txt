@@ -65,7 +65,7 @@ if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR "${CMAKE_CXX_COMPILER_ID}" MATCHE
 		"-Wundef"
 		"-Wfloat-equal"
 		"-Wunreachable-code"
-		"-Wswitch-default"
+		"-Wswitch-enum"
 		"-Weffc++"
 	)
 	string(REPLACE ";" " " CXX_FLAGS "${CXX_FLAGS}")
