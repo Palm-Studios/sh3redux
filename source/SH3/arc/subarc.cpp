@@ -92,7 +92,7 @@ int subarc::LoadFile(index_t index, std::vector<std::uint8_t>& buffer, std::vect
     // Seek to the file entry and read it
     subarc_file_entry fileEntry;
     ASSERT(index <= std::numeric_limits<std::streamoff>::max() / sizeof(fileEntry));
-    file.seekg(static_cast<std::streamoff>(index * sizeof(fileEntry)));
+    file.seekg(static_cast<std::streamoff>(index * sizeof(fileEntry)), std::ios_base::cur);
     static_assert(std::is_trivially_copyable<decltype(fileEntry)>::value, "must be deserializable through char*");
     file.read(reinterpret_cast<char*>(&fileEntry), sizeof(fileEntry));
 
