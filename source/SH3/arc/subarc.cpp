@@ -52,8 +52,10 @@ std::ifstream subarc::open(std::ios_base::openmode mode)
 
 int subarc::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
 {
+    using std::next;
+
     auto matching = files.equal_range(filename);
-    if(matching.first != matching.second)
+    if(matching.first == matching.second)
     {
         return arcFileNotFound;
     }
