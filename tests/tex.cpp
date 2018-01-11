@@ -92,7 +92,7 @@ int main(int argc, char** argv)
 
     quadVao.Unbind();
 
-    sh3_graphics::sh3_texture tex(mft, "data/pic/sy/sys_title.tex");
+    sh3_graphics::sh3_texture tex(mft, "data/pic/sy/sys_warning.tex");
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "info", "You should now see a texture drawn on the screen.", nullptr);
