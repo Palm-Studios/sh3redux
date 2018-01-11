@@ -160,7 +160,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
     if(header.bpp == PixelFormat::PALETTE)
     {
         palette_info         pal_header;
-        std::vector<bgra>    palette;    // Palette Data (I think this is BGRA)
+        std::vector<rgba>    palette;    // Palette Data (I think this is BGRA)
 
         // First, we need to seek to the palette and read it in.
         file.Seek(offset + header.batchHeaderSize + header.texFileSize, std::ios_base::beg);
@@ -302,7 +302,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
             // Christ help me...
             for(std::size_t pindex = 0, doff = 0; pindex < iBuffer.size() && doff < data.size(); pindex++, doff += 3)
             {
-                bgra pixel = palette[iBuffer[pindex]];
+                rgba pixel = palette[iBuffer[pindex]];
 
                 data[doff + 0]  = pixel.r;
                 data[doff + 1]  = pixel.g;
@@ -315,7 +315,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
             {
                 std::uint8_t index;
                 file.ReadData(&index, sizeof(index), e);
-                bgra pixel = palette[index];
+                rgba pixel = palette[index];
 
                 data[i + 0]   = pixel.r;
                 data[i + 1]   = pixel.g;
@@ -375,7 +375,7 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
         case PixelFormat::PALETTE:
             srcFormat = GL_RGB;
             dstFormat = GL_RGB;
-            type = GL_UNSIGNED_SHORT_5_5_5_1;
+            type = GL_UNSIGNED_BYTE;
             break;
         default:
             die("sh3_texture::Load( ): Invalid pixel format: %d", header.bpp);
