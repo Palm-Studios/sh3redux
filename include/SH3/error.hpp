@@ -49,6 +49,9 @@ protected:
     error(const error&) = default;
     ~error() = default;
 
+    error& operator=(const error&) = default;
+    error& operator=(error&&) = default;
+
 public:
     /**
      *  Check if error is present.
