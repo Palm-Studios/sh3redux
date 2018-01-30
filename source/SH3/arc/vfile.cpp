@@ -30,15 +30,15 @@ bool vfile::Open(mft& mft, const std::string& filename)
         it (so we know how large it is without probing) though most headers contain the size of the
         full file
     */
-    int size = mft.LoadFile(filename, buffer);
-    if(size == arcFileNotFound)
+    mft::load_error e;
+    std::size_t size = mft.LoadFile(filename, buffer, e);
+    if(e)
     {
         open = false;
     }
     else
     {
-        assert(size >= 0);
-        fsize = static_cast<unsigned>(size);
+        fsize = size;
 
         open = true;
     }
