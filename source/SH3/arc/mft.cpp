@@ -416,6 +416,24 @@ namespace {
     }
 }
 
+std::string mft::load_error::message() const
+{
+    std::string error;
+    switch(result)
+    {
+    case load_result::SUCCESS:
+        error = "Success";
+        break;
+    case load_result::FILE_NOT_FOUND:
+        error = "File not found";
+        break;
+    case load_result::SUBARC_ERROR:
+        error = subarcError.message();
+        break;
+    }
+    return error;
+}
+
 mft::mft()
 {
     mft_reader reader;
@@ -430,16 +448,27 @@ mft::mft()
     }
 }
 
-int mft::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start)
+std::size_t mft::LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start, load_error &e)
 {
     for(subarc& candidate : subarcs)
     {
-        int result = candidate.LoadFile(filename, buffer, start);
-        if(result != arcFileNotFound)
+        subarc::load_error subarcError;
+        std::size_t result = candidate.LoadFile(filename, buffer, start, subarcError);
+        if(subarcError.get_result() != subarc::load_result::FILE_NOT_FOUND)
         {
+            if(subarcError.get_result() != subarc::load_result::SUBARC_NOT_FOUND)
+            {
+                Log(LogLevel::WARN, "Couldn't open subarc-file %s\n", candidate.name.c_str());
+                continue;
+            }
+            if(subarcError)
+            {
+                e.set_error(subarcError);
+            }
             return result;
         }
     }
 
-    return arcFileNotFound;
+    e.set_error(load_result::FILE_NOT_FOUND);
+    return 0;
 }
