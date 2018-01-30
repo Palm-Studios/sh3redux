@@ -62,7 +62,7 @@ public:
      *
      *  @returns The @c result_enum.
      */
-    result_enum get_error() const { return result; }
+    result_enum get_result() const { return result; }
 
     /**
      *  Set the wrapped @c result_enum.
