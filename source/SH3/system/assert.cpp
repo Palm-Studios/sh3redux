@@ -191,7 +191,7 @@ static bool ask(bool& ignore, const std::string& message)
 void sh3_assert(bool &ignore, const char* msg, const char* file, int line, const char* func)
 {
     static const std::string ignoreMessage("Assertion ignored from now on.");
-    static const std::string unignoreMessage("Assertion ignored not ignored anymore.");
+    static const std::string unignoreMessage("Assertion not ignored anymore.");
 
     std::string fullMessage = std::string("Assertion failed in function ") + func + " at " + file + ":" + std::to_string(line) + ": " + msg + ".";
 
@@ -208,7 +208,7 @@ void sh3_assert(bool &ignore, const char* msg, const char* file, int line, const
     {
         if(ignore != preIgnore)
         {
-            const std::string& message = ignore ? unignoreMessage : ignoreMessage;
+            const std::string& message = ignore ? ignoreMessage : unignoreMessage;
             std::cerr << message << std::endl;
             Log(LogLevel::INFO, "%s", message.c_str());
         }
