@@ -20,6 +20,8 @@
 #include <utility>
 #include <vector>
 
+#include "SH3/error.hpp"
+
 namespace sh3 { namespace arc {
     static constexpr int arcFileNotFound = -1; /**< Status @ref mft::LoadFile() and @ref subarc::LoadFile() return if a file cannot be found. */
 
@@ -34,6 +36,100 @@ namespace sh3 { namespace arc {
         /** A mapping of filenames to the file's @ref index_t. */
         using files_map = std::map<std::string, index_t>;
 
+        /**
+         *  An enum representing possible results from trying to load a file.
+         */
+        enum class load_result
+        {
+            SUCCESS,             ///< Success.
+            FILE_NOT_FOUND,      ///< File not found.
+            SUBARC_NOT_FOUND,    ///< Subarc not found.
+            SUBARC_ERROR,        ///< The subarc could not be parsed correctly.
+            //TODO: END_OF_FILE?
+            PARTIAL_READ,        ///< End of file reached before completing the load.
+            PARTIAL_HEADER_READ, ///< End of file reached before even loading the file.
+        };
+        struct load_error final : public error<load_result>
+        {
+        public:
+            /**
+             *  Types of header for which @ref load_result::PARTIAL_HEADER_READ can occur.
+             */
+            enum class header
+            {
+                SUBARC, ///< The @ref subarc_header.
+                FILE    ///< The @ref subarc_file_entry.
+            };
+
+        public:
+            void set_error(load_result result) = delete;
+
+            /**
+             *  Set the wrapped @ref load_result to @ref load_result::SUBARC_NOT_FOUND.
+             */
+            void set_subarc_not_found_error() { result = load_result::SUBARC_NOT_FOUND; }
+
+            /**
+             *  Set the wrapped @ref load_result to @ref load_result::FILE_NOT_FOUND.
+             */
+            void set_file_not_found_error() { result = load_result::FILE_NOT_FOUND; }
+
+            /**
+             *  Set the wrapped @ref load_result to @ref load_result::SUBARC_ERROR.
+             *  
+             *  @param readMagic The magic value read from the header.
+             */
+            void set_subarc_error(std::uint32_t readMagic) { result = load_result::SUBARC_ERROR; magic = readMagic; }
+
+            /**
+             *  Set the wrapped @ref load_result to @ref load_result::PARTIAL_READ.
+             *  
+             *  @param fileSize The size of the file.
+             *  @param numRead  The number of bytes that could be retrieved.
+             */
+            void set_partial_read_error(std::size_t fileSize, std::size_t numRead) { result = load_result::PARTIAL_READ; readError = {fileSize, numRead}; }
+
+            /**
+             *  Set the wrapped @ref load_result to @ref load_result::PARTIAL_HEADER_READ.
+             *  
+             *  @param headerType The type of the header.
+             *  @param numRead    The number of bytes that could be retrieved.
+             */
+            void set_partial_header_read_error(header headerType, std::size_t numRead) { result = load_result::PARTIAL_HEADER_READ; headerReadError = {headerType, numRead}; }
+
+            /**
+             *  Stringify the @ref load_error.
+             *  
+             *  @returns The error as a @c std::string.
+             */
+            std::string message() const;
+
+        private:
+            /**
+             *  Additional data for @ref load_result::PARTIAL_READ.
+             */
+            struct read_error
+            {
+                std::size_t size; ///< The number of bytes that were supposed to be read.
+                std::size_t read; ///< The number of bytes read.
+            };
+            /**
+             *  Additional data for @ref load_result::PARTIAL_HEADER_READ.
+             */
+            struct header_read_error
+            {
+                header headerType; ///< The type of the header.
+                std::size_t read;  ///< The number of bytes read.
+            };
+            union
+            {
+                std::uint32_t magic; ///< Additional data for @ref load_result::SUBARC_ERROR.
+                read_error readError; ///< See @ref read_error.
+                header_read_error headerReadError; ///< See @ref header_read_error.
+            };
+        };
+
+    public:
         subarc(subarc&&) = default;
         /** Constructor.
          *  
@@ -50,10 +146,11 @@ namespace sh3 { namespace arc {
          *  @param filename Path to the file to load.
          *  @param buffer   The buffer to store the file contents into.
          *  @param start    An iterator to the insertion position in @c buffer.
+         *  @param e        @ref load_error from this operation.
          *  
          *  @returns The file length if loading is successful, @ref arcFileNotFound if not.
          */
-        int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start);
+        std::size_t LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start, load_error &e);
 
         /**
          *  Load a file into @c buffer.
@@ -62,10 +159,11 @@ namespace sh3 { namespace arc {
          *  
          *  @param filename Path to the file to load.
          *  @param buffer   The buffer to store the file contents into.
+         *  @param e        @ref load_error from this operation.
          *  
          *  @returns The file length if loading is successful, @ref arcFileNotFound if not.
          */
-        int LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer) { auto back = end(buffer); return LoadFile(filename, buffer, back); }
+        std::size_t LoadFile(const std::string& filename, std::vector<std::uint8_t>& buffer, load_error &e) { auto back = end(buffer); return LoadFile(filename, buffer, back, e); }
 
         /**
          *  Load a file into @c buffer.
@@ -75,10 +173,11 @@ namespace sh3 { namespace arc {
          *  @param index  The @ref index_t for the file to load.
          *  @param buffer The buffer to store the file contents into.
          *  @param start  An iterator to the insertion position in @c buffer.
+         *  @param e        @ref load_error from this operation.
          *  
          *  @returns The file length if loading is successful, @ref arcFileNotFound if not.
          */
-        int LoadFile(index_t index, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start);
+        std::size_t LoadFile(index_t index, std::vector<std::uint8_t>& buffer, std::vector<std::uint8_t>::iterator& start, load_error &e);
 
         /**
          *  Load a file into @c buffer.
@@ -87,10 +186,14 @@ namespace sh3 { namespace arc {
          *  
          *  @param index  The @ref index_t for the file to load.
          *  @param buffer The buffer to store the file contents into.
+         *  @param e        @ref load_error from this operation.
          *  
          *  @returns The file length if loading is successful, @ref arcFileNotFound if not.
          */
-        int LoadFile(index_t index, std::vector<std::uint8_t>& buffer) { auto back = end(buffer); return LoadFile(index, buffer, back); }
+        std::size_t LoadFile(index_t index, std::vector<std::uint8_t>& buffer, load_error &e) { auto back = end(buffer); return LoadFile(index, buffer, back, e); }
+
+    public:
+        const std::string name; /**< Name of this subarc. */
 
     private:
         /** Open the subarc-file.
@@ -101,7 +204,6 @@ namespace sh3 { namespace arc {
          */
         std::ifstream open(std::ios_base::openmode mode = std::ios::binary);
 
-        std::string name; /**< Name of this subarc. */
 
         /** Maps a file (and its associated virtual path) to its subarc index. */
         files_map files;
