@@ -17,10 +17,110 @@
 #include "SH3/system/glcontext.hpp"
 #include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
+#include "SH3/system/assert.hpp"
 #include <GL/glew.h>
 #include <GL/glu.h>
 #include <GL/glext.h>
 #include <glm/gtc/matrix_transform.hpp>
+
+/**
+ *  OpenGL error callback function. 
+ *
+ *  Used in conjunction with glDebugMessageCallback.
+ *
+ *  @arg source     The Source of this error.
+ *  @arg type       The type of error this is.
+ *  @arg id         Error ID.
+ *  @arg severity   How severe this error is. If it's fatal, terminate the program with @ref die().
+ *  @arg length     Length of the message log.
+ *  @arg message    Error message passed to us from OpenGL.
+ *  @arg data       User Param data.
+ */
+static void GLAPIENTRY debugCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const GLvoid* data)
+{   
+    LogLevel    level;
+    std::string errMsg;
+    
+    static_cast<void>(id);
+    static_cast<void>(length);
+    
+    ASSERT(!data);
+    errMsg = "";
+
+    // Get the source of the error message
+    switch(source)
+    {
+    case GL_DEBUG_SOURCE_API: // Error caused by the OpenGL API
+        errMsg += "API ";
+        break;
+    case GL_DEBUG_SOURCE_WINDOW_SYSTEM:
+        errMsg += "WINDOW SYSTEM ";
+        break;
+    case GL_DEBUG_SOURCE_SHADER_COMPILER:
+        errMsg += "SHADER COMPILER ";
+        break;
+    case GL_DEBUG_SOURCE_APPLICATION:
+        errMsg += "APPLICATION ";
+        break;
+    case GL_DEBUG_SOURCE_OTHER:
+        errMsg += "OTHER ";
+        break;
+    default:
+        errMsg += "UNKNOWN ";
+        break;
+    }
+
+    // Get the type of error this is
+    switch(type)
+    {
+    case GL_DEBUG_TYPE_ERROR:
+        errMsg += "(ERROR): ";
+        break;
+    case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR:
+        errMsg += "(DEPRECATED): ";
+        break;
+    case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:
+        errMsg += "(UNDEFINED BEHAVIOR): ";
+        break;
+    case GL_DEBUG_TYPE_PORTABILITY:
+        errMsg += "PORTABILITY! ";
+        break;
+    case GL_DEBUG_TYPE_PERFORMANCE:
+        errMsg += "(PERFORMANCE): ";
+        break;
+    case GL_DEBUG_TYPE_OTHER:
+        errMsg += "(OTHER): ";
+        break;
+    case GL_DEBUG_TYPE_MARKER:
+        errMsg += "(MARKER): ";
+        break;
+    default:
+        errMsg += "(UNKNOWN): ";
+        break;
+    }
+
+    switch(severity)
+    {
+        case GL_DEBUG_SEVERITY_HIGH:
+            level = LogLevel::FATAL;
+            break;
+        case GL_DEBUG_SEVERITY_MEDIUM:
+            level = LogLevel::ERROR;
+            break;
+        case GL_DEBUG_SEVERITY_LOW:
+            level = LogLevel::WARN;
+            break;
+        case GL_DEBUG_SEVERITY_NOTIFICATION:
+            level = LogLevel::INFO;
+            break;
+        default:
+            level = LogLevel::INFO;
+            break;
+    }
+
+    errMsg += message;
+    Log(level, errMsg.c_str());
+}
 
 using namespace sh3_gl;
 
@@ -28,6 +128,7 @@ context::context(sh3_window& hwnd)
 {
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Put the context into 'forwrad compatible' mode, meaning no deprecated functionality will be allowed AT ALL!
 
     glContext.reset(SDL_GL_CreateContext(hwnd.hwnd.get()));
 
@@ -45,7 +146,19 @@ context::context(sh3_window& hwnd)
     SDL_GL_SetAttribute(SDL_GL_BUFFER_SIZE, 32);
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-}
+
+    if(GLEW_KHR_debug)
+    {
+        glEnable(GL_DEBUG_OUTPUT);
+        glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+        glDebugMessageCallback(debugCallback, nullptr);
+        glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+    }
+    else
+    {
+        Log(LogLevel::WARN, "GL_KHR_debug not available on this OpenGL context!");
+    }
+}   
 
 const char* context::GetVendor() const
 {
