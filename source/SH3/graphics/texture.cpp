@@ -13,6 +13,7 @@
 #include <SH3/system/log.hpp>
 #include <SH3/arc/mft.hpp>
 #include <SH3/arc/vfile.hpp>
+#include <SH3/types/color.hpp>
 
 #include <algorithm>
 #include <cassert>
@@ -23,35 +24,11 @@
 
 using namespace sh3_graphics;
 
+/** @defgroup graphics-types Graphics Types
+ *  @{
+*/
+
 #pragma pack(push, 1)
-struct rgba
-{
-    std::uint8_t r, g, b, a;
-};
-
-struct rgba16
-{
-    std::uint8_t r : 5;
-    std::uint8_t g : 5;
-    std::uint8_t b : 5;
-    std::uint8_t a : 1;
-};
-
-struct rgb
-{
-    std::uint8_t r, g, b;
-};
-
-struct bgra
-{
-    std::uint8_t b, g, r, a;
-};
-
-struct bgr
-{
-    std::uint8_t b, g, r;
-};
-
 struct tga_header
 {
     static constexpr std::uint8_t TYPE_RGB24 = 2;
@@ -69,8 +46,9 @@ struct tga_header
     std::uint8_t bpp = 24;                  /**< Bits per pixel */
     std::uint8_t flags = FLAGS_FLIP;
 };
-
 #pragma pack(pop)
+
+/**@}*/
 
 namespace
 {
