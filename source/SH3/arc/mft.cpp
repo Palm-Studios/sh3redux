@@ -456,13 +456,14 @@ std::size_t mft::LoadFile(const std::string& filename, std::vector<std::uint8_t>
         std::size_t result = candidate.LoadFile(filename, buffer, start, subarcError);
         if(subarcError.get_result() != subarc::load_result::FILE_NOT_FOUND)
         {
-            if(subarcError.get_result() != subarc::load_result::SUBARC_NOT_FOUND)
-            {
-                Log(LogLevel::WARN, "Couldn't open subarc-file %s\n", candidate.name.c_str());
-                continue;
-            }
             if(subarcError)
             {
+                if(subarcError.get_result() == subarc::load_result::SUBARC_NOT_FOUND)
+                {
+                    //skip and see if other subarcs can be opened
+                    Log(LogLevel::WARN, "Couldn't open subarc-file %s\n", candidate.name.c_str());
+                    continue;
+                }
                 e.set_error(subarcError);
             }
             return result;
