@@ -24,3 +24,20 @@ target_link_libraries("fileinfo"
     PRIVATE "${SDL2_LIBRARIES}"
 	PRIVATE "${ZLIB_LIBRARIES}"
 )
+
+add_executable("arc_dump"
+	"dump/dump.cpp"
+	
+	"../source/SH3/arc/mft.cpp"
+	"../source/SH3/arc/subarc.cpp"
+	"../source/SH3/arc/vfile.cpp"
+	
+	"../source/SH3/system/assert.cpp"
+	"../source/SH3/system/config.cpp"
+	"../source/SH3/system/log.cpp"
+)
+
+target_link_libraries("fileinfo"
+    PRIVATE "${SDL2_LIBRARIES}"
+	PRIVATE "${ZLIB_LIBRARIES}"
+)
