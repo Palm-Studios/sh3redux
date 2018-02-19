@@ -50,6 +50,7 @@ namespace sh3 { namespace arc {
         };
 
 
+        vfile(){}
         vfile(mft& mft, const std::string& filename): fpos(0), fname(filename)
         {Open(mft, filename);}
 
@@ -87,15 +88,6 @@ namespace sh3 { namespace arc {
           */
           size_t GetFilesize() const {return fsize;}
 
-
-    private:
-        std::size_t fpos;         /**< Current file position */
-        std::size_t fsize;        /**< Size of this file inside the arc section in bytes */
-        std::string fname;        /**< The name of this file (taken from arc.arc) */
-        bool        open = false; /**< Is this file handle currently open? */
-
-        std::vector<std::uint8_t> buffer; /**< Buffer that @ref ReadData() reads from */
-
         /**
          *  Open a handle to a virtual file.
          *
@@ -107,6 +99,15 @@ namespace sh3 { namespace arc {
          *  @returns @c true if the file was found, @c false if not.
          */
         bool Open(mft& mft, const std::string& filename);
+
+
+    private:
+        std::size_t fpos;         /**< Current file position */
+        std::size_t fsize;        /**< Size of this file inside the arc section in bytes */
+        std::string fname;        /**< The name of this file (taken from arc.arc) */
+        bool        open = false; /**< Is this file handle currently open? */
+
+        std::vector<std::uint8_t> buffer; /**< Buffer that @ref ReadData() reads from */
     };
 
 } }
