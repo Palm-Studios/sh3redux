@@ -29,6 +29,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 set(BUILD_TESTS ON CACHE BOOL "Build the test programs.")
+set(BUILD_TOOLS ON CACHE BOOL "Build sh3r debug tools.")
 
 set(ASSERTION_BEHAVIOR_DEFAULT "Log and ask")
 if("${CMAKE_BUILD_TYPE}" STREQUAL "Release" OR "${CMAKE_BUILD_TYPE}" STREQUAL "MinSizeRel")
@@ -132,6 +133,10 @@ set(CMAKE_CXX_FLAGS "${CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
 add_subdirectory(source)
 if(BUILD_TESTS)
 	add_subdirectory(tests)
+endif()
+
+if(BUILD_TOOLS)
+	add_subdirectory(tools)
 endif()
 
 find_package(Doxygen)
