@@ -1,4 +1,4 @@
-find_package(Boost REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system filesystem)
 find_package(SDL2 REQUIRED)
 find_package(ZLIB REQUIRED)
 
@@ -37,7 +37,16 @@ add_executable("arc_dump"
 	"../source/SH3/system/log.cpp"
 )
 
-target_link_libraries("fileinfo"
+target_link_libraries("arc_dump"
     PRIVATE "${SDL2_LIBRARIES}"
+	PRIVATE "${ZLIB_LIBRARIES}"
+)
+
+add_executable("arc_extract"
+	"extract/extract.cpp"
+)
+
+target_link_libraries("arc_extract"
+	PRIVATE "${Boost_LIBRARIES}"
 	PRIVATE "${ZLIB_LIBRARIES}"
 )
