@@ -16,6 +16,10 @@ include_directories(SYSTEM "${OPENGL_INCLUDE_DIR}")
 include_directories(SYSTEM "${SDL2_INCLUDE_DIRS}")
 include_directories(SYSTEM "${ZLIB_INCLUDE_DIRS}")
 
+if(WIN32)
+    set(BINARY_RESOURCE_FILE "resource.rc")
+endif()
+
 add_executable("input"
 	"input.cpp"
 	
@@ -26,6 +30,8 @@ add_executable("input"
 	"../source/SH3/system/input.cpp"
 	"../source/SH3/system/log.cpp"
 	"../source/SH3/system/window.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("input"
@@ -45,6 +51,8 @@ add_executable("vao"
 	"../source/SH3/system/glvertarray.cpp"
 	"../source/SH3/system/log.cpp"
 	"../source/SH3/system/window.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("vao"
@@ -70,6 +78,8 @@ add_executable("tex"
 	"../source/SH3/system/glvertarray.cpp"
 	"../source/SH3/system/log.cpp"
 	"../source/SH3/system/window.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("tex"
@@ -93,6 +103,8 @@ add_executable("cam"
 	"../source/SH3/system/glvertarray.cpp"
 	"../source/SH3/system/log.cpp"
 	"../source/SH3/system/window.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("cam"

@@ -6,11 +6,15 @@ execute_process(COMMAND cmake -E echo *
 project(sh3rd CXX)
 
 if(WIN32)
+    # Some of these directives require the use of the windows '\\' path seperator because apparently idiots wrote the package find files....
 	enable_language(RC)
+    message("-- Compiling for win32...")
+    set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/platform/win32/cmake/) # Set the module directories so that cmake doesn't barf for glm, SDL2 and GLEW...
 endif()
 
 if("${CMAKE_SIZEOF_VOID_P}" EQUAL 8)
 	set(BINARY_RESOURCE_FILE "resource64.rc")
+    set(AMD64 BOOL TRUE)
 	add_definitions(-DSH3_64)
 elseif("${CMAKE_SIZEOF_VOID_P}" EQUAL 4)
 	set(BINARY_RESOURCE_FILE "resource32.rc")
@@ -20,7 +24,7 @@ endif()
 
 include(CheckCXXCompilerFlag)
 
-if(NOT CMAKE_BUILD_TYPE)
+if(NOT CMAKE_BUIiLD_TYPE)
 	set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "Type of build." FORCE)
 	if(NOT CMAKE_CONFIGURATION_TYPES)
 		set(CMAKE_CONFIGURATION_TYPES "Debug" "Release" "MinSizeRel" "RelWithDebugInfo")
@@ -123,6 +127,31 @@ if(CYGWIN) # WIN32?
 	include_directories(SYSTEM "${CMAKE_BINARY_DIR}/support")
 elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "Darwin")
 	include_directories(SYSTEM "include/support/osx")
+endif()
+
+# If we're on windows, do a check for what compiler we're using (so we can link the appropriate libraries)
+if(WIN32)
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU") # We're dealing with MinGW etc
+        set(Boost_USE_STATIC_LIBS ON)
+        set(BOOST_INCLUDEDIR ${LIB_ROOT_DIR}/boost/boost)
+
+        # Do a check for system bitness
+        if(AMD64)
+            set(BOOST_LIBRARYDIR ${LIB_ROOT_DIR}/boost/lib/amd64/debug)
+        else()
+            set(BOOST_LIBRARYDIR ${LIB_ROOT_DIR}/boost/lib/x86/debug)
+        endif()
+
+        set(GLEW_LIBRARY ${LIB_ROOT_DIR}/GLEW/lib/libglew.a)
+        set(SDL2_LIBRARY ${LIB_ROOT_DIR}/SDL2/lib)
+        set(ZLIB_LIBRARY ${LIB_ROOT_DIR}/zlib/lib/zlib.a)
+
+        set(GLEW_LIBRARIES ${LIB_ROOT_DIR}/GLEW/lib/libglew.a)
+        set(SDL2_INCLUDE_DIRS ${LIB_ROOT_DIR}/SDL2/include/SDL2) # CMake doesn't automatically pass this like the others???
+        set(CMAKE_EXE_LINKER_FLAGS "-lmingw32")
+        set(SDL2_LIBRARIES ${LIB_ROOT_DIR}/SDL2/lib/libSDL2main.a;${LIB_ROOT_DIR}/SDL2/lib/libSDL2.dll.a)
+        set(ZLIB_LIBRARIES ${LIB_ROOT_DIR}/zlib/lib/libz.a)
+    endif()
 endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "../bin")
