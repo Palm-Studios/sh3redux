@@ -8,45 +8,57 @@ include_directories(SYSTEM "${Boost_INCLUDE_DIRS}")
 include_directories(SYSTEM "${SDL2_INCLUDE_DIRS}")
 include_directories(SYSTEM "${ZLIB_INCLUDE_DIRS}")
 
+
+if(WIN32)
+    set(BINARY_RESOURCE_FILE "resource.rc")
+    unset(CMAKE_EXE_LINKER_FLAGS)
+endif()
+
 add_executable("fileinfo"
-	"fileinfo/info.cpp"
-	
-	"../source/SH3/arc/mft.cpp"
-	"../source/SH3/arc/subarc.cpp"
-	"../source/SH3/arc/vfile.cpp"
-	
-	"../source/SH3/system/assert.cpp"
-	"../source/SH3/system/config.cpp"
-	"../source/SH3/system/log.cpp"
+    "fileinfo/info.cpp"
+    
+    "../source/SH3/arc/mft.cpp"
+    "../source/SH3/arc/subarc.cpp"
+    "../source/SH3/arc/vfile.cpp"
+    
+    "../source/SH3/system/assert.cpp"
+    "../source/SH3/system/config.cpp"
+    "../source/SH3/system/log.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("fileinfo"
     PRIVATE "${SDL2_LIBRARIES}"
-	PRIVATE "${ZLIB_LIBRARIES}"
+    PRIVATE "${ZLIB_LIBRARIES}"
 )
 
 add_executable("arc_dump"
-	"dump/dump.cpp"
-	
-	"../source/SH3/arc/mft.cpp"
-	"../source/SH3/arc/subarc.cpp"
-	"../source/SH3/arc/vfile.cpp"
-	
-	"../source/SH3/system/assert.cpp"
-	"../source/SH3/system/config.cpp"
-	"../source/SH3/system/log.cpp"
+    "dump/dump.cpp"
+    
+    "../source/SH3/arc/mft.cpp"
+    "../source/SH3/arc/subarc.cpp"
+    "../source/SH3/arc/vfile.cpp"
+    
+    "../source/SH3/system/assert.cpp"
+    "../source/SH3/system/config.cpp"
+    "../source/SH3/system/log.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("arc_dump"
     PRIVATE "${SDL2_LIBRARIES}"
-	PRIVATE "${ZLIB_LIBRARIES}"
+    PRIVATE "${ZLIB_LIBRARIES}"
 )
 
 add_executable("arc_extract"
-	"extract/extract.cpp"
+    "extract/extract.cpp"
+
+    "${BINARY_RESOURCE_FILE}"
 )
 
 target_link_libraries("arc_extract"
-	PRIVATE "${Boost_LIBRARIES}"
-	PRIVATE "${ZLIB_LIBRARIES}"
+    PRIVATE "${Boost_LIBRARIES}"
+    PRIVATE "${ZLIB_LIBRARIES}"
 )
