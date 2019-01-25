@@ -40,6 +40,7 @@ include/GL
 include/glm
 include/SDL2
 include/boost
+libs/
 
 #SILENT HILL 3 stuff
 *.arc
