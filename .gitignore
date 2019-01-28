@@ -41,6 +41,11 @@ include/glm
 include/SDL2
 include/boost
 libs/
+obj/
+
+# Makefile related stuff
+*.make
+Makefile
 
 #SILENT HILL 3 stuff
 *.arc
