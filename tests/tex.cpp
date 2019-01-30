@@ -10,7 +10,7 @@
 #include "SH3/system/exit_code.hpp"
 #include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
-#include "SH3/system/glprogram.hpp"
+#include "SH3/system/shader.hpp"
 #include "SH3/graphics/msbmp.hpp"
 #include "SH3/graphics/texture.hpp"
 #include "SH3/system/glbuffer.hpp"
@@ -74,8 +74,7 @@ int main(int argc, char** argv)
     sh3_window window(1024, 768, "sh3redux | texture test");
     bool quit = false;
     SDL_Event ev;
-    sh3_gl::program::load_error err;
-    sh3_gl::program prog("image", err);
+    sh3::gl::CShader prog("image");
     sh3::arc::mft mft;
 
     using Quad = sh3_gl::vao<QuadAttributes>;
@@ -97,6 +96,11 @@ int main(int argc, char** argv)
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "info", "You should now see a texture drawn on the screen.", nullptr);
 
+    prog.Bind();
+    prog.SetUniform("tFloat", 0.2f);
+    GLfloat t = prog.GetUniformValue<GLfloat>("tFloat");
+    std::printf("%0.4f\n", t);
+
     while(!quit)
     {
         while(SDL_PollEvent(&ev) != 0)
@@ -106,7 +110,6 @@ int main(int argc, char** argv)
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-        prog.Bind();
         tex.Bind(GL_TEXTURE1);
         quadVao.Draw();
         SDL_GL_SwapWindow(window.hwnd.get());
