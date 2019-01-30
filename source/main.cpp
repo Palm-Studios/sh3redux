@@ -11,7 +11,7 @@
 #include "SH3/system/exit_code.hpp"
 #include "SH3/system/log.hpp"
 #include "SH3/system/window.hpp"
-#include "SH3/system/glprogram.hpp"
+#include "SH3/system/shader.hpp"
 #include "SH3/graphics/msbmp.hpp"
 #include "SH3/graphics/texture.hpp"
 #include "SH3/system/glbuffer.hpp"
@@ -83,8 +83,7 @@ int main(int argc, char** argv)
     bool quit = false;
     SDL_Event e;
 
-    sh3_gl::program::load_error err;
-    sh3_gl::program test("test", err);
+    sh3::gl::CShader test("test");
 
     using Triangle = sh3_gl::vao<TriangleAttributes>;
 
