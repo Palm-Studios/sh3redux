@@ -13,8 +13,8 @@
 #include "SH3/system/shader.hpp"
 #include "SH3/graphics/msbmp.hpp"
 #include "SH3/graphics/texture.hpp"
-#include "SH3/system/glbuffer.hpp"
-#include "SH3/system/glvertarray.hpp"
+#include "SH3/system/glvertexbuffer.hpp"
+#include "SH3/system/glvertexarray.hpp"
 #include "SH3/types/vertex.hpp"
 #include <SDL.h>
 #include <cstdio>
@@ -40,29 +40,6 @@ static GLfloat uv_buffer[] =
     0.0f, 0.0f,
 };
 
-struct QuadAttributes final
-{
-private:
-    using Target = sh3_gl::buffer_object::Target;
-
-    QuadAttributes() = delete;
-
-public:
-    enum class Slot
-    {
-        VERTEX,
-        UV,
-        MAX
-    };
-
-    static constexpr sh3_gl::vao_target_array<Slot> Targets =
-    { {
-        Target::ARRAY_BUFFER,
-        Target::ARRAY_BUFFER
-    } };
-};
-constexpr sh3_gl::vao_target_array<QuadAttributes::Slot> QuadAttributes::Targets;
-
 int main(int argc, char** argv)
 {
     static_cast<void>(argc);
@@ -77,29 +54,36 @@ int main(int argc, char** argv)
     sh3::gl::CShader prog("image");
     sh3::arc::mft mft;
 
-    using Quad = sh3_gl::vao<QuadAttributes>;
-    Quad quadVao;
-    quadVao.Bind();
+    using Quad = sh3::gl::CVertexArray;
 
-    sh3_gl::buffer_object& verts = quadVao[Quad::Slot::VERTEX];
-    verts.BufferData(vert_buffer, sizeof(vert_buffer), GL_STATIC_DRAW);
-    quadVao.SetDataLocation(Quad::Slot::VERTEX, Quad::DataType::FLOAT, 3, 0, 0);
+    Quad quadVao2;
+    sh3::gl::CVertexBuffer      vertBuff;
+    sh3::gl::VertexAttribute    vertAttribs;
+    sh3::gl::CVertexBuffer      uvBuff;
+    sh3::gl::VertexAttribute    uvAttribs;
 
-    sh3_gl::buffer_object& uv = quadVao[Quad::Slot::UV];
-    uv.BufferData(uv_buffer, sizeof(uv_buffer), GL_STATIC_DRAW);
-    quadVao.SetDataLocation(Quad::Slot::UV, Quad::DataType::FLOAT, 2, 0, 0);
+    vertBuff.BufferData(sh3::gl::CVertexBuffer::BufferTarget::ARRAY_BUFFER, sizeof(vert_buffer), vert_buffer, sh3::gl::CVertexBuffer::BufferUsage::STATIC_DRAW);
+    vertAttribs.idx = 0;
+    vertAttribs.normalize = false;
+    vertAttribs.offset = 0;
+    vertAttribs.size = 3;
+    vertAttribs.stride = 0;
+    quadVao2.BindAttribute(vertAttribs, vertBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
 
-    quadVao.Unbind();
+    uvBuff.BufferData(sh3::gl::CVertexBuffer::BufferTarget::ARRAY_BUFFER, sizeof(uv_buffer), uv_buffer, sh3::gl::CVertexBuffer::BufferUsage::STATIC_DRAW);
+    uvAttribs.idx = 1;
+    uvAttribs.normalize = false;
+    uvAttribs.offset = 0;
+    uvAttribs.size = 2;
+    uvAttribs.stride = 0;
+    quadVao2.BindAttribute(uvAttribs, uvBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
 
-    sh3_graphics::sh3_texture tex(mft, "data/pic/sy/sys_warning.tex");
+    sh3_graphics::sh3_texture tex(mft, "data/eff_tex/fog_tr.pic");
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "info", "You should now see a texture drawn on the screen.", nullptr);
 
     prog.Bind();
-    prog.SetUniform("tFloat", 0.2f);
-    GLfloat t = prog.GetUniformValue<GLfloat>("tFloat");
-    std::printf("%0.4f\n", t);
 
     while(!quit)
     {
@@ -111,7 +95,8 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         tex.Bind(GL_TEXTURE1);
-        quadVao.Draw();
+        quadVao2.Bind();
+        glDrawArrays(GL_TRIANGLES, 0, 6);
         SDL_GL_SwapWindow(window.hwnd.get());
     }
 
