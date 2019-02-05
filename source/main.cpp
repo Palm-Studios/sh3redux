@@ -14,8 +14,8 @@
 #include "SH3/system/shader.hpp"
 #include "SH3/graphics/msbmp.hpp"
 #include "SH3/graphics/texture.hpp"
-#include "SH3/system/glbuffer.hpp"
-#include "SH3/system/glvertarray.hpp"
+#include "SH3/system/glvertexbuffer.hpp"
+#include "SH3/system/glvertexarray.hpp"
 #include "SH3/types/vertex.hpp"
 #include <SDL.h>
 #include <cstdio>
@@ -31,32 +31,6 @@ static GLfloat glCol[] = {
     0.0f, 1.0f, 0.0f,
     0.0f, 0.0f, 1.0f,
 };
-
-/**
- *  VAO Attributes for a colorful triangle.
- */
-struct TriangleAttributes final
-{
-private:
-    using Target = sh3_gl::buffer_object::Target;
-
-    TriangleAttributes() = delete;
-
-public:
-    enum class Slot
-    {
-        VERTEX,
-        COLOR,
-        MAX
-    };
-
-    static constexpr sh3_gl::vao_target_array<Slot> Targets =
-    { {
-        Target::ARRAY_BUFFER,
-        Target::ARRAY_BUFFER
-    } };
-};
-constexpr sh3_gl::vao_target_array<TriangleAttributes::Slot> TriangleAttributes::Targets;
 
 /**
  *  Entry point to the program.
@@ -85,21 +59,31 @@ int main(int argc, char** argv)
 
     sh3::gl::CShader test("test");
 
-    using Triangle = sh3_gl::vao<TriangleAttributes>;
+    using Triangle = sh3::gl::CVertexArray;
 
     Triangle triVao;
+    sh3::gl::CVertexBuffer      vBuff;
+    sh3::gl::VertexAttribute    vAttr;
+    sh3::gl::CVertexBuffer      colBuff;
+    sh3::gl::VertexAttribute    colAttr;
 
-    triVao.Bind();
+    // Setup vertex attribute
+    vAttr.idx = 0;
+    vAttr.normalize = false;
+    vAttr.offset = 0;
+    vAttr.size = 3;
+    vAttr.stride = 0;
 
-    sh3_gl::buffer_object& verts = triVao[Triangle::Slot::VERTEX];
-    verts.BufferData(g_vertex_buffer_data, sizeof(g_vertex_buffer_data), GL_STATIC_DRAW);
-    triVao.SetDataLocation(Triangle::Slot::VERTEX, Triangle::DataType::FLOAT, 3, 0, 0);
+    vBuff.BufferData(sh3::gl::CVertexBuffer::BufferTarget::ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, sh3::gl::CVertexBuffer::BufferUsage::STATIC_DRAW);
+    triVao.BindAttribute(vAttr, vBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
 
-    sh3_gl::buffer_object& col = triVao[Triangle::Slot::COLOR];
-    col.BufferData(glCol, sizeof(glCol), GL_STATIC_DRAW);
-    triVao.SetDataLocation(Triangle::Slot::COLOR, Triangle::DataType::FLOAT, 3, 0, 0);
-
-    triVao.Unbind();
+    colAttr.idx = 1;
+    colAttr.normalize = false;
+    colAttr.offset = 0;
+    colAttr.size = 3;
+    colAttr.stride = 0;
+    colBuff.BufferData(sh3::gl::CVertexBuffer::BufferTarget::ARRAY_BUFFER, sizeof(glCol), glCol, sh3::gl::CVertexBuffer::BufferUsage::STATIC_DRAW);
+    triVao.BindAttribute(colAttr, colBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     while(!quit)
@@ -112,7 +96,8 @@ int main(int argc, char** argv)
 
         glClear(GL_COLOR_BUFFER_BIT);
         test.Bind();
-        triVao.Draw();
+        triVao.Bind();
+        glDrawArrays(GL_TRIANGLES, 0, 3);
         SDL_GL_SwapWindow(window.hwnd.get());
     }
 
