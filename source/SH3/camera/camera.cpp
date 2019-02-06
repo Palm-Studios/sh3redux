@@ -14,7 +14,7 @@
 #include <algorithm>
 #include <boost/algorithm/clamp.hpp>
 
-static constexpr glm::vec3 worldUp = glm::vec3(0, 1, 0); /**< Which axis is considered 'world up'. */
+static const glm::vec3 worldUp = glm::vec3(0, 1, 0); /**< Which axis is considered 'world up'. */
 
 sh3::camera::Camera::Camera(const glm::vec3& pos, angle<float> fov, float aspect, float zNear, float zFar)
 : camPos(pos), camFov(fov), aRatio(aspect), camNear(zNear), camFar(zFar),
