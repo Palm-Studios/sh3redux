@@ -8,8 +8,8 @@ workspace "silenthill3"
 
 project "sh3r"
     kind "ConsoleApp"
-    targetdir ("build/sh3r/%{cfg.buildcfg}_%{cfg.archtecture}")
-    objdir ("obj/sh3r/%{cfg.buildcfg}_%{cfg.archtecture}")
+    targetdir ("build/sh3r/%{cfg.buildcfg}_%{cfg.architecture}")
+    objdir ("obj/sh3r/%{cfg.buildcfg}_%{cfg.architecture}")
     files {"source/SH3/**.cpp", "source/main.cpp", "include/SH3/**.hpp"}
 
     
