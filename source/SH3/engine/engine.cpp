@@ -32,48 +32,60 @@ CEngine::~CEngine()
 
 void CEngine::Init(const std::string& args)
 {
+    static_cast<void>(args);
     running = true;
     Run();
 }
 
 void CEngine::Run(void) noexcept
 {
-    std::uint64_t now;          // Current time
-    std::uint64_t frameTime;    // The time it took to render one frame
-    std::uint64_t accum;        // Time accumlulator
-    std::uint64_t lastTime = 0; // The value of 'now' for currentFrame - 1
-    std::uint64_t frames = 0;   // Frame counter. NOT frames per second!
+    bool            first = true;
+    std::uint64_t   now;          // Current time
+    std::uint64_t   frameTime;    // The time it took to render one frame
+    std::uint64_t   elapsedTime;  // Time accumlulator
+    std::uint64_t   lastTime = 0; // The value of 'now' for currentFrame - 1
+    std::uint64_t   frames = 0;   // Frame counter. NOT frames per second!
+    std::uint64_t   diff = 0;
 
     while(running)
     {
         now = clock.GetTimeMilliseconds();
-        frameTime = now - lastTime;
-        accum += frameTime;
-        frames++;
+        elapsedTime += frameTime;
+
+        if(first)
+        {
+            first = false;
+            lastTime = now;
+            continue;
+        }
+
+        stateManager.Peek().get()->InputHandler();
+        stateManager.Peek().get()->Update();
+        stateManager.Peek().get()->Render();
+
+        if(elapsedTime >= clock.SECOND_IN_MS)
+        {
+            std::printf("frames rendered: %llu, last frametime: %llu\n", frames, frameTime);
+            elapsedTime = 0;
+            frames = 0;
+        }
 
         /**
          *  Seeing as we're locked to 60fps, if the previous frame time was
          *  less than our target frame time, we'll just sleep for the difference
          *  to ensure that we still run at 60FPS :)
+         *
+         *  This doesn't work (yet!)
          */
-        if(frameTime < FRAME_TIME_TARGET)
-        {
-            std::uint64_t diff = FRAME_TIME_TARGET - frameTime;
-            std::this_thread::sleep_for(std::chrono::milliseconds(diff));
-        }
+//        if(frameTime < FRAME_TIME_TARGET)
+//        {
+//            std::uint64_t sleepTime = now + FRAME_TIME_TARGET - clock.GetTimeMilliseconds();
+//            std::this_thread::sleep_for(std::chrono::milliseconds(now + FRAME_TIME_TARGET - clock.GetTimeMilliseconds()));
+//        }
 
-        // input
-        // update
-        // render
-
-        // Do some shit
-        if(accum >= clock.SECOND_IN_MS)
-        {
-            std::printf("frames rendered: %llu, last frametime: %llu\n", frames, frameTime);
-            accum = 0;
-            frames = 0;
-        }
-
+        frameTime = clock.GetTimeMilliseconds() - lastTime;
+        frames++;
         lastTime = now;
+        std::this_thread::sleep_for(std::chrono::milliseconds(now + FRAME_TIME_TARGET - clock.GetTimeMilliseconds()));
     }
 }
