@@ -18,6 +18,7 @@
 #include "SH3/common/singleton.hpp"
 #include "SH3/system/config.hpp"
 #include "SH3/system/clock.hpp"
+#include "SH3/engine/statemanager.hpp"
 
 #include <string>
 #include <cstdint>
@@ -63,9 +64,10 @@ private:
     void Run(void) noexcept;
 
 private:
-    sh3_config              config;         /**< The engine's configuration file */
-    bool                    running;        /**< Is the game currently running? */
-    sh3::system::clock_t    clock;          /**< Game clock (for loop timing)*/
+    sh3_config                  config;         /**< The engine's configuration file */
+    bool                        running;        /**< Is the game currently running? */
+    sh3::system::clock_t        clock;          /**< Game clock (for loop timing)*/
+    sh3::state::CStateManager   stateManager;
 };
 
 }}
