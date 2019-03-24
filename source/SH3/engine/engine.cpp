@@ -11,10 +11,12 @@
  *  @author Jesse Buhagiar [quaker762]
  */
 #include "SH3/engine/engine.hpp"
-
+#include "SH3/graphics/msbmp.hpp"
+#include "SH3/engine/state/intro.hpp"
 
 #include <iostream>
 #include <thread>
+
 
 using namespace sh3::engine;
 using namespace std::chrono;
@@ -33,6 +35,14 @@ CEngine::~CEngine()
 void CEngine::Init(const std::string& args)
 {
     static_cast<void>(args);
+
+    // Initialise the window/video subsystem
+    hwnd.Create(1280, 1024, "SILENT HILL 3: Redux");
+    // States
+    sh3::state::CIntroState intro(stateManager);
+
+    stateManager.PushState(intro);
+
     running = true;
     Run();
 }
@@ -68,6 +78,7 @@ void CEngine::Run(void) noexcept
         stateManager.Peek().get()->InputHandler(event);
         stateManager.Peek().get()->Update();
         stateManager.Peek().get()->Render();
+        SDL_GL_SwapWindow(const_cast<SDL_Window*>(hwnd.GetHandle()));
 
         if(elapsedTime >= clock.SECOND_IN_MS)
         {

@@ -14,6 +14,7 @@
 #include <SH3/arc/mft.hpp>
 #include <SH3/arc/vfile.hpp>
 #include <SH3/types/color.hpp>
+#include "SH3/graphics/msbmp.hpp"
 
 #include <algorithm>
 #include <cassert>
@@ -22,7 +23,7 @@
 #include <functional>
 #include <limits>
 
-using namespace sh3_graphics;
+using namespace sh3::graphics;
 
 /** @defgroup graphics-types Graphics Types
  *  @{
@@ -93,9 +94,8 @@ void DumpRGB2Bitmap(std::uint32_t width, std::uint32_t height, std::vector<std::
 }
 }
 
-
 //TODO: Scale the texture and then
-void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
+void CTexture::Load(sh3::arc::mft& mft, const std::string& filename)
 {
     sh3_texture_header          header;
     sh3::arc::vfile             file(mft, filename);
@@ -134,6 +134,10 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
     }
 
     data.resize(header.texSize); // Early data resize (if it's an 8bpp texture, it will be resized anyway)
+
+    width   = header.texWidth;
+    height  = header.texHeight;
+    bpp     = header.bpp;
 
     if(header.bpp == PixelFormat::PALETTE)
     {
@@ -366,10 +370,111 @@ void sh3_texture::Load(sh3::arc::mft& mft, const std::string& filename)
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use linear interpolation for the texture
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-    glBindTexture(GL_TEXTURE_2D, tex); // Un-bind this texture.
+    glBindTexture(GL_TEXTURE_2D, 0); // Un-bind this texture.
 }
 
-void sh3_texture::Bind(GLenum textureUnit)
+void CTexture::Load(const std::string& path)
+{
+    using namespace sh3::graphics::bmp;
+
+    std::ifstream   file;
+    file_header     fheader;    // File information header
+    info_header     iheader;
+    std::uint16_t   bpp;        // Bitmap bit depth
+
+    std::vector<palette_color> palette;     // Vector containing colour data for this image
+    std::vector<std::uint8_t> data;                // Vector containing image data or palette offsets
+
+    file.open(path, std::ios::binary);
+
+    if(!file.is_open())
+    {
+        // If this happens we're in a bit of trouble, because we can't load the default texture..... We could crash here.
+        Log(LogLevel::ERROR, "msbmp::Load( ): Unable to open a handle to %s!", path.c_str());
+        return;
+    }
+
+    file.read(reinterpret_cast<char*>(&fheader), sizeof(fheader)); // Read in the file header
+    if(fheader.tag[0] != 'B' || fheader.tag[1] != 'M')
+    {
+        Log(LogLevel::WARN, "msmbmp::Load( ): Warning: This file does not appear to be a BMP! Reason: BAD_HEADER!");
+        return;
+    }
+
+    file.read(reinterpret_cast<char*>(&iheader), sizeof(iheader)); // Read in the information header
+    ASSERT(iheader.width >= 0);
+    width = static_cast<GLsizei>(iheader.width);
+    ASSERT(iheader.height >= 0);
+    height = static_cast<GLsizei>(iheader.height);
+    bpp = iheader.bpp;
+
+    data.resize(static_cast<std::size_t>(width * height) * 3u); // Some programs misformat this, so calculate it ourselves. This is usually 24-bit even for 8-bit paletted images!
+
+    /**
+     * FIXME PLEASE!!!!!!!!
+
+    // We can now differentiate if our bitmap is 8bpp or 24bpp
+    if(bpp == 8) // Paletted images are for fuckwits, I'm looking at you, Konami....
+    {
+        palette.resize(iheader.palette_size);
+        file.seekg(sizeof(fheader) + sizeof(iheader), std::ios_base::beg); // Seek to the palette
+        file.read(reinterpret_cast<char*>(palette.data()), iheader.palette_size);
+        file.seekg(fheader.pix_offset, std::ios_base::beg); // Ensure we are actually in the data section
+
+        // Slightly expensive, but we now copy each pixel into the data buffer by getting it's index in the palette.
+        // Seeing as this is done once, I doubt it matters too much, especially if we do this during load time
+        // and keep the image alive for the whole of the scene duration (there are 3 bmps total in SH3, not including
+        // our default 'error' texture)
+        for(pixel& p: data)
+        {
+            palette_color color;    // 4-byte colour, stored in BGRA (where A is unused)
+            std::uint8_t index;     // Image byte, which is the index into the colour palette
+            file.read(reinterpret_cast<char*>(&index), sizeof(index));
+
+            color = palette[index];
+            p.r = color.r; // Extract Red
+            p.g = color.g; // Extract Green
+            p.b = color.b; // Extract Blue
+        }
+
+    }
+    */
+    if(bpp == 24)
+    {
+        file.seekg(fheader.pix_offset, std::ios_base::beg); // Seek to the image data
+        ASSERT(data.size() <= std::numeric_limits<std::streamsize>::max());
+        //file.read(reinterpret_cast<char*>(data.data()), static_cast<std::streamsize>(data.size())); // Read in the image data
+        file.read(reinterpret_cast<char*>(data.data()), data.size());
+    }
+    else
+    {
+        Log(LogLevel::WARN, "msbmp::Load( ): Bad pixel depth %d!", bpp);
+        return;
+    }
+
+    /**
+     * They're actually mirrored too! The co-ordinate systems are COMPLETELY different,
+     * OpenGL is bottom left, bmp is (more pracitically), top left. We should probably pass in
+     * some kind of shader attribute (via a boolean) so that we can swap the <s, t> co-ords.
+     */
+    std::reverse(data.begin(), data.end()); // Reverse the data because .bmp files are actually upside down in RAM
+
+
+    // Do the actual texture upload
+    glGenTextures(1, &tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data.data());
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // Use linear interpolation for the texture
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+
+    glBindTexture(GL_TEXTURE_2D, 0); // Un-bind this texture.
+}
+
+void CTexture::Bind(GLenum textureUnit)
 {
     ASSERT(textureUnit >= GL_TEXTURE0 && textureUnit <= GL_TEXTURE31);
 
@@ -377,7 +482,7 @@ void sh3_texture::Bind(GLenum textureUnit)
     glBindTexture(GL_TEXTURE_2D, tex);
 }
 
-void sh3_texture::Unbind()
+void CTexture::Unbind()
 {
     glBindTexture(GL_TEXTURE_2D, 0);
 }

@@ -78,7 +78,7 @@ int main(int argc, char** argv)
     uvAttribs.stride = 0;
     quadVao2.BindAttribute(uvAttribs, uvBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
 
-    sh3_graphics::sh3_texture tex(mft, "data/eff_tex/fog_tr.pic");
+    sh3::graphics::CTexture tex("data/pic/kcet.bmp");
 
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "info", "You should now see a texture drawn on the screen.", nullptr);
@@ -94,7 +94,7 @@ int main(int argc, char** argv)
         }
 
         glClear(GL_COLOR_BUFFER_BIT);
-        tex.Bind(GL_TEXTURE1);
+        tex.Bind(GL_TEXTURE0);
         quadVao2.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 6);
         SDL_GL_SwapWindow(const_cast<SDL_Window*>(window.GetHandle()));

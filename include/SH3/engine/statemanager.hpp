@@ -21,6 +21,9 @@
 
 namespace sh3 { namespace state {
 
+
+class CGameState;
+
 /**
  *  State manager class. Provides us a way to manage states properly as well as providing an API
  *  to transition states (and have fancy effects).

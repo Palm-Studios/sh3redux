@@ -29,7 +29,22 @@ class CWindow;  /**< Forward declaration to prevent circular inclusion */
 class CRenderContext
 {
 public:
+
+    CRenderContext(){}
+
+    /**
+     * Constructor
+     *
+     * @param hwnd Physical SDL Window Reference
+     */
     explicit CRenderContext(CWindow& hwnd);
+
+    /**
+     * Create a new OpenGL Render Context
+     *
+     * @param hwnd Physical SDL Window Reference
+     */
+    void Create(CWindow& hwnd);
 
    /**
     *  Return the vendor of OpenGL Driver in use.

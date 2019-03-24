@@ -63,10 +63,9 @@ public:
 public:
     /**
      * Default constructor.
-     *
-     * @note This is deleted. The name of shader MUST be specified!
      */
-    CShader() = delete;
+    CShader()
+        : programID(0x00), locked(false), name("UNDEFINED"), status(LoadStatus::COMPILE_ERROR), attribs(){}
 
     /**
      * Constructor
@@ -176,14 +175,23 @@ public:
      *
      * The shader objects are then linked together to form our final Shader Program (stored in @ref program)
      *
-     * @return @ref LoadStatus giving the status of the load.
+     * @param name Name of the shader we want to load from /data/shaders/
      */
-    void Load(void);
+    void Load(const std::string& name);
 
     /**
      * Get the load status of this shader.
      */
     const LoadStatus GetLoadStatus()const {return status;}
+
+private:
+
+    /**
+     * Load the shader source from disk and compile it.
+     *
+     * The shader objects are then linked together to form our final Shader Program (stored in @ref program)
+     */
+    void Load(void);
 
 private:
     GLuint                          programID;  /**< Program ID Generated for us by OpenGL */

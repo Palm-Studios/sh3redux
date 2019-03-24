@@ -25,6 +25,12 @@ CVertexArray::CVertexArray(const std::string& _name)
     Create();
 }
 
+CVertexArray::CVertexArray(const CVertexArray& rhs)
+    : vaoID(rhs.vaoID), name(rhs.name)
+{
+
+}
+
 CVertexArray::~CVertexArray()
 {
     Destroy();
