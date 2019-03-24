@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     Log(LogLevel::INFO, "===SILENT HILL 3 REDUX===");
     Log(LogLevel::INFO, "Copyright 2016-2017 Palm Studios\n");
 
-    sh3_window window(1024, 768, "sh3redux | texture test");
+    sh3::system::CWindow window(1024, 768, "sh3redux | texture test");
     bool quit = false;
     SDL_Event ev;
     sh3::gl::CShader prog("image");
@@ -97,7 +97,7 @@ int main(int argc, char** argv)
         tex.Bind(GL_TEXTURE1);
         quadVao2.Bind();
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        SDL_GL_SwapWindow(window.hwnd.get());
+        SDL_GL_SwapWindow(const_cast<SDL_Window*>(window.GetHandle()));
     }
 
     return static_cast<int>(exit_code::SUCCESS);
