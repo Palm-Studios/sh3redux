@@ -17,6 +17,7 @@
 #define _GAMESTATE_HPP_
 
 #include "SH3/engine/statemanager.hpp"
+#include "SH3/arc/mft.hpp"
 
 #include <string>
 #include <memory>
@@ -52,6 +53,10 @@ public:
     {
 
     }
+
+    CGameState(const CGameState& rhs)
+        : name(rhs.name), id(rhs.id), stateManager(rhs.stateManager)
+        {}
 
     /**
      *  Virtual Destructor
@@ -102,6 +107,7 @@ protected:
     std::string     name;               /**< The name of this state */
     std::uint64_t   id;                 /**< Numerical ID for this state */
     CStateManager&  stateManager;       /**< Reference to @ref sh3::engine::CEngine::stateManager */
+    sh3::arc::mft   mft;
 };
 
 }}

@@ -126,6 +126,11 @@ using namespace sh3::system;
 
 CRenderContext::CRenderContext(CWindow& hwnd)
 {
+    Create(hwnd);
+}   
+
+void CRenderContext::Create(CWindow& hwnd)
+{
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Put the context into 'forwrad compatible' mode, meaning no deprecated functionality will be allowed AT ALL!
@@ -162,7 +167,7 @@ CRenderContext::CRenderContext(CWindow& hwnd)
     {
         Log(LogLevel::WARN, "GL_KHR_debug not available on this OpenGL context!");
     }
-}   
+}
 
 const char* CRenderContext::GetVendor() const
 {
