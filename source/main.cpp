@@ -104,6 +104,12 @@ int main(int argc, char** argv)
 //    }
 
     sh3::engine::CEngine game;
-    game.Instance().Init("");
+    game.Init("");
+
+    /**
+     * Until we move a fair bit of stuff out of the construct (which is getting kinda dangerous at this point),
+     * this method of init should NOT be used!
+     */
+    //game.Instance().Init("");
     return static_cast<int>(exit_code::SUCCESS);
 }

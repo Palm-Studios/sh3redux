@@ -20,7 +20,7 @@ using namespace sh3::engine;
 using namespace std::chrono;
 
 CEngine::CEngine()
-    : config(), running(false)
+    : config(), running(false), hwnd(640, 480, "SILENT HILL 3: Redux")
 {
 
 }
@@ -59,7 +59,13 @@ void CEngine::Run(void) noexcept
             continue;
         }
 
-        stateManager.Peek().get()->InputHandler();
+        while(SDL_PollEvent(&event) != 0)
+        {
+            if(event.type == SDL_QUIT)
+                running = false;
+        }
+
+        stateManager.Peek().get()->InputHandler(event);
         stateManager.Peek().get()->Update();
         stateManager.Peek().get()->Render();
 
