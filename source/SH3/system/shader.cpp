@@ -36,6 +36,12 @@ CShader::~CShader()
     glDeleteProgram(programID);
 }
 
+void CShader::Load(const std::string& _name)
+{
+    name = _name;
+    Load();
+}
+
 void CShader::Load()
 {
     std::ifstream   sourceStream;           // Source file stream

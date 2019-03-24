@@ -17,9 +17,12 @@
 #define _GAMESTATE_HPP_
 
 #include "SH3/engine/statemanager.hpp"
+#include "SH3/arc/mft.hpp"
 
 #include <string>
 #include <memory>
+
+#include <SDL.h>
 
 namespace sh3 { namespace state {
 
@@ -50,6 +53,10 @@ public:
     {
 
     }
+
+    CGameState(const CGameState& rhs)
+        : name(rhs.name), id(rhs.id), stateManager(rhs.stateManager)
+        {}
 
     /**
      *  Virtual Destructor
@@ -92,7 +99,7 @@ public:
      *
      * All input is handled/passed here (@z33ky should have a better idea of how this works)
      */
-    virtual void InputHandler(void) noexcept = 0;
+    virtual void InputHandler(const SDL_Event& event) noexcept = 0;
 
     virtual std::unique_ptr<CGameState> clone() const = 0;
 
@@ -100,6 +107,7 @@ protected:
     std::string     name;               /**< The name of this state */
     std::uint64_t   id;                 /**< Numerical ID for this state */
     CStateManager&  stateManager;       /**< Reference to @ref sh3::engine::CEngine::stateManager */
+    sh3::arc::mft   mft;
 };
 
 }}

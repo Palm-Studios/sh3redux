@@ -32,6 +32,12 @@ public:
     static constexpr int SCREEN_HEIGHT_DEFAULT  = 1024;     /**< Default screen height (for graphical "safe mode") */
 
 public:
+
+    /**
+     * Default constructor
+     */
+    CWindow(): fullscreen(false), title(""), hwnd(nullptr), context(){}
+
     /**
      * Class constructor
      *
@@ -40,6 +46,15 @@ public:
      * @param title     Window title (for windowed mode)
      */
     CWindow(int width, int height, const std::string& title);
+
+    /**
+     * Create a physical SDL window, as well as initialise the OpenGL context that goes along with it.
+     *
+     * @param width     Window width
+     * @param height    Window height
+     * @param title     Window title (for windowed mode)
+     */
+    void Create(int width, int height, const std::string& title);
 
     /**
      * Get the handle to the physical SDL2 window pointer

@@ -13,6 +13,8 @@
 
 #include <iostream>
 
+#include <SDL.h>
+
 using namespace sh3::state;
 
 class StackProtector : public CGameState
@@ -45,7 +47,6 @@ public:
 
     virtual void Destroy(void) noexcept
     {
-        die("BLERGH! Call to StackProtector::Destroy (you've tried to underflow the stack!!)");
     }
 
     virtual void Update(void) noexcept
@@ -58,7 +59,7 @@ public:
         std::cout << "TOCK" << std::endl;
     }
 
-    virtual void InputHandler(void) noexcept
+    virtual void InputHandler(const SDL_Event& event) noexcept
     {
         // Do nothing
     }
