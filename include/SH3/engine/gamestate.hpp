@@ -21,6 +21,8 @@
 #include <string>
 #include <memory>
 
+#include <SDL.h>
+
 namespace sh3 { namespace state {
 
 class CStateManager; // Forward declaration to prevent circular inclusion
@@ -92,7 +94,7 @@ public:
      *
      * All input is handled/passed here (@z33ky should have a better idea of how this works)
      */
-    virtual void InputHandler(void) noexcept = 0;
+    virtual void InputHandler(const SDL_Event& event) noexcept = 0;
 
     virtual std::unique_ptr<CGameState> clone() const = 0;
 
