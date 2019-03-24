@@ -19,10 +19,13 @@
 #include "SH3/system/config.hpp"
 #include "SH3/system/clock.hpp"
 #include "SH3/engine/statemanager.hpp"
+#include "SH3/system/window.hpp"
 
 #include <string>
 #include <cstdint>
 #include <chrono>
+
+#include <SDL.h>
 
 namespace sh3 { namespace engine {
 
@@ -68,6 +71,8 @@ private:
     bool                        running;        /**< Is the game currently running? */
     sh3::system::clock_t        clock;          /**< Game clock (for loop timing)*/
     sh3::state::CStateManager   stateManager;
+    sh3::system::CWindow        hwnd;
+    SDL_Event                   event;
 };
 
 }}
