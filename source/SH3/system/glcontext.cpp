@@ -122,19 +122,23 @@ static void GLAPIENTRY debugCallback(GLenum source, GLenum type, GLuint id, GLen
     Log(level, errMsg.c_str());
 }
 
-using namespace sh3_gl;
+using namespace sh3::system;
 
-context::context(sh3_window& hwnd)
+CRenderContext::CRenderContext(CWindow& hwnd)
 {
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, SDL_GL_CONTEXT_FORWARD_COMPATIBLE_FLAG); // Put the context into 'forwrad compatible' mode, meaning no deprecated functionality will be allowed AT ALL!
 
-    glContext.reset(SDL_GL_CreateContext(hwnd.hwnd.get()));
+    glContext.reset(SDL_GL_CreateContext(const_cast<SDL_Window*>(hwnd.GetHandle())));
 
-    if(glewInit() != GLEW_OK) // Initialise GLEW!
+    int ret = 0;
+    if((ret = glewInit()) != GLEW_OK) // Initialise GLEW!
     {
-        die("sh3_glcontext::sh3_glcontext( ): GLEW Init failed! (Does your Graphics Driver support OpenGL 3.3?)");
+        std::string err = "CRenderContext::CRenderContext( ): GLEW Init failed! Reason: ";
+        err += std::string(reinterpret_cast<const char*>(glewGetErrorString(ret)));
+
+        die(err.c_str());
     }
 
     // Set the colour size for OpenGL!
@@ -160,22 +164,22 @@ context::context(sh3_window& hwnd)
     }
 }   
 
-const char* context::GetVendor() const
+const char* CRenderContext::GetVendor() const
 {
     return GlGetString(GL_VENDOR);
 }
 
-const char* context::GetVersion() const
+const char* CRenderContext::GetVersion() const
 {
     return GlGetString(GL_VERSION);
 }
 
-const char* context::GetRenderer() const
+const char* CRenderContext::GetRenderer() const
 {
     return GlGetString(GL_RENDERER);
 }
 
-void context::GetExtensions()
+void CRenderContext::GetExtensions()
 {
     GLint numExts;
 
@@ -192,7 +196,7 @@ void context::GetExtensions()
     }
 }
 
-void context::PrintInfo() const
+void CRenderContext::PrintInfo() const
 {
     Log(LogLevel::INFO, "GL_VENDOR:\t %s", GetVendor());
     Log(LogLevel::INFO, "GL_VERSION:\t %s", GetVersion());
@@ -203,12 +207,14 @@ void context::PrintInfo() const
     std::printf("GL_RENDERER:\t %s\n", GetRenderer());
 }
 
-const char* context::GlGetString(GLenum name)
+const char* CRenderContext::GlGetString(GLenum name)
 {
     return reinterpret_cast<const char*>(glGetString(name));
 }
 
-glm::mat4 context::GetProjectionMatrix(float fov, int width, int height, float near, float far)
+/**
+glm::mat4 CRenderContext::GetProjectionMatrix(float fov, int width, int height, float near, float far)
 {
     return glm::perspective(fov, static_cast<float>(width) / static_cast<float>(height), near, far);
 }
+**/

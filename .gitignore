@@ -54,3 +54,4 @@ Makefile
 
 # Documentation
 /docs
+/Debug/
