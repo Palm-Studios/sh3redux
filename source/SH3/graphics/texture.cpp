@@ -410,12 +410,10 @@ void CTexture::Load(const std::string& path)
 
     data.resize(static_cast<std::size_t>(width * height) * 3u); // Some programs misformat this, so calculate it ourselves. This is usually 24-bit even for 8-bit paletted images!
 
-    /**
-     * FIXME PLEASE!!!!!!!!
-
     // We can now differentiate if our bitmap is 8bpp or 24bpp
     if(bpp == 8) // Paletted images are for fuckwits, I'm looking at you, Konami....
     {
+        /**
         palette.resize(iheader.palette_size);
         file.seekg(sizeof(fheader) + sizeof(iheader), std::ios_base::beg); // Seek to the palette
         file.read(reinterpret_cast<char*>(palette.data()), iheader.palette_size);
@@ -436,9 +434,10 @@ void CTexture::Load(const std::string& path)
             p.g = color.g; // Extract Green
             p.b = color.b; // Extract Blue
         }
-
+        **/
+        Log(LogLevel::WARN, "CTexture::Load() does not support 8-bit MS bitmaps! Consider revising!");
+        return;
     }
-    */
     if(bpp == 24)
     {
         file.seekg(fheader.pix_offset, std::ios_base::beg); // Seek to the image data
@@ -457,14 +456,13 @@ void CTexture::Load(const std::string& path)
      * OpenGL is bottom left, bmp is (more pracitically), top left. We should probably pass in
      * some kind of shader attribute (via a boolean) so that we can swap the <s, t> co-ords.
      */
-    std::reverse(data.begin(), data.end()); // Reverse the data because .bmp files are actually upside down in RAM
-
+    //std::reverse(data.begin(), data.end()); // Reverse the data because .bmp files are actually upside down in RAM
 
     // Do the actual texture upload
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
 
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data.data());
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data.data());
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

@@ -66,6 +66,9 @@ void CIntroState::Init(void) noexcept
     uvAttribs.size = 2;
     uvAttribs.stride = 0;
     quadVao2.BindAttribute(uvAttribs, uvBuff, sh3::gl::VertexAttribute::AttributeType::FLOAT);
+
+    numTimes = 0;
+    ticks = 0;
 }
 
 void CIntroState::Destroy(void) noexcept
@@ -97,9 +100,9 @@ void CIntroState::Render(void) noexcept
     glClear(GL_COLOR_BUFFER_BIT);
     shader.Bind();
 
-    if(numTimes == 1)
+    if(numTimes == 0)
         konami1.Bind(GL_TEXTURE0);
-    else if(numTimes == 2)
+    else if(numTimes == 1)
         kcet.Bind(GL_TEXTURE0);
     else
         warning.Bind(GL_TEXTURE0);
