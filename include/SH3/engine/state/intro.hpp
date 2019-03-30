@@ -31,6 +31,8 @@ public:
     {
         name = "sh3_state_intro";
         id = 1;
+        numTimes = 0;
+        ticks = 0;
     }
 
     CIntroState(const CIntroState& rhs) : CGameState(rhs)
@@ -63,7 +65,7 @@ private:
 
     std::size_t             ticks;      /**< Tick execution counter */
     float                   alpha = 0.0f;
-    int                     numTimes = 0;
+    int                     numTimes;
     sh3::gl::CShader        shader;
 
     // OpenGL related structures
