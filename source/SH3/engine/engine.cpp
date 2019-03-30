@@ -103,6 +103,14 @@ void CEngine::Run(void) noexcept
         frameTime = clock.GetTimeMilliseconds() - lastTime;
         frames++;
         lastTime = now;
-        std::this_thread::sleep_for(std::chrono::milliseconds(now + FRAME_TIME_TARGET - clock.GetTimeMilliseconds()));
+
+        /**
+         *  HACK HACK: Prevent a hard lock on Windows
+         *  It seems that a call to SDL_Delay() with another
+         *  function call (clock.GetTimeMilliseconds()) causes the program
+         *  to hardlock on exit. SDL_Delay() might be failing somehow?
+         */
+        now = clock.GetTimeMilliseconds();
+        SDL_Delay(now + FRAME_TIME_TARGET - now);
     }
 }
