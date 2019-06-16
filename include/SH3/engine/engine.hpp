@@ -67,12 +67,12 @@ private:
     void Run(void) noexcept;
 
 private:
-    sh3_config                  config;         /**< The engine's configuration file */
-    bool                        running;        /**< Is the game currently running? */
-    sh3::system::clock_t        clock;          /**< Game clock (for loop timing)*/
-    sh3::state::CStateManager   stateManager;
-    sh3::system::CWindow        hwnd;
-    SDL_Event                   event;
+    sh3::system::CConfigurationFile config;         /**< The engine's configuration file */
+    bool                            running;        /**< Is the game currently running? */
+    sh3::system::clock_t            clock;          /**< Game clock (for loop timing)*/
+    sh3::state::CStateManager       stateManager;
+    sh3::system::CWindow            hwnd;
+    SDL_Event                       event;
 };
 
 }}

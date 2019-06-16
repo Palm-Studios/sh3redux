@@ -243,7 +243,7 @@ void CTexture::Load(sh3::arc::mft& mft, const std::string& filename)
                         xoffset ^= 4u;
                     }
 
-                    const auto tempx = x + xoffset; // - 16;
+                    const auto tempx = x + xoffset - 16; // - 16;
                     // every other pixel is for (y + 2)
                     const auto tempy = y + ((i % 2u) ? 2u : 0u);
 
