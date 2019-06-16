@@ -22,7 +22,7 @@ using namespace sh3::engine;
 using namespace std::chrono;
 
 CEngine::CEngine()
-    : config(), running(false), hwnd(640, 480, "SILENT HILL 3: Redux")
+    : running(false), hwnd(640, 480, "SILENT HILL 3: Redux")
 {
 
 }
@@ -42,6 +42,10 @@ void CEngine::Init(const std::string& args)
     sh3::state::CIntroState intro(stateManager);
 
     stateManager.PushState(intro);
+
+    config.Load();
+    bool test = config.GetConfigurationValue<bool>("[test]", "testval");
+    int t2 = config.GetConfigurationValue<float>("[test 2]", "testval");
 
     running = true;
     Run();

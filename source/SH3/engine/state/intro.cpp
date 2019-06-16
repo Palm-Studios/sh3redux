@@ -76,6 +76,11 @@ void CIntroState::Destroy(void) noexcept
     glDisable(GL_BLEND); // Disable blending for now
 }
 
+void CIntroState::InputHandler(const SDL_Event& event) noexcept
+{
+
+}
+
 void CIntroState::Update(void) noexcept
 {
     ticks++;
@@ -109,9 +114,4 @@ void CIntroState::Render(void) noexcept
 
     quadVao2.Bind();
     glDrawArrays(GL_TRIANGLES, 0, 6);
-}
-
-void CIntroState::InputHandler(const SDL_Event& event) noexcept
-{
-
 }
